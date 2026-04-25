@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的世界服务器 - 网易&国际互通版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: #f7f9fa;
+            color: #333;
+            background-image: url(https://img1.baidu.com/it/u=2892291222,3806132293&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-blend-mode: lighten;
+            overflow-x: hidden;
+        }
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #ffffff;
+            border-bottom: 2px solid #E53935;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        .menu-btn span {
+            width: 28px;
+            height: 3px;
+            background: #E53935;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: #ffffff;
+            border-right: 2px solid #E53935;
+            z-index: 998;
+            transition: left 0.3s ease;
+            padding: 20px 0;
+            overflow-y: auto;
+        }
+        .sidebar.show {
+            left: 0;
+        }
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar-logo img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #E53935;
+            object-fit: cover;
+        }
+        .menu-item {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+        .menu-item:hover {
+            background: #fff0f0;
+            border-left: 4px solid #E53935;
+            color: #E53935;
+        }
+        .submenu {
+            display: none;
+            padding: 10px 20px 10px 35px;
+        }
+        .submenu.show {
+            display: block;
+        }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .tool-item {
+            background: #f9f9f9;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #555;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .tool-item:hover {
+            border-color: #E53935;
+            color: #E53935;
+            transform: scale(1.03);
+        }
+
+        /* 启动器子项样式 */
+        .launcher-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #333;
+        }
+        .launcher-item img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+        .launcher-item:hover {
+            color: #E53935;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 70px auto 0;
+            padding: 30px 20px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #E53935;
+            object-fit: cover;
+        }
+        .notice {
+            background: #fff9e6;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .notice-text {
+            white-space: nowrap;
+            animation: scroll 15s linear infinite;
+            font-size: 1.1rem;
+            color: #ff9800;
+            font-weight: 500;
+        }
+        @keyframes scroll {
+            0% {transform: translateX(100%);}
+            100% {transform: translateX(-100%);}
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 2px solid #E53935;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .header h1 {
+            font-size: 3rem;
+            color: #E53935;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        .server-card {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            align-items: stretch;
+        }
+        .card {
+            width: 400px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 3px solid #eee;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .card h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #E53935;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            min-height: 60px;
+        }
+        .card .desc {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            flex: 1;
+            min-height: 120px;
+        }
+        .qun-box {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: auto;
+            border: 2px solid #eee;
+        }
+        .qun-box p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .qun-num {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #FFD700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 4px rgba(255,215,0,0.3);
+        }
+        .copy-btn {
+            padding: 12px 35px;
+            background: #E53935;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto;
+        }
+        .copy-btn:hover {
+            background: #C62828;
+            transform: scale(1.05);
+        }
+        .card:hover {
+            border-color: #E53935;
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(229,57,53,0.15);
+        }
+        .donate-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .donate-btn {
+            padding: 14px 40px;
+            background: #E53935;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(229,57,53,0.2);
+        }
+        .donate-btn:hover {
+            background: #C62828;
+            transform: scale(1.05);
+        }
+        .donate-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            display: none;
+        }
+        .donate-modal.show {
+            display: flex;
+        }
+        .donate-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+        }
+        .donate-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+        }
+        .donate-title {
+            font-size: 1.5rem;
+            color: #E53935;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .donate-qrcode {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .qrcode-item {
+            width: 180px;
+        }
+        .qrcode-item img {
+            width: 100%;
+            border-radius: 8px;
+            border: 2px solid #eee;
+        }
+        .qrcode-item p {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #333;
+            font-weight: 500;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            color: #888;
+            font-size: 1rem;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        .mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.3);
+            z-index: 997;
+            display: none;
+        }
+        .mask.show {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .logo-img { width: 120px; height: 120px; }
+            .header h1 { font-size: 2.2rem; }
+            .card { width: 100%; padding: 25px 20px; }
+            .qun-num { font-size: 2.3rem; letter-spacing: 2px; }
+            .copy-btn { padding: 10px 30px; }
+        }
+        @media (max-width: 400px) {
+            .header h1 { font-size: 1.8rem; }
+            .qun-num { font-size: 2rem; }
+            .notice-text { font-size: 0.95rem; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div class="top-bar">
+    <button class="menu-btn" id="menuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="封面.png" alt="LOGO">
+    </div>
+    <div class="menu-item" onclick="goHome()">🏠 主页</div>
+    <div class="menu-item" id="toolMenu">🧰 MC工具</div>
+    <div class="submenu" id="toolSub">
+        <div class="tool-grid">
+            <div class="tool-item" onclick="window.open('https://o.xbottle.top/mcsounds/','_blank')">MC音效</div>
+            <div class="tool-item" onclick="window.open('https://ccvaults.com/','_blank')">MC贴图</div>
+            <div class="tool-item" onclick="window.open('https://mcpixelart.com/','_blank')">MC艺术画</div>
+            <div class="tool-item" onclick="window.open('https://3dt.easecation.net/','_blank')">3D字制作</div>
+            <div class="tool-item" onclick="window.open('https://klpbbs.com/forum.php?mod=guide&view=hot&mobile=2','_blank')">苦力怕论坛</div>
+        </div>
+    </div>
+
+    <!-- ↓↓↓ 你要的【启动器】菜单 ↓↓↓ -->
+    <div class="menu-item" id="launcherMenu">🚀 启动器</div>
+    <div class="submenu" id="launcherSub">
+        <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
+            <img src="龙腾猫跃.png" alt="PCL2">
+            <span>PCL2 启动器</span>
+        </div>
+        <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
+            <img src="FCL.png" alt="FCL">
+            <span>FCL 启动器</span>
+        </div>
+        <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
+            <img src="网易.png" alt="网易版">
+            <span>网易版 MC</span>
+        </div>
+    </div>
+</div>
+
+<div class="mask" id="mask"></div>
+<div class="container">
+    <div class="logo">
+        <img src="封面.png" alt="MC服务器LOGO" class="logo-img">
+    </div>
+    <div class="notice">
+        <div class="notice-text">
+            📢 服务器长期稳定运营 | 每日上线领福利 | 网易/国际版数据互通福利 | 群内有开服教程和专属模组包 📢
+        </div>
+    </div>
+    <div class="header">
+        <h1><i class="fas fa-cube"></i> 我的世界专属服务器</h1>
+        <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
+    </div>
+    <div class="server-card">
+        <div class="card">
+            <h2><i class="fas fa-globe-asia"></i> 网易版专属服</h2>
+            <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！
+            纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
+            <div class="qun-box">
+                <p>网易服官方交流QQ群</p>
+                <div class="qun-num" id="wy-qun">668352250</div>
+                <button class="copy-btn" onclick="copyQun('wy-qun')"><i class="fas fa-copy"></i> 一键复制群号</button>
+            </div>
+        </div>
+        <div class="card">
+            <h2><i class="fas fa-earth"></i> 国际互通版</h2>
+            <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！
+            丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
+            <div class="qun-box">
+                <p>国际服官方交流QQ群</p>
+                <div class="qun-num" id="gj-qun">1059442560</div>
+                <button class="copy-btn" onclick="copyQun('gj-qun')"><i class="fas fa-copy"></i> 一键复制群号</button>
+            </div>
+        </div>
+    </div>
+    <div class="donate-section">
+        <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
+    </div>
+    <div class="footer">
+        <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
+    </div>
+</div>
+<div class="donate-modal" id="donateModal">
+    <div class="donate-box">
+        <button class="donate-close" onclick="closeDonate()">×</button>
+        <div class="donate-title">服务器赞助支持</div>
+        <div class="donate-qrcode">
+            <div class="qrcode-item">
+                <img src="微信收款码.png" alt="微信收款">
+                <p>微信支付</p>
+            </div>
+            <div class="qrcode-item">
+                <img src="支付宝收款码.png" alt="支付宝收款">
+                <p>支付宝</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mask = document.getElementById('mask');
+    const toolMenu = document.getElementById('toolMenu');
+    const toolSub = document.getElementById('toolSub');
+
+    // 启动器菜单
+    const launcherMenu = document.getElementById('launcherMenu');
+    const launcherSub = document.getElementById('launcherSub');
+
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+        mask.classList.toggle('show');
+    });
+    mask.addEventListener('click', () => {
+        sidebar.classList.remove('show');
+        mask.classList.remove('show');
+    });
+    toolMenu.addEventListener('click', () => {
+        toolSub.classList.toggle('show');
+    });
+
+    // 启动器展开收起
+    launcherMenu.addEventListener('click', () => {
+        launcherSub.classList.toggle('show');
+    });
+
+    function goHome() {
+        window.scrollTo(0,0);
+        sidebar.classList.remove('show');
+        mask.classList.remove('show');
+    }
+    function copyQun(id) {
+        const qunNum = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(qunNum).then(() => {
+            alert(`✅ 已成功复制群号：${qunNum}`);
+        }).catch(err => {
+            alert("❌ 复制失败，请手动复制群号！");
+        });
+    }
+    function openDonate() {
+        document.getElementById('donateModal').classList.add('show');
+    }
+    function closeDonate() {
+        document.getElementById('donateModal').classList.remove('show');
+    }
+    window.onload = function() {
+        document.body.style.opacity = 0;
+        let op = 0;
+        const timer = setInterval(() => {
+            if (op >= 1) clearInterval(timer);
+            document.body.style.opacity = op;
+            op += 0.08;
+        }, 30);
+    };
+</script>
+</body>
+</html>
