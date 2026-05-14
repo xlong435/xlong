@@ -14,11 +14,10 @@
         body {
             background: #f7f9fa;
             color: #333;
-            background-image: url(https://img1.baidu.com/it/u=2892291222,3806132293&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500);
+            background-image: url(背景.webp);
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
-            background-blend-mode: lighten;
             overflow-x: hidden;
         }
         /* 顶部栏：左侧菜单 + 中间LOGO */
@@ -259,6 +258,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+
             min-height: 60px;
         }
         .card .desc {
@@ -301,7 +301,7 @@
             margin-bottom: 20px;
             text-shadow: 0 0 4px rgba(255,215,0,0.3);
         }
-        .copy-btn {
+        .join-btn {
             padding: 12px 35px;
             background: #E53935;
             color: #fff;
@@ -317,7 +317,7 @@
             gap: 8px;
             margin: 0 auto;
         }
-        .copy-btn:hover {
+        .join-btn:hover {
             background: #C62828;
             transform: scale(1.05);
         }
@@ -434,7 +434,7 @@
             .header h1 { font-size: 2.2rem; }
             .card { width: 100%; padding: 25px 20px; }
             .qun-num { font-size: 2.3rem; letter-spacing: 2px; }
-            .copy-btn { padding: 10px 30px; }
+            .join-btn { padding: 10px 30px; }
             .map-preview img { height: 70px; }
             .studio-img { width: 120px; }
         }
@@ -523,8 +523,8 @@
             </div>
             <div class="qun-box">
                 <p>网易服官方交流QQ群</p>
-                <div class="qun-num" id="wy-qun">668352250</div>
-                <button class="copy-btn" onclick="copyQun('wy-qun')"><i class="fas fa-copy"></i> 一键复制群号</button>
+                <div class="qun-num">668352250</div>
+                <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
             </div>
         </div>
         <div class="card">
@@ -538,8 +538,8 @@
             </div>
             <div class="qun-box">
                 <p>国际服官方交流QQ群</p>
-                <div class="qun-num" id="gj-qun">1059442560</div>
-                <button class="copy-btn" onclick="copyQun('gj-qun')"><i class="fas fa-copy"></i> 一键复制群号</button>
+                <div class="qun-num">1059442560</div>
+                <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
             </div>
         </div>
     </div>
@@ -592,14 +592,6 @@
         window.scrollTo(0,0);
         sidebar.classList.remove('show');
         mask.classList.remove('show');
-    }
-    function copyQun(id) {
-        const qunNum = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(qunNum).then(() => {
-            alert(`✅ 已成功复制群号：${qunNum}`);
-        }).catch(err => {
-            alert("❌ 复制失败，请手动复制群号！");
-        });
     }
     function openDonate() {
         document.getElementById('donateModal').classList.add('show');
