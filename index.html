@@ -11,24 +11,61 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", sans-serif;
         }
+        /* ========== 全屏封面页 ========== */
+        .splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url(封面.webp) center / cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .start-btn {
+            padding: 16px 48px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            background: rgba(139, 90, 43, 0.85);
+            border: 3px solid #FFD700;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: 2px 2px 0 #5A3D1F;
+            box-shadow: 0 0 12px rgba(255,215,0,0.4);
+            transition: transform 0.2s, background 0.2s;
+        }
+        .start-btn:hover {
+            background: rgba(139, 90, 43, 1);
+            transform: scale(1.05);
+        }
+        /* ========== 主页内容（默认隐藏） ========== */
+        .main-page {
+            display: none;
+        }
+        /* ========== 原样式原样不动 ========== */
         body {
             color: #fff;
-            /* 背景适配核心：兼顾PC和手机比例 */
             background-image: url(背景.webp);
-            /* PC端：完整覆盖，居中显示，不拉伸 */
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            /* 手机端：调整比例，裁掉非关键区域，保证文字和主体可见 */
             @media (max-width: 768px) {
                 background-size: 200% auto;
                 background-position: 50% 10%;
-                background-attachment: scroll; /* 手机端关闭fixed，避免卡顿 */
+                background-attachment: scroll;
             }
             overflow-x: hidden;
         }
-        /* MC方块奇幻风格全局效果 */
         .gold-text {
             color: #fff;
             text-shadow:
@@ -49,7 +86,6 @@
         .icon-red-glow img {
             filter: drop-shadow(0 0 3px rgba(229,57,53,0.7));
         }
-        /* 顶部栏 */
         .top-bar {
             position: fixed;
             top: 0;
@@ -91,7 +127,6 @@
             border: 2px solid #8B5A2B;
             object-fit: cover;
         }
-        /* 侧边栏 */
         .sidebar {
             position: fixed;
             top: 0;
@@ -180,13 +215,11 @@
         .launcher-item:hover {
             color: #FFD700;
         }
-        /* 容器 */
         .container {
             max-width: 1200px;
             margin: 70px auto 0;
             padding: 30px 20px;
         }
-        /* 滚动播报 */
         .notice {
             background: rgba(25,18,12,0.8);
             border: 2px solid #FFD700;
@@ -206,7 +239,6 @@
             0% {transform: translateX(100%);}
             100% {transform: translateX(-100%);}
         }
-        /* 工作室板块 */
         .studio-section {
             text-align: center;
             margin-bottom: 30px;
@@ -245,7 +277,6 @@
         .studio-btn:hover {
             background: #A67C52;
         }
-        /* 头部卡片 */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -269,7 +300,6 @@
             color: #ccc;
             line-height: 1.5;
         }
-        /* 服务器卡片 */
         .server-card {
             display: flex;
             flex-wrap: wrap;
@@ -368,7 +398,6 @@
             transform: translateY(-8px);
             box-shadow: 0 8px 25px rgba(255,215,0,0.25);
         }
-        /* 赞助板块 */
         .donate-section {
             text-align: center;
             margin: 40px 0;
@@ -454,7 +483,6 @@
             color: #fff;
             font-weight: 500;
         }
-        /* 页脚 */
         .footer {
             text-align: center;
             margin-top: 60px;
@@ -479,7 +507,6 @@
         .mask.show {
             display: block;
         }
-        /* 响应式适配 */
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2rem; }
             .card { width: 100%; padding: 25px 20px; }
@@ -501,120 +528,142 @@
     <meta name="keywords" content="我的世界服务器,MC服务器,网易MC服务器,国际版MC服务器,MC互通服,我的世界开服">
 </head>
 <body>
-<div class="top-bar">
-    <button class="menu-btn" id="menuBtn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <img src="封面.webp" alt="LOGO" class="top-logo icon-red-glow">
-    <div style="width:40px;"></div>
-</div>
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-        <img src="封面.webp" alt="LOGO" class="icon-red-glow">
+    <!-- 全屏封面 -->
+    <div class="splash" id="splash">
+        <button class="start-btn" id="startBtn">开始冒险</button>
     </div>
-    <div class="menu-item" onclick="goHome()">🏠 主页</div>
-    <div class="menu-item" id="toolMenu">🧰 MC工具</div>
-    <div class="submenu" id="toolSub">
-        <div class="tool-grid">
-            <div class="tool-item" onclick="window.open('https://o.xbottle.top/mcsounds/','_blank')">MC音效</div>
-            <div class="tool-item" onclick="window.open('https://ccvaults.com/','_blank')">MC贴图</div>
-            <div class="tool-item" onclick="window.open('https://mcpixelart.com/','_blank')">MC艺术画</div>
-            <div class="tool-item" onclick="window.open('https://3dt.easecation.net/','_blank')">3D字制作</div>
-            <div class="tool-item" onclick="window.open('https://klpbbs.com/forum.php?mod=guide&view=hot&mobile=2','_blank')">苦力怕论坛</div>
+
+    <!-- 原主页内容（默认隐藏） -->
+    <div class="main-page" id="mainPage">
+        <div class="top-bar">
+            <button class="menu-btn" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <img src="封面.webp" alt="LOGO" class="top-logo icon-red-glow">
+            <div style="width:40px;"></div>
         </div>
-    </div>
-    <div class="menu-item" id="launcherMenu">🚀 启动器</div>
-    <div class="submenu" id="launcherSub">
-        <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
-            <img src="龙腾猫跃.webp" alt="PCL2" class="icon-red-glow">
-            <span>PCL2 启动器</span>
-        </div>
-        <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
-            <img src="FCL.webp" alt="FCL" class="icon-red-glow">
-            <span>FCL 启动器</span>
-        </div>
-        <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
-            <img src="网易.webp" alt="网易版" class="icon-red-glow">
-            <span>网易版 MC</span>
-        </div>
-    </div>
-</div>
-<div class="mask" id="mask"></div>
-<div class="container">
-    <div class="notice">
-        <div class="notice-text">
-            📢 服务器长期稳定运营 | 每日上线领福利 | 网易/国际版数据互通福利 | 群内有开服教程和专属模组包 📢
-        </div>
-    </div>
-    <div class="studio-section">
-        <img src="工作室.webp" alt="工作室LOGO" class="studio-img icon-red-glow" onclick="joinStudioGroup()">
-        <div class="studio-desc">
-            专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！
-        </div>
-        <a class="studio-btn" onclick="joinStudioGroup()">加入工作室交流群</a>
-    </div>
-    <div class="header">
-        <h1><i class="fas fa-cube"></i> 我的世界专属服务器</h1>
-        <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
-    </div>
-    <div class="server-card">
-        <div class="card">
-            <h2><i class="fas fa-globe-asia icon-red-glow"></i> 网易版专属服</h2>
-            <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！
-            纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
-            <div class="map-preview">
-                <img src="预览一.webp" alt="预览一">
-                <img src="预览二.webp" alt="预览二">
-                <img src="预览三.webp" alt="预览三">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <img src="封面.webp" alt="LOGO" class="icon-red-glow">
             </div>
-            <div class="qun-box">
-                <p>网易服官方交流QQ群</p>
-                <div class="qun-num">668352250</div>
-                <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
+            <div class="menu-item" onclick="goHome()">🏠 主页</div>
+            <div class="menu-item" id="toolMenu">🧰 MC工具</div>
+            <div class="submenu" id="toolSub">
+                <div class="tool-grid">
+                    <div class="tool-item" onclick="window.open('https://o.xbottle.top/mcsounds/','_blank')">MC音效</div>
+                    <div class="tool-item" onclick="window.open('https://ccvaults.com/','_blank')">MC贴图</div>
+                    <div class="tool-item" onclick="window.open('https://mcpixelart.com/','_blank')">MC艺术画</div>
+                    <div class="tool-item" onclick="window.open('https://3dt.easecation.net/','_blank')">3D字制作</div>
+                    <div class="tool-item" onclick="window.open('https://klpbbs.com/forum.php?mod=guide&view=hot&mobile=2','_blank')">苦力怕论坛</div>
+                </div>
+            </div>
+            <div class="menu-item" id="launcherMenu">🚀 启动器</div>
+            <div class="submenu" id="launcherSub">
+                <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
+                    <img src="龙腾猫跃.webp" alt="PCL2" class="icon-red-glow">
+                    <span>PCL2 启动器</span>
+                </div>
+                <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
+                    <img src="FCL.webp" alt="FCL" class="icon-red-glow">
+                    <span>FCL 启动器</span>
+                </div>
+                <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
+                    <img src="网易.webp" alt="网易版" class="icon-red-glow">
+                    <span>网易版 MC</span>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <h2><i class="fas fa-earth icon-red-glow"></i> 国际互通版</h2>
-            <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！
-            丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
-            <div class="map-preview">
-                <img src="国际一.webp" alt="国际一">
-                <img src="国际二.webp" alt="国际二">
-                <img src="国际三.webp" alt="国际三">
+        <div class="mask" id="mask"></div>
+        <div class="container">
+            <div class="notice">
+                <div class="notice-text">
+                    📢 服务器长期稳定运营 | 每日上线领福利 | 网易/国际版数据互通福利 | 群内有开服教程和专属模组包 📢
+                </div>
             </div>
-            <div class="qun-box">
-                <p>国际服官方交流QQ群</p>
-                <div class="qun-num">1059442560</div>
-                <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
+            <div class="studio-section">
+                <img src="工作室.webp" alt="工作室LOGO" class="studio-img icon-red-glow" onclick="joinStudioGroup()">
+                <div class="studio-desc">
+                    专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！
+                </div>
+                <a class="studio-btn" onclick="joinStudioGroup()">加入工作室交流群</a>
+            </div>
+            <div class="header">
+                <h1><i class="fas fa-cube"></i> 我的世界专属服务器</h1>
+                <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
+            </div>
+            <div class="server-card">
+                <div class="card">
+                    <h2><i class="fas fa-globe-asia icon-red-glow"></i> 网易版专属服</h2>
+                    <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！
+                    纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
+                    <div class="map-preview">
+                        <img src="预览一.webp" alt="预览一">
+                        <img src="预览二.webp" alt="预览二">
+                        <img src="预览三.webp" alt="预览三">
+                    </div>
+                    <div class="qun-box">
+                        <p>网易服官方交流QQ群</p>
+                        <div class="qun-num">668352250</div>
+                        <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2><i class="fas fa-earth icon-red-glow"></i> 国际互通版</h2>
+                    <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！
+                    丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
+                    <div class="map-preview">
+                        <img src="国际一.webp" alt="国际一">
+                        <img src="国际二.webp" alt="国际二">
+                        <img src="国际三.webp" alt="国际三">
+                    </div>
+                    <div class="qun-box">
+                        <p>国际服官方交流QQ群</p>
+                        <div class="qun-num">1059442560</div>
+                        <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
+                    </div>
+                </div>
+            </div>
+            <div class="donate-section">
+                <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
+            </div>
+            <div class="footer">
+                <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
+            </div>
+        </div>
+        <div class="donate-modal" id="donateModal">
+            <div class="donate-box">
+                <button class="donate-close" onclick="closeDonate()">×</button>
+                <div class="donate-title">服务器赞助支持</div>
+                <div class="donate-qrcode">
+                    <div class="qrcode-item">
+                        <img src="微信收款码.png" alt="微信收款">
+                        <p>微信支付</p>
+                    </div>
+                    <div class="qrcode-item">
+                        <img src="支付宝收款码.png" alt="支付宝收款">
+                        <p>支付宝支付</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="donate-section">
-        <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
-    </div>
-    <div class="footer">
-        <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
-    </div>
-</div>
-<div class="donate-modal" id="donateModal">
-    <div class="donate-box">
-        <button class="donate-close" onclick="closeDonate()">×</button>
-        <div class="donate-title">服务器赞助支持</div>
-        <div class="donate-qrcode">
-            <div class="qrcode-item">
-                <img src="微信收款码.png" alt="微信收款">
-                <p>微信支付</p>
-            </div>
-            <div class="qrcode-item">
-                <img src="支付宝收款码.png" alt="支付宝收款">
-                <p>支付宝支付</p>
-            </div>
-        </div>
-    </div>
-</div>
+
 <script>
+    // 进入动画：封面 -> 主页
+    const splash = document.getElementById('splash');
+    const mainPage = document.getElementById('mainPage');
+    const startBtn = document.getElementById('startBtn');
+    startBtn.addEventListener('click', () => {
+        splash.classList.add('hidden');
+        setTimeout(() => {
+            mainPage.style.display = 'block';
+            window.scrollTo(0, 0);
+        }, 800);
+    });
+
+    // 原交互代码
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
     const mask = document.getElementById('mask');
