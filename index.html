@@ -11,14 +11,14 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", sans-serif;
         }
-        /* ========== 全屏封面页 ========== */
+        /* ========== 第一页：全屏封面（背景.webp + 开始冒险按钮） ========== */
         .splash {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: url(封面.webp) center / cover no-repeat;
+            background: url(背景.webp) center / cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -47,11 +47,11 @@
             background: rgba(139, 90, 43, 1);
             transform: scale(1.05);
         }
-        /* ========== 主页内容（默认隐藏） ========== */
+        /* ========== 第二页：原主页内容（默认隐藏） ========== */
         .main-page {
             display: none;
         }
-        /* ========== 原样式原样不动 ========== */
+        /* ========== 原样式原样不动（适配PC+手机） ========== */
         body {
             color: #fff;
             background-image: url(背景.webp);
@@ -528,12 +528,12 @@
     <meta name="keywords" content="我的世界服务器,MC服务器,网易MC服务器,国际版MC服务器,MC互通服,我的世界开服">
 </head>
 <body>
-    <!-- 全屏封面 -->
+    <!-- 第一页：全屏背景.webp + 开始冒险按钮 -->
     <div class="splash" id="splash">
         <button class="start-btn" id="startBtn">开始冒险</button>
     </div>
 
-    <!-- 原主页内容（默认隐藏） -->
+    <!-- 第二页：原主页内容（默认隐藏） -->
     <div class="main-page" id="mainPage">
         <div class="top-bar">
             <button class="menu-btn" id="menuBtn">
@@ -651,7 +651,7 @@
     </div>
 
 <script>
-    // 进入动画：封面 -> 主页
+    // 点击开始冒险：平滑过渡到主页
     const splash = document.getElementById('splash');
     const mainPage = document.getElementById('mainPage');
     const startBtn = document.getElementById('startBtn');
