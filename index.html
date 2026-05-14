@@ -19,14 +19,17 @@
             background-position: center;
             overflow-x: hidden;
         }
-
-        /* ========== 全局效果：金色描边、红光 ========== */
+        /* MC方块奇幻风格全局效果 */
         .gold-text {
             color: #fff;
             text-shadow:
-                0 0 2px #FFD700,
+                2px 2px 0 #8B5A2B,
+                -1px -1px 0 #8B5A2B,
                 0 0 4px #FFD700,
-                0 0 6px #FFB700;
+                0 0 8px #FFB700;
+        }
+        .wood-border {
+            border: 3px solid #8B5A2B;
         }
         .red-glow {
             box-shadow:
@@ -37,16 +40,15 @@
         .icon-red-glow img {
             filter: drop-shadow(0 0 3px rgba(229,57,53,0.7));
         }
-
-        /* ========== 顶部栏（深色不透明） ========== */
+        /* 顶部栏 */
         .top-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 60px;
-            background: #111111;
-            border-bottom: 2px solid #E53935;
+            background: rgba(25,18,12,0.9);
+            border-bottom: 3px solid #8B5A2B;
             z-index: 999;
             display: flex;
             align-items: center;
@@ -69,7 +71,7 @@
         .menu-btn span {
             width: 28px;
             height: 3px;
-            background: #E53935;
+            background: #FFD700;
             border-radius: 2px;
             transition: 0.3s;
         }
@@ -77,19 +79,18 @@
             height: 45px;
             width: 45px;
             border-radius: 50%;
-            border: 2px solid #E53935;
+            border: 2px solid #8B5A2B;
             object-fit: cover;
         }
-
-        /* ========== 侧边栏（深色不透明） ========== */
+        /* 侧边栏 */
         .sidebar {
             position: fixed;
             top: 0;
             left: -280px;
             width: 280px;
             height: 100vh;
-            background: #181818;
-            border-right: 2px solid #E53935;
+            background: rgba(25,18,12,0.95);
+            border-right: 3px solid #8B5A2B;
             z-index: 998;
             transition: left 0.3s ease;
             padding: 70px 0 20px;
@@ -106,7 +107,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 3px solid #E53935;
+            border: 3px solid #8B5A2B;
             object-fit: cover;
         }
         .menu-item {
@@ -118,9 +119,9 @@
             border-left: 4px solid transparent;
         }
         .menu-item:hover {
-            background: #222;
-            border-left: 4px solid #E53935;
-            color: #E53935;
+            background: rgba(139,90,43,0.3);
+            border-left: 4px solid #FFD700;
+            color: #FFD700;
         }
         .submenu {
             display: none;
@@ -135,8 +136,8 @@
             gap: 8px;
         }
         .tool-item {
-            background: #222;
-            border: 2px solid #333;
+            background: rgba(45,32,20,0.8);
+            border: 2px solid #5A3D1F;
             border-radius: 6px;
             padding: 10px 8px;
             text-align: center;
@@ -146,8 +147,8 @@
             transition: 0.2s;
         }
         .tool-item:hover {
-            border-color: #E53935;
-            color: #E53935;
+            border-color: #FFD700;
+            color: #FFD700;
             transform: scale(1.03);
         }
         .launcher-item {
@@ -168,20 +169,18 @@
             border-radius: 4px;
         }
         .launcher-item:hover {
-            color: #E53935;
+            color: #FFD700;
         }
-
-        /* ========== 容器 ========== */
+        /* 容器 */
         .container {
             max-width: 1200px;
             margin: 70px auto 0;
             padding: 30px 20px;
         }
-
-        /* ========== 滚动播报：透明深色底 ========== */
+        /* 滚动播报 */
         .notice {
-            background: rgba(0,0,0,0.7);
-            border: 2px solid rgba(255,193,7,0.6);
+            background: rgba(25,18,12,0.8);
+            border: 2px solid #FFD700;
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 30px;
@@ -198,8 +197,7 @@
             0% {transform: translateX(100%);}
             100% {transform: translateX(-100%);}
         }
-
-        /* ========== 工作室板块 ========== */
+        /* 工作室板块 */
         .studio-section {
             text-align: center;
             margin-bottom: 30px;
@@ -210,14 +208,14 @@
             margin-bottom: 10px;
             cursor: pointer;
             transition: transform 0.2s;
-            filter: drop-shadow(0 0 4px rgba(229,57,53,0.7));
+            filter: drop-shadow(0 0 4px rgba(255,215,0,0.7));
         }
         .studio-img:hover {
             transform: scale(1.05);
         }
         .studio-desc {
             font-size: 1.1rem;
-            color: #E53935;
+            color: #FFD700;
             font-weight: 500;
             line-height: 1.6;
             max-width: 700px;
@@ -226,27 +224,26 @@
         .studio-btn {
             display: inline-block;
             padding: 8px 22px;
-            background: #E53935;
+            background: #8B5A2B;
             color: #fff;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 0 4px rgba(229,57,53,0.6);
+            box-shadow: 0 0 4px rgba(255,215,0,0.5);
         }
         .studio-btn:hover {
-            background: #C62828;
+            background: #A67C52;
         }
-
-        /* ========== 头部卡片（深色不透明） ========== */
+        /* 头部卡片 */
         .header {
             text-align: center;
             margin-bottom: 40px;
             padding: 20px;
-            background: #181818;
+            background: rgba(25,18,12,0.9);
             border-radius: 10px;
-            border: 2px solid #E53935;
+            border: 3px solid #8B5A2B;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .header h1 {
@@ -254,17 +251,16 @@
             margin-bottom: 10px;
             color: #fff;
             text-shadow:
-                0 0 2px #FFD700,
+                2px 2px 0 #8B5A2B,
                 0 0 4px #FFD700,
-                0 0 6px #FFB700;
+                0 0 8px #FFB700;
         }
         .header p {
             font-size: 1.2rem;
             color: #ccc;
             line-height: 1.5;
         }
-
-        /* ========== 服务器卡片（深色不透明） ========== */
+        /* 服务器卡片 */
         .server-card {
             display: flex;
             flex-wrap: wrap;
@@ -274,9 +270,9 @@
         }
         .card {
             width: 400px;
-            background: #181818;
+            background: rgba(25,18,12,0.9);
             border-radius: 12px;
-            border: 3px solid #333;
+            border: 3px solid #5A3D1F;
             padding: 30px;
             text-align: center;
             transition: all 0.3s ease;
@@ -289,9 +285,8 @@
             margin-bottom: 20px;
             color: #fff;
             text-shadow:
-                0 0 2px #FFD700,
-                0 0 4px #FFD700,
-                0 0 6px #FFB700;
+                2px 2px 0 #8B5A2B,
+                0 0 4px #FFD700;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -316,14 +311,14 @@
             height: 90px;
             object-fit: cover;
             border-radius: 6px;
-            border: 2px solid #333;
+            border: 2px solid #5A3D1F;
         }
         .qun-box {
-            background: #222;
+            background: rgba(45,32,20,0.8);
             border-radius: 8px;
             padding: 25px;
             margin-top: auto;
-            border: 2px solid #333;
+            border: 2px solid #5A3D1F;
         }
         .qun-box p {
             font-size: 1.2rem;
@@ -340,7 +335,7 @@
         }
         .join-btn {
             padding: 12px 35px;
-            background: #E53935;
+            background: #8B5A2B;
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -353,26 +348,25 @@
             justify-content: center;
             gap: 8px;
             margin: 0 auto;
-            box-shadow: 0 0 4px rgba(229,57,53,0.6);
+            box-shadow: 0 0 4px rgba(255,215,0,0.5);
         }
         .join-btn:hover {
-            background: #C62828;
+            background: #A67C52;
             transform: scale(1.05);
         }
         .card:hover {
-            border-color: #E53935;
+            border-color: #FFD700;
             transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(229,57,53,0.25);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.25);
         }
-
-        /* ========== 赞助板块 ========== */
+        /* 赞助板块 */
         .donate-section {
             text-align: center;
             margin: 40px 0;
         }
         .donate-btn {
             padding: 14px 40px;
-            background: #E53935;
+            background: #8B5A2B;
             color: #fff;
             font-size: 1.2rem;
             font-weight: bold;
@@ -380,10 +374,10 @@
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(229,57,53,0.3);
+            box-shadow: 0 4px 12px rgba(255,215,0,0.3);
         }
         .donate-btn:hover {
-            background: #C62828;
+            background: #A67C52;
             transform: scale(1.05);
         }
         .donate-modal {
@@ -403,14 +397,14 @@
             display: flex;
         }
         .donate-box {
-            background: #181818;
+            background: rgba(25,18,12,0.95);
             padding: 30px;
             border-radius: 16px;
             width: 90%;
             max-width: 600px;
             text-align: center;
             position: relative;
-            border: 2px solid #E53935;
+            border: 3px solid #8B5A2B;
         }
         .donate-close {
             position: absolute;
@@ -428,9 +422,8 @@
             margin-bottom: 20px;
             font-weight: bold;
             text-shadow:
-                0 0 2px #FFD700,
-                0 0 4px #FFD700,
-                0 0 6px #FFB700;
+                2px 2px 0 #8B5A2B,
+                0 0 4px #FFD700;
         }
         .donate-qrcode {
             display: flex;
@@ -444,7 +437,7 @@
         .qrcode-item img {
             width: 100%;
             border-radius: 8px;
-            border: 2px solid #333;
+            border: 2px solid #5A3D1F;
         }
         .qrcode-item p {
             margin-top: 10px;
@@ -452,19 +445,18 @@
             color: #fff;
             font-weight: 500;
         }
-
-        /* ========== 页脚（深色不透明） ========== */
+        /* 页脚 */
         .footer {
             text-align: center;
             margin-top: 60px;
             padding: 20px;
-            background: #181818;
+            background: rgba(25,18,12,0.9);
             border-radius: 10px;
             color: #ccc;
             font-size: 1rem;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            border: 2px solid #8B5A2B;
         }
-
         .mask {
             position: fixed;
             top: 0;
@@ -478,7 +470,6 @@
         .mask.show {
             display: block;
         }
-
         /* 响应式适配 */
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2rem; }
