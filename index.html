@@ -12,16 +12,16 @@
             font-family: "Microsoft YaHei", sans-serif;
         }
 
-        /* ========== 全局背景：全站都用背景.webp，撑满 ========== */
-        body {
-            color: #fff;
+        /* ========== 核心修正：强制html/body撑满整个窗口，背景真正全屏 ========== */
+        html, body {
+            width: 100%;
+            min-height: 100vh;
             background: url("背景.webp") center / cover no-repeat fixed;
             overflow-x: hidden;
         }
         @media (max-width: 768px) {
-            body {
+            html, body {
                 background-attachment: scroll;
-                background-size: cover;
             }
         }
 
@@ -30,13 +30,14 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
+            background: transparent;
         }
         .splash.hidden {
             opacity: 0;
@@ -62,9 +63,12 @@
             transform: scale(1.05);
         }
 
-        /* ========== 第二页：原主页内容（默认隐藏） ========== */
+        /* ========== 第二页：原主页内容 ========== */
         .main-page {
             display: none;
+            width: 100%;
+            min-height: 100vh;
+            background: transparent;
         }
 
         /* ========== 原样式原样不动 ========== */
