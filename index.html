@@ -12,29 +12,47 @@
             font-family: "Microsoft YaHei", sans-serif;
         }
         body {
-            background: #f7f9fa;
-            color: #333;
+            color: #fff;
             background-image: url(背景.webp);
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
             overflow-x: hidden;
         }
-        /* 顶部栏：左侧菜单 + 中间LOGO */
+
+        /* ========== 全局效果：金色描边、红光 ========== */
+        .gold-text {
+            color: #fff;
+            text-shadow:
+                0 0 2px #FFD700,
+                0 0 4px #FFD700,
+                0 0 6px #FFB700;
+        }
+        .red-glow {
+            box-shadow:
+                0 0 4px rgba(229,57,53,0.6),
+                0 0 8px rgba(229,57,53,0.4);
+        }
+        .icon-red-glow i,
+        .icon-red-glow img {
+            filter: drop-shadow(0 0 3px rgba(229,57,53,0.7));
+        }
+
+        /* ========== 顶部栏（深色不透明） ========== */
         .top-bar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 60px;
-            background: #ffffff;
+            background: #111111;
             border-bottom: 2px solid #E53935;
             z-index: 999;
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
         .menu-btn {
             width: 40px;
@@ -55,7 +73,6 @@
             border-radius: 2px;
             transition: 0.3s;
         }
-        /* 顶部LOGO */
         .top-logo {
             height: 45px;
             width: 45px;
@@ -63,13 +80,15 @@
             border: 2px solid #E53935;
             object-fit: cover;
         }
+
+        /* ========== 侧边栏（深色不透明） ========== */
         .sidebar {
             position: fixed;
             top: 0;
             left: -280px;
             width: 280px;
             height: 100vh;
-            background: #ffffff;
+            background: #181818;
             border-right: 2px solid #E53935;
             z-index: 998;
             transition: left 0.3s ease;
@@ -93,13 +112,13 @@
         .menu-item {
             padding: 15px 25px;
             font-size: 1.1rem;
-            color: #333;
+            color: #ddd;
             cursor: pointer;
             transition: 0.2s;
             border-left: 4px solid transparent;
         }
         .menu-item:hover {
-            background: #fff0f0;
+            background: #222;
             border-left: 4px solid #E53935;
             color: #E53935;
         }
@@ -116,13 +135,13 @@
             gap: 8px;
         }
         .tool-item {
-            background: #f9f9f9;
-            border: 2px solid #eee;
+            background: #222;
+            border: 2px solid #333;
             border-radius: 6px;
             padding: 10px 8px;
             text-align: center;
             font-size: 0.9rem;
-            color: #555;
+            color: #ccc;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -138,7 +157,7 @@
             padding: 10px 0;
             cursor: pointer;
             font-size: 1rem;
-            color: #333;
+            color: #ddd;
         }
         .launcher-item img {
             width: 28px;
@@ -151,15 +170,18 @@
         .launcher-item:hover {
             color: #E53935;
         }
+
+        /* ========== 容器 ========== */
         .container {
             max-width: 1200px;
             margin: 70px auto 0;
             padding: 30px 20px;
         }
-        /* 正文里的LOGO已移除 */
+
+        /* ========== 滚动播报：透明深色底 ========== */
         .notice {
-            background: #fff9e6;
-            border: 2px solid #ffc107;
+            background: rgba(0,0,0,0.7);
+            border: 2px solid rgba(255,193,7,0.6);
             border-radius: 8px;
             padding: 12px;
             margin-bottom: 30px;
@@ -169,13 +191,15 @@
             white-space: nowrap;
             animation: scroll 15s linear infinite;
             font-size: 1.1rem;
-            color: #ff9800;
+            color: #ffc107;
             font-weight: 500;
         }
         @keyframes scroll {
             0% {transform: translateX(100%);}
             100% {transform: translateX(-100%);}
         }
+
+        /* ========== 工作室板块 ========== */
         .studio-section {
             text-align: center;
             margin-bottom: 30px;
@@ -186,6 +210,7 @@
             margin-bottom: 10px;
             cursor: pointer;
             transition: transform 0.2s;
+            filter: drop-shadow(0 0 4px rgba(229,57,53,0.7));
         }
         .studio-img:hover {
             transform: scale(1.05);
@@ -208,29 +233,38 @@
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
+            box-shadow: 0 0 4px rgba(229,57,53,0.6);
         }
         .studio-btn:hover {
             background: #C62828;
         }
+
+        /* ========== 头部卡片（深色不透明） ========== */
         .header {
             text-align: center;
             margin-bottom: 40px;
             padding: 20px;
-            background: #ffffff;
+            background: #181818;
             border-radius: 10px;
             border: 2px solid #E53935;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .header h1 {
             font-size: 3rem;
-            color: #E53935;
             margin-bottom: 10px;
+            color: #fff;
+            text-shadow:
+                0 0 2px #FFD700,
+                0 0 4px #FFD700,
+                0 0 6px #FFB700;
         }
         .header p {
             font-size: 1.2rem;
-            color: #666;
+            color: #ccc;
             line-height: 1.5;
         }
+
+        /* ========== 服务器卡片（深色不透明） ========== */
         .server-card {
             display: flex;
             flex-wrap: wrap;
@@ -240,30 +274,33 @@
         }
         .card {
             width: 400px;
-            background: #ffffff;
+            background: #181818;
             border-radius: 12px;
-            border: 3px solid #eee;
+            border: 3px solid #333;
             padding: 30px;
             text-align: center;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
         }
         .card h2 {
             font-size: 2rem;
             margin-bottom: 20px;
-            color: #E53935;
+            color: #fff;
+            text-shadow:
+                0 0 2px #FFD700,
+                0 0 4px #FFD700,
+                0 0 6px #FFB700;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-
             min-height: 60px;
         }
         .card .desc {
             font-size: 1.1rem;
-            color: #555;
+            color: #ccc;
             margin-bottom: 30px;
             line-height: 1.7;
             flex: 1;
@@ -279,19 +316,19 @@
             height: 90px;
             object-fit: cover;
             border-radius: 6px;
-            border: 2px solid #eee;
+            border: 2px solid #333;
         }
         .qun-box {
-            background: #f9f9f9;
+            background: #222;
             border-radius: 8px;
             padding: 25px;
             margin-top: auto;
-            border: 2px solid #eee;
+            border: 2px solid #333;
         }
         .qun-box p {
             font-size: 1.2rem;
             margin-bottom: 15px;
-            color: #333;
+            color: #fff;
         }
         .qun-num {
             font-size: 2.8rem;
@@ -316,6 +353,7 @@
             justify-content: center;
             gap: 8px;
             margin: 0 auto;
+            box-shadow: 0 0 4px rgba(229,57,53,0.6);
         }
         .join-btn:hover {
             background: #C62828;
@@ -324,8 +362,10 @@
         .card:hover {
             border-color: #E53935;
             transform: translateY(-8px);
-            box-shadow: 0 8px 25px rgba(229,57,53,0.15);
+            box-shadow: 0 8px 25px rgba(229,57,53,0.25);
         }
+
+        /* ========== 赞助板块 ========== */
         .donate-section {
             text-align: center;
             margin: 40px 0;
@@ -340,7 +380,7 @@
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(229,57,53,0.2);
+            box-shadow: 0 4px 12px rgba(229,57,53,0.3);
         }
         .donate-btn:hover {
             background: #C62828;
@@ -352,7 +392,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -363,13 +403,14 @@
             display: flex;
         }
         .donate-box {
-            background: #fff;
+            background: #181818;
             padding: 30px;
             border-radius: 16px;
             width: 90%;
             max-width: 600px;
             text-align: center;
             position: relative;
+            border: 2px solid #E53935;
         }
         .donate-close {
             position: absolute;
@@ -379,13 +420,17 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: #666;
+            color: #ccc;
         }
         .donate-title {
             font-size: 1.5rem;
-            color: #E53935;
+            color: #fff;
             margin-bottom: 20px;
             font-weight: bold;
+            text-shadow:
+                0 0 2px #FFD700,
+                0 0 4px #FFD700,
+                0 0 6px #FFB700;
         }
         .donate-qrcode {
             display: flex;
@@ -399,37 +444,42 @@
         .qrcode-item img {
             width: 100%;
             border-radius: 8px;
-            border: 2px solid #eee;
+            border: 2px solid #333;
         }
         .qrcode-item p {
             margin-top: 10px;
             font-size: 1rem;
-            color: #333;
+            color: #fff;
             font-weight: 500;
         }
+
+        /* ========== 页脚（深色不透明） ========== */
         .footer {
             text-align: center;
             margin-top: 60px;
             padding: 20px;
-            background: #ffffff;
+            background: #181818;
             border-radius: 10px;
-            color: #888;
+            color: #ccc;
             font-size: 1rem;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
         }
+
         .mask {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.7);
             z-index: 997;
             display: none;
         }
         .mask.show {
             display: block;
         }
+
+        /* 响应式适配 */
         @media (max-width: 768px) {
             .header h1 { font-size: 2.2rem; }
             .card { width: 100%; padding: 25px 20px; }
@@ -457,13 +507,12 @@
         <span></span>
         <span></span>
     </button>
-    <!-- 顶部标题栏LOGO -->
-    <img src="封面.webp" alt="LOGO" class="top-logo">
+    <img src="封面.webp" alt="LOGO" class="top-logo icon-red-glow">
     <div style="width:40px;"></div>
 </div>
 <div class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-        <img src="封面.webp" alt="LOGO">
+        <img src="封面.webp" alt="LOGO" class="icon-red-glow">
     </div>
     <div class="menu-item" onclick="goHome()">🏠 主页</div>
     <div class="menu-item" id="toolMenu">🧰 MC工具</div>
@@ -479,29 +528,28 @@
     <div class="menu-item" id="launcherMenu">🚀 启动器</div>
     <div class="submenu" id="launcherSub">
         <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
-            <img src="龙腾猫跃.webp" alt="PCL2">
+            <img src="龙腾猫跃.webp" alt="PCL2" class="icon-red-glow">
             <span>PCL2 启动器</span>
         </div>
         <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
-            <img src="FCL.webp" alt="FCL">
+            <img src="FCL.webp" alt="FCL" class="icon-red-glow">
             <span>FCL 启动器</span>
         </div>
         <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
-            <img src="网易.webp" alt="网易版">
+            <img src="网易.webp" alt="网易版" class="icon-red-glow">
             <span>网易版 MC</span>
         </div>
     </div>
 </div>
 <div class="mask" id="mask"></div>
 <div class="container">
-    <!-- 正文里的LOGO已删除 -->
     <div class="notice">
         <div class="notice-text">
             📢 服务器长期稳定运营 | 每日上线领福利 | 网易/国际版数据互通福利 | 群内有开服教程和专属模组包 📢
         </div>
     </div>
     <div class="studio-section">
-        <img src="工作室.webp" alt="工作室LOGO" class="studio-img" onclick="joinStudioGroup()">
+        <img src="工作室.webp" alt="工作室LOGO" class="studio-img icon-red-glow" onclick="joinStudioGroup()">
         <div class="studio-desc">
             专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！
         </div>
@@ -513,7 +561,7 @@
     </div>
     <div class="server-card">
         <div class="card">
-            <h2><i class="fas fa-globe-asia"></i> 网易版专属服</h2>
+            <h2><i class="fas fa-globe-asia icon-red-glow"></i> 网易版专属服</h2>
             <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！
             纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
             <div class="map-preview">
@@ -528,7 +576,7 @@
             </div>
         </div>
         <div class="card">
-            <h2><i class="fas fa-earth"></i> 国际互通版</h2>
+            <h2><i class="fas fa-earth icon-red-glow"></i> 国际互通版</h2>
             <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！
             丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
             <div class="map-preview">
