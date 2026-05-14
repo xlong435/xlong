@@ -13,10 +13,19 @@
         }
         body {
             color: #fff;
+            /* 背景适配核心：兼顾PC和手机比例 */
             background-image: url(背景.webp);
+            /* PC端：完整覆盖，居中显示，不拉伸 */
             background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
             background-attachment: fixed;
-            background-position: center;
+            /* 手机端：调整比例，裁掉非关键区域，保证文字和主体可见 */
+            @media (max-width: 768px) {
+                background-size: 200% auto;
+                background-position: 50% 10%;
+                background-attachment: scroll; /* 手机端关闭fixed，避免卡顿 */
+            }
             overflow-x: hidden;
         }
         /* MC方块奇幻风格全局效果 */
