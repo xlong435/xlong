@@ -267,20 +267,24 @@
             max-width: 700px;
             margin: 0 auto 10px;
         }
+        /* 改：淡灰+立体 */
         .studio-btn {
             display: inline-block;
             padding: 8px 22px;
-            background: #8B5A2B;
+            background: #949494;
             color: #fff;
             border-radius: 6px;
             font-size: 1rem;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            box-shadow: 0 0 4px rgba(255,215,0,0.5);
+            border: 2px solid #b0b0b0;
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.4), inset 1px 1px 2px rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
         }
         .studio-btn:hover {
-            background: #A67C52;
+            background: #808080;
+            transform: translateY(-2px);
         }
         .header {
             text-align: center;
@@ -377,26 +381,27 @@
             margin-bottom: 20px;
             text-shadow: 0 0 4px rgba(255,215,0,0.3);
         }
+        /* 改：淡灰+立体 */
         .join-btn {
             padding: 12px 35px;
-            background: #8B5A2B;
+            background: #949494;
             color: #fff;
-            border: none;
+            border: 2px solid #b0b0b0;
             border-radius: 8px;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             margin: 0 auto;
-            box-shadow: 0 0 4px rgba(255,215,0,0.5);
+            box-shadow: 2px 2px 6px rgba(0,0,0,0.4), inset 1px 1px 2px rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
         }
         .join-btn:hover {
-            background: #A67C52;
-            transform: scale(1.05);
+            background: #808080;
+            transform: translateY(-2px);
         }
         .card:hover {
             border-color: #FFD700;
@@ -681,7 +686,7 @@
         sidebar.classList.remove('show');
         mask.classList.remove('show');
     });
-    toolMenu.addEventListener('click', () => {
+    toolMenu.addEventListener('click, () => {
         toolSub.classList.toggle('show');
     });
     launcherMenu.addEventListener('click', () => {
