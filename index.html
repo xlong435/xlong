@@ -267,7 +267,7 @@
             max-width: 700px;
             margin: 0 auto 10px;
         }
-        /* 改：淡灰+立体 */
+        /* 淡灰+立体按钮 */
         .studio-btn {
             display: inline-block;
             padding: 8px 22px;
@@ -381,7 +381,7 @@
             margin-bottom: 20px;
             text-shadow: 0 0 4px rgba(255,215,0,0.3);
         }
-        /* 改：淡灰+立体 */
+        /* 淡灰+立体按钮 */
         .join-btn {
             padding: 12px 35px;
             background: #949494;
@@ -659,7 +659,7 @@
         </div>
     </div>
 <script>
-    // 点击开始冒险：平滑过渡到主页
+    // 点击开始冒险：平滑过渡到主页（已修复）
     const splash = document.getElementById('splash');
     const mainPage = document.getElementById('mainPage');
     const startBtn = document.getElementById('startBtn');
@@ -670,7 +670,7 @@
             window.scrollTo(0, 0);
         }, 800);
     });
-    // 原交互代码
+    // 原交互代码（已修复笔误）
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
     const mask = document.getElementById('mask');
@@ -686,7 +686,7 @@
         sidebar.classList.remove('show');
         mask.classList.remove('show');
     });
-    toolMenu.addEventListener('click, () => {
+    toolMenu.addEventListener('click', () => {
         toolSub.classList.toggle('show');
     });
     launcherMenu.addEventListener('click', () => {
