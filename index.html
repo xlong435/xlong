@@ -11,40 +11,36 @@
             box-sizing: border-box;
             font-family: "Microsoft YaHei", sans-serif;
         }
-
-        /* ========== 核心修正：强制html/body撑满整个窗口，背景真正全屏 ========== */
+        /* ========== 第一页：背景.webp ========== */
         html, body {
             width: 100%;
             min-height: 100vh;
-            background: url("背景.webp") center / cover no-repeat fixed;
             overflow-x: hidden;
         }
-        @media (max-width: 768px) {
-            html, body {
-                background-attachment: scroll;
-            }
-        }
-
-        /* ========== 第一页：全屏封面 ========== */
+        /* 开屏页背景：背景.webp */
         .splash {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            background: url("背景.webp") center / cover no-repeat fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             transition: opacity 0.8s ease, visibility 0.8s ease;
-            background: transparent;
+        }
+        @media (max-width: 768px) {
+            .splash {
+                background-attachment: scroll;
+            }
         }
         .splash.hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-
         .start-btn {
             padding: 16px 48px;
             font-size: 1.5rem;
@@ -62,15 +58,18 @@
             background: rgba(139, 90, 43, 1);
             transform: scale(1.05);
         }
-
-        /* ========== 第二页：原主页内容 ========== */
+        /* ========== 第二页：背景2.webp ========== */
         .main-page {
             display: none;
             width: 100%;
             min-height: 100vh;
-            background: transparent;
+            background: url("背景2.webp") center / cover no-repeat fixed;
         }
-
+        @media (max-width: 768px) {
+            .main-page {
+                background-attachment: scroll;
+            }
+        }
         /* ========== 原样式原样不动 ========== */
         .gold-text {
             color: #fff;
