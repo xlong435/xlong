@@ -1,1 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC基岩版1.21.11 完整指令大全 - 网易MC风格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+        }
 
+        :root {
+            --mc-main-green: #43B96E;
+            --mc-dark-bg: #121714;
+            --mc-card-bg: #1A211D;
+            --mc-border: #2A332E;
+            --mc-text-normal: #E8E8E8;
+            --mc-text-gray: #8A998F;
+            --mc-text-gold: #FFD352;
+            --mc-hover-bg: #232C28;
+        }
+
+        body {
+            background-color: var(--mc-dark-bg);
+            color: var(--mc-text-normal);
+            line-height: 1.7;
+        }
+
+        /* 顶部导航栏 */
+        .header {
+            background-color: var(--mc-card-bg);
+            border-bottom: 1px solid var(--mc-border);
+            padding: 18px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            color: var(--mc-main-green);
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .header .desc {
+            color: var(--mc-text-gray);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* 搜索区域 */
+        .search-wrap {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            background: var(--mc-card-bg);
+            border: 1px solid var(--mc-border);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 3px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--mc-main-green);
+            box-shadow: 0 0 8px rgba(67, 185, 110, 0.25);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        /* 分类标题 */
+        .category-title {
+            color: var(--mc-text-gold);
+            font-size: 20px;
+            margin: 36px 0 16px;
+            padding-left: 10px;
+            border-left: 4px solid var(--mc-main-green);
+        }
+
+        /* 指令卡片 */
+        .cmd-card {
+            background: var(--mc-card-bg);
+            border: 1px solid var(--mc-border);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: background 0.2s;
+        }
+
+        .cmd-card:hover {
+            background: var(--mc-hover-bg);
+        }
+
+        /* 指令头部 点击展开 */
+        .cmd-header {
+            padding: 14px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cmd-name {
+            color: var(--mc-main-green);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .cmd-desc {
+            color: var(--mc-text-gray);
+            font-size: 14px;
+            margin-left: 12px;
+        }
+
+        .arrow {
+            color: var(--mc-text-gray);
+            transition: transform 0.3s;
+        }
+
+        .arrow.active {
+            transform: rotate(180deg);
+        }
+
+        /* 指令详情区域 */
+        .cmd-detail {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            border-top: 1px solid var(--mc-border);
+        }
+
+        .cmd-detail.show {
+            padding: 16px 20px;
+            max-height: 3000px;
+        }
+
+        /* 代码样式 */
+        pre {
+            background: var(--mc-dark-bg);
+            padding: 12px;
+            border-radius: 3px;
+            overflow-x: auto;
+            color: #7ed899;
+            margin: 10px 0;
+        }
+
+        .molang-title {
+            color: var(--mc-text-gold);
+            margin: 16px 0 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="header">
+    <h1>Minecraft 基岩版 1.21.11 指令大全</h1>
+    <div class="desc">网易我的世界官网风格 | 全指令收录 · 点击展开语法 · 含完整Molang文档</div>
+</div>
+
+<!-- 搜索框 -->
+<div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="搜索指令、关键词、Molang语法...">
+</div>
+
+<!-- 主内容区 -->
+<div class="container">
+    <!-- 传送类指令 -->
+    <h2 class="category-title">传送类指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tp</span>
+                <span class="cmd-desc">实体传送指令（简化版）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tp &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; [旋转角度X] [旋转角度Y]
+/tp &lt;目标&gt; &lt;目标实体&gt;
+/tp &lt;目标&gt; &lt;目标实体&gt; facing &lt;朝向实体&gt;
+/tp &lt;目标&gt; &lt;目标实体&gt; facing &lt;x&gt; &lt;y&gt; &lt;z&gt;</pre>
+            <p>用途：将玩家或实体传送到指定坐标、目标实体，或朝向指定方向。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/teleport</span>
+                <span class="cmd-desc">高级传送指令（含安全传送）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/teleport &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; [rx] [ry] [是否安全传送]
+/teleport &lt;目标&gt; &lt;目标实体&gt; facing &lt;朝向实体&gt;
+/teleport &lt;目标&gt; &lt;目标实体&gt; facing &lt;x&gt; &lt;y&gt; &lt;z&gt;</pre>
+            <p>用途：相比/tp支持安全传送判断，防止玩家卡入方块。</p>
+        </div>
+    </div>
+
+    <!-- 游戏模式与难度 -->
+    <h2 class="category-title">游戏模式与难度指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/gamemode</span>
+                <span class="cmd-desc">修改游戏模式</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/gamemode &lt;survival|creative|adventure|spectator&gt; [玩家]</pre>
+            <p>用途：修改指定玩家的游戏模式，支持生存/创造/冒险/旁观者模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/difficulty</span>
+                <span class="cmd-desc">修改游戏难度</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/difficulty &lt;peaceful|easy|normal|hard&gt;</pre>
+            <p>用途：修改世界难度，支持和平/简单/普通/困难。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/defaultgamemode</span>
+                <span class="cmd-desc">设置世界默认游戏模式</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/defaultgamemode &lt;survival|creative|adventure&gt;</pre>
+        </div>
+    </div>
+
+    <!-- 实体与动画指令 -->
+    <h2 class="category-title">实体与动画指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/playanimation</span>
+                <span class="cmd-desc">播放实体动画（含完整Molang语法）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>指令基础语法：</strong></p>
+<pre>/playanimation &lt;目标&gt; &lt;动画名称&gt; [时长] [过渡时间] [循环] [Molang表达式]</pre>
+
+            <h3 class="molang-title">完整 Molang 全部语法</h3>
+<pre>
+# 基础数值运算
++  -  *  /  %
+
+# 逻辑运算符
+&& || ! == != > < >= <=
+
+# 内置变量（常用）
+query.position_x       实体X坐标
+query.position_y       实体Y坐标
+query.position_z       实体Z坐标
+query.health           实体生命值
+query.max_health       实体最大生命值
+query.speed            实体移动速度
+query.is_on_ground     是否在地面
+query.is_moving        是否正在移动
+query.age              实体存活刻数
+query.is_burning       是否正在燃烧
+query.is_in_water      是否在水中
+query.is_in_lava       是否在岩浆中
+query.is_sneaking      是否潜行
+query.is_sprinting     是否冲刺
+query.is_riding        是否骑乘
+query.is_dead          是否死亡
+query.variant          实体变体ID
+query.armor_head       头盔护甲值
+query.armor_torso      胸甲护甲值
+query.armor_legs       护腿护甲值
+query.armor_feet       靴子护甲值
+query.hurt_time        受伤后闪烁时间
+query.swing_time       攻击动作时间
+query.is_angry         是否愤怒（狼/猪灵等）
+query.is_baby          是否幼年实体
+query.weather_rain     是否下雨
+query.weather_thunder  是否雷雨
+
+# 常用函数
+math.sin(x)            正弦函数
+math.cos(x)            余弦函数
+math.tan(x)            正切函数
+math.sqrt(x)           开平方
+math.abs(x)            绝对值
+math.floor(x)          向下取整
+math.ceil(x)           向上取整
+math.round(x)          四舍五入
+math.clamp(a,min,max)   数值限制
+math.random(min,max)   生成随机数
+math.pi                圆周率常量
+math.exp(x)            指数函数
+math.log(x)            自然对数
+math.pow(x,y)          x的y次方
+math.min(a,b)          取最小值
+math.max(a,b)          取最大值
+</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/summon</span>
+                <span class="cmd-desc">生成实体</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/summon &lt;实体ID&gt; [x] [y] [z] [旋转角度] [数据标签]</pre>
+            <p>用途：在指定位置生成实体，支持自定义数据标签。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/kill</span>
+                <span class="cmd-desc">杀死实体</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/kill [目标]</pre>
+            <p>用途：杀死指定实体，省略目标则杀死自己。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/effect</span>
+                <span class="cmd-desc">添加/移除状态效果</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/effect &lt;目标&gt; &lt;效果ID&gt; [时长] [等级] [隐藏粒子]
+/effect clear [目标] [效果ID]</pre>
+            <p>用途：给实体添加或移除状态效果，支持隐藏粒子效果。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tp @e</span>
+                <span class="cmd-desc">批量传送实体（示例用法）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tp @e[type=zombie] 100 64 100
+/tp @e[type=!player] @p</pre>
+            <p>用途：批量传送指定类型的实体到指定位置或玩家位置。</p>
+        </div>
+    </div>
+
+    <!-- 物品与方块指令 -->
+    <h2 class="category-title">物品与方块指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/give</span>
+                <span class="cmd-desc">给予玩家物品</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/give &lt;玩家&gt; &lt;物品ID&gt; [数量] [附加值] [JSON标签]</pre>
+            <p>用途：给指定玩家发放物品，支持自定义NBT标签。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/setblock</span>
+                <span class="cmd-desc">放置指定方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/setblock &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;方块ID&gt; [放置模式] [数据标签]</pre>
+            <p>用途：在指定坐标放置方块，支持替换/保留/销毁模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/fill</span>
+                <span class="cmd-desc">填充指定区域方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/fill &lt;x1&gt; &lt;y1&gt; &lt;z1&gt; &lt;x2&gt; &lt;y2&gt; &lt;z2&gt; &lt;方块ID&gt; [放置模式] [过滤方块]</pre>
+            <p>用途：填充两个对角坐标之间的区域，支持替换/空心/保留等模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/clear</span>
+                <span class="cmd-desc">清空玩家物品栏</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/clear [玩家] [物品ID] [附加值] [数量] [数据标签]</pre>
+            <p>用途：清空玩家物品栏，可指定清除特定物品。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/replaceitem</span>
+                <span class="cmd-desc">替换实体/方块的物品</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/replaceitem entity &lt;目标&gt; &lt;槽位&gt; &lt;物品ID&gt; [数量] [附加值] [数据标签]
+/replaceitem block &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;槽位&gt; &lt;物品ID&gt; [数量] [附加值] [数据标签]</pre>
+            <p>用途：替换实体（玩家/生物）或方块（箱子/发射器）指定槽位的物品。</p>
+        </div>
+    </div>
+
+    <!-- 游戏规则与世界指令 -->
+    <h2 class="category-title">游戏规则与世界指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/gamerule</span>
+                <span class="cmd-desc">修改世界游戏规则</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/gamerule &lt;规则名&gt; [true/false/数值]</pre>
+            <p>常用规则：</p>
+            <ul>
+                <li>doDaylightCycle - 昼夜交替</li>
+                <li>mobGriefing - 生物破坏方块</li>
+                <li>keepInventory - 死亡保留物品</li>
+                <li>doMobSpawning - 生物生成</li>
+                <li>commandBlockOutput - 命令方块输出日志</li>
+                <li>showDeathMessages - 显示死亡信息</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/time</span>
+                <span class="cmd-desc">修改/查询世界时间</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/time set &lt;day|night|noon|midnight|数值&gt;
+/time add &lt;数值&gt;
+/time query &lt;daytime|gametime|day&gt;</pre>
+            <p>用途：设置/增加/查询世界时间。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/weather</span>
+                <span class="cmd-desc">修改天气</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/weather &lt;clear|rain|thunder&gt; [持续时间]</pre>
+            <p>用途：设置世界天气为晴天/雨天/雷雨。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/seed</span>
+                <span class="cmd-desc">查询世界种子</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/seed</pre>
+            <p>用途：显示当前世界的种子代码。</p>
+        </div>
+    </div>
+
+    <!-- 玩家管理指令 -->
+    <h2 class="category-title">玩家管理指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/xp</span>
+                <span class="cmd-desc">给予/设置玩家经验</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/xp &lt;数量&gt;L [玩家]  设置玩家等级
+/xp &lt;数量&gt; [玩家]    给予玩家经验值</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/scoreboard</span>
+                <span class="cmd-desc">计分板管理指令</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法（常用）：</strong></p>
+<pre># 创建计分板
+/scoreboard objectives add &lt;名称&gt; &lt;类型&gt; [显示名称]
+# 设置玩家分数
+/scoreboard players set &lt;玩家&gt; &lt;计分板&gt; &lt;分数&gt;
+# 增加玩家分数
+/scoreboard players add &lt;玩家&gt; &lt;计分板&gt; &lt;数值&gt;
+# 减少玩家分数
+/scoreboard players remove &lt;玩家&gt; &lt;计分板&gt; &lt;数值&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tag</span>
+                <span class="cmd-desc">给实体添加/移除标签</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tag &lt;目标&gt; add &lt;标签名&gt;
+/tag &lt;目标&gt; remove &lt;标签名&gt;
+/tag &lt;目标&gt; list</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/title</span>
+                <span class="cmd-desc">给玩家显示标题/副标题/动作栏文字</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/title &lt;玩家&gt; title &lt;文字&gt;
+/title &lt;玩家&gt; subtitle &lt;文字&gt;
+/title &lt;玩家&gt; actionbar &lt;文字&gt;
+/title &lt;玩家&gt; times &lt;淡入&gt; &lt;停留&gt; &lt;淡出&gt;</pre>
+        </div>
+    </div>
+
+    <!-- 命令方块与调试指令 -->
+    <h2 class="category-title">命令方块与调试指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/execute</span>
+                <span class="cmd-desc">执行复杂指令（核心指令）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法（基岩版）：</strong></p>
+<pre>/execute &lt;执行者&gt; &lt;位置&gt; &lt;指令&gt;
+/execute as &lt;目标&gt; at @s run &lt;指令&gt;
+/execute positioned &lt;x y z&gt; run &lt;指令&gt;
+/execute if &lt;条件&gt; run &lt;指令&gt;
+/execute unless &lt;条件&gt; run &lt;指令&gt;
+/execute align &lt;坐标轴&gt; run &lt;指令&gt;
+/execute anchored &lt;eyes|feet&gt; run &lt;指令&gt;
+/execute facing &lt;x y z|实体&gt; run &lt;指令&gt;
+/execute in &lt;维度&gt; run &lt;指令&gt;
+/execute rotated &lt;rx ry&gt; run &lt;指令&gt;
+/execute run &lt;指令&gt;</pre>
+            <p>用途：改变指令的执行者、执行位置，或添加条件判断执行指令。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/clone</span>
+                <span class="cmd-desc">复制方块区域</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/clone &lt;x1 y1 z1&gt; &lt;x2 y2 z2&gt; &lt;目标x y z&gt; [模式] [过滤方块]</pre>
+            <p>用途：复制一个区域的方块到另一个位置，支持过滤和替换模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/testfor</span>
+                <span class="cmd-desc">检测实体/玩家是否存在</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/testfor &lt;目标&gt;
+/testfor @e[type=zombie,r=10]</pre>
+            <p>用途：检测指定范围内是否存在目标实体，常用于命令方块连锁。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/testforblock</span>
+                <span class="cmd-desc">检测指定位置的方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/testforblock &lt;x y z&gt; &lt;方块ID&gt; [数据值] [数据标签]</pre>
+            <p>用途：检测指定坐标的方块是否为目标方块，常用于机关/陷阱。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/debug</span>
+                <span class="cmd-desc">调试性能指令</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/debug start
+/debug stop
+/debug report</pre>
+            <p>用途：记录性能数据，用于排查卡顿问题。</p>
+        </div>
+    </div>
+
+    <!-- 其他常用指令 -->
+    <h2 class="category-title">其他常用指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/say</span>
+                <span class="cmd-desc">向所有玩家发送消息</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/say &lt;消息内容&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tell</span>
+                <span class="cmd-desc">向指定玩家发送私信</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tell &lt;玩家&gt; &lt;消息内容&gt;
+/msg &lt;玩家&gt; &lt;消息内容&gt;
+/w &lt;玩家&gt; &lt;消息内容&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/kick</span>
+                <span class="cmd-desc">踢出玩家</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/kick &lt;玩家&gt; [原因]</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/ban</span>
+                <span class="cmd-desc">封禁玩家（服务器指令）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/ban &lt;玩家&gt; [原因]
+/banlist ips
+/banlist players
+/pardon &lt;玩家&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/op</span>
+                <span class="cmd-desc">给予玩家管理员权限</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/op &lt;玩家&gt;
+/deop &lt;玩家&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/list</span>
+                <span class="cmd-desc">列出在线玩家</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/list</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/help</span>
+                <span class="cmd-desc">查看指令帮助</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/help [页码|指令名]</pre>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// 展开/折叠指令
+function toggleCmd(el) {
+    const detail = el.nextElementSibling;
+    const arrow = el.querySelector('.arrow');
+    detail.classList.toggle('show');
+    arrow.classList.toggle('active');
+}
+
+// 搜索功能
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+    const keyword = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.cmd-card');
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(keyword) ? 'block' : 'none';
+    });
+});
+</script>
+
+</body>
+</html>
