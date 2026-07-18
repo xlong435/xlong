@@ -18,14 +18,21 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
-        /* 开屏页背景：背景.webp */
+        /* 开屏页背景：背景.webp 已修改9:16+电脑两侧红底色 */
         .splash {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: url("背景.webp") center / cover no-repeat fixed;
+            /* 电脑端空白填充火爆红色风格 */
+            background-color: #990000;
+            background-image: url("背景.webp");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            /* 锁定图片高度占满屏幕，宽度自动，维持原生9:16比例不变形 */
+            background-size: auto 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -35,6 +42,8 @@
         @media (max-width: 768px) {
             .splash {
                 background-attachment: scroll;
+                /* 手机端铺满全屏，取消左右红边 */
+                background-size: cover;
             }
         }
         .splash.hidden {
