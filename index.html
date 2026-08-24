@@ -722,7 +722,7 @@
         }
 
         /* ================================================================
-           新增：赞助玩家榜单 —— 金色框边 + 动态星光环绕
+           赞助玩家榜单 —— 金色框边 + 动态星光环绕
            ================================================================ */
         .sponsor-section {
             margin: 30px auto 10px;
@@ -737,10 +737,7 @@
             border-radius: 16px;
             padding: 28px 24px 32px;
             text-align: center;
-            box-shadow:
-                0 0 30px rgba(255, 215, 0, 0.12),
-                0 0 60px rgba(255, 215, 0, 0.06),
-                inset 0 0 40px rgba(255, 215, 0, 0.04);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.12), 0 0 60px rgba(255, 215, 0, 0.06), inset 0 0 40px rgba(255, 215, 0, 0.04);
             overflow: visible;
             min-height: 140px;
             transition: box-shadow 0.4s ease;
@@ -761,7 +758,6 @@
             z-index: 1;
         }
 
-        /* ----- 星光轨道容器 ----- */
         .star-orbit {
             position: absolute;
             top: 50%;
@@ -790,10 +786,7 @@
             line-height: 1;
             text-align: center;
             color: #FFD700;
-            text-shadow:
-                0 0 6px #FFD700,
-                0 0 16px rgba(255, 215, 0, 0.6),
-                0 0 30px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 6px #FFD700, 0 0 16px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.3);
             transform-origin: center;
             animation: twinkle 2.4s ease-in-out infinite alternate;
             will-change: transform, opacity;
@@ -817,39 +810,29 @@
             animation-delay: calc(var(--i) * 0.18s);
         }
 
-        /* ----- 赞助榜单内容 ----- */
         .sponsor-title {
             font-size: 1.6rem;
             font-weight: 700;
             color: #FFD700;
-            text-shadow:
-                0 0 8px rgba(255, 215, 0, 0.5),
-                0 0 20px rgba(255, 215, 0, 0.2);
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2);
             letter-spacing: 2px;
             margin-bottom: 12px;
         }
 
-        /* 赞助者姓名：天蓝色发光，思源黑体，增加底部间距让多个名字间有呼吸感 */
         .sponsor-name {
             font-family: "Source Han Sans CN", "思源黑体", sans-serif;
             font-size: 1.7rem;
             font-weight: 600;
             color: #4FC3F7;
-            text-shadow:
-                0 0 10px rgba(79, 195, 247, 0.7),
-                0 0 25px rgba(79, 195, 247, 0.4),
-                0 0 50px rgba(79, 195, 247, 0.2);
+            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7), 0 0 25px rgba(79, 195, 247, 0.4), 0 0 50px rgba(79, 195, 247, 0.2);
             letter-spacing: 1px;
             padding: 4px 0;
             transition: text-shadow 0.3s ease;
-            margin-bottom: 8px;  /* 新增：让两个名字之间有间距 */
+            margin-bottom: 8px;
         }
 
         .sponsor-name:hover {
-            text-shadow:
-                0 0 16px rgba(79, 195, 247, 0.9),
-                0 0 40px rgba(79, 195, 247, 0.5),
-                0 0 70px rgba(79, 195, 247, 0.3);
+            text-shadow: 0 0 16px rgba(79, 195, 247, 0.9), 0 0 40px rgba(79, 195, 247, 0.5), 0 0 70px rgba(79, 195, 247, 0.3);
         }
 
         .sponsor-badge {
@@ -862,33 +845,317 @@
             padding-top: 8px;
         }
 
-        /* ========== 响应式适配 ========== */
+        /* ================================================================
+           下载按钮模块 —— 替代原视频模块
+           ================================================================ */
+        .download-section {
+            margin: 40px auto 30px;
+            max-width: 820px;
+            position: relative;
+        }
+
+        .download-board {
+            position: relative;
+            background: rgba(20, 14, 10, 0.92);
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            padding: 28px 30px 34px;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.08), 0 0 80px rgba(255, 215, 0, 0.04), inset 0 0 30px rgba(255, 215, 0, 0.03);
+            transition: box-shadow 0.4s ease;
+            text-align: center;
+        }
+
+        .download-board::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: radial-gradient(ellipse at 70% 30%, rgba(255, 215, 0, 0.05), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .download-board>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .download-title i {
+            font-size: 1.3rem;
+            color: #FFD700;
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: stretch;
+        }
+
+        /* 单个下载按钮 */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 36px 16px 24px;
+            background: rgba(25, 18, 12, 0.85);
+            border: 2.5px solid #FFD700;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: "Source Han Sans CN", "思源黑体", sans-serif;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.06), inset 0 0 20px rgba(255, 215, 0, 0.02);
+            min-width: 240px;
+            flex: 1 1 auto;
+            justify-content: center;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 按钮金色光晕动画 */
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 215, 0, 0.05), transparent, rgba(255, 200, 50, 0.03), transparent);
+            animation: btnShine 8s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes btnShine {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .download-btn>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-btn .btn-icon {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            display: block;
+            border-radius: 8px;
+            flex-shrink: 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 4px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .download-btn .btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            line-height: 1.3;
+        }
+
+        .download-btn .btn-text .main {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 6px rgba(255, 215, 0, 0.15);
+        }
+
+        .download-btn .btn-text .sub {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: rgba(255, 215, 0, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .download-btn .btn-arrow {
+            font-size: 1.2rem;
+            color: rgba(255, 215, 0, 0.5);
+            transition: transform 0.3s ease, color 0.3s ease;
+            margin-left: 4px;
+        }
+
+        /* hover 效果 */
+        .download-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: #FFE44D;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.20), 0 0 80px rgba(255, 215, 0, 0.08), inset 0 0 30px rgba(255, 215, 0, 0.05);
+            background: rgba(35, 24, 16, 0.92);
+        }
+
+        .download-btn:hover .btn-icon {
+            transform: scale(1.08) rotate(-2deg);
+            border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        .download-btn:hover .btn-arrow {
+            transform: translateX(4px);
+            color: #FFD700;
+        }
+
+        .download-btn:active {
+            transform: scale(0.96) translateY(0px);
+            transition-duration: 0.08s;
+        }
+
+        /* 按钮下方小提示 */
+        .download-hint {
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
+            font-weight: 300;
+        }
+
+        .download-hint i {
+            margin: 0 4px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .download-section {
+                margin: 30px auto 20px;
+            }
+
+            .download-board {
+                padding: 20px 16px 24px;
+                border-radius: 14px;
+            }
+
+            .download-title {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+            }
+
+            .download-buttons {
+                gap: 14px;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .download-btn {
+                padding: 14px 24px 14px 18px;
+                font-size: 1rem;
+                min-width: 200px;
+                width: 100%;
+                max-width: 380px;
+                gap: 12px;
+            }
+
+            .download-btn .btn-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .download-btn .btn-text .main {
+                font-size: 0.95rem;
+            }
+
+            .download-btn .btn-text .sub {
+                font-size: 0.6rem;
+            }
+
+            .download-hint {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .download-board {
+                padding: 14px 12px 18px;
+                border-width: 2px;
+            }
+
+            .download-title {
+                font-size: 1rem;
+            }
+
+            .download-btn {
+                padding: 12px 16px 12px 14px;
+                font-size: 0.9rem;
+                min-width: 160px;
+                gap: 10px;
+                border-radius: 12px;
+            }
+
+            .download-btn .btn-icon {
+                width: 30px;
+                height: 30px;
+                padding: 3px;
+            }
+
+            .download-btn .btn-text .main {
+                font-size: 0.85rem;
+            }
+
+            .download-btn .btn-arrow {
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .download-title {
+                font-size: 1.7rem;
+            }
+
+            .download-btn {
+                padding: 20px 44px 20px 30px;
+                font-size: 1.3rem;
+                min-width: 280px;
+            }
+
+            .download-btn .btn-icon {
+                width: 52px;
+                height: 52px;
+            }
+
+            .download-btn .btn-text .main {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* ========== 赞助榜单响应式适配（保留） ========== */
         @media (max-width: 768px) {
             .sponsor-board {
                 padding: 20px 16px 24px;
                 min-height: 120px;
                 border-radius: 14px;
             }
-
             .sponsor-title {
                 font-size: 1.3rem;
             }
-
             .sponsor-name {
                 font-size: 1.3rem;
                 margin-bottom: 6px;
             }
-
             .star {
                 width: 14px;
                 height: 14px;
                 font-size: 14px;
             }
-
             .star-orbit {
                 animation-duration: 18s;
             }
-
             @keyframes twinkle {
                 0% {
                     opacity: 0.2;
@@ -907,22 +1174,18 @@
                 min-height: 100px;
                 border-width: 2px;
             }
-
             .sponsor-title {
                 font-size: 1.1rem;
             }
-
             .sponsor-name {
                 font-size: 1.1rem;
                 margin-bottom: 4px;
             }
-
             .star {
                 width: 11px;
                 height: 11px;
                 font-size: 11px;
             }
-
             .star-orbit {
                 animation-duration: 16s;
             }
@@ -934,12 +1197,10 @@
                 height: 22px;
                 font-size: 22px;
             }
-
             .sponsor-name {
                 font-size: 2.0rem;
                 margin-bottom: 10px;
             }
-
             .sponsor-title {
                 font-size: 1.8rem;
             }
@@ -1063,18 +1324,52 @@
             </div>
 
             <!-- ============================================================
-            新增：赞助玩家榜单（放在 footer 下方）
+            下载按钮模块 —— 替代原视频模块
+            ============================================================ -->
+            <div class="download-section">
+                <div class="download-board">
+                    <div class="download-title">
+                        <i class="fas fa-download"></i> 游戏下载
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="download-buttons">
+
+                        <!-- 按钮1：下载国际版MC -->
+                        <a class="download-btn" href="国际版MC.apk" download="国际版MC.apk" id="downloadMc">
+                            <img src="国际.webp" alt="国际版" class="btn-icon">
+                            <span class="btn-text">
+                                <span class="main">国际版 MC</span>
+                                <span class="sub">.apk · 点击下载</span>
+                            </span>
+                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                        </a>
+
+                        <!-- 按钮2：下载FCL启动器 -->
+                        <a class="download-btn" href="FCL.apk" download="FCL启动器.apk" id="downloadFcl">
+                            <img src="FCL.webp" alt="FCL" class="btn-icon">
+                            <span class="btn-text">
+                                <span class="main">FCL 启动器</span>
+                                <span class="sub">.apk · 点击下载</span>
+                            </span>
+                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                        </a>
+
+                    </div>
+                    <div class="download-hint">
+                        <i class="fas fa-info-circle"></i> 文件放置于网站同目录下 · 点击即开始下载
+                    </div>
+                </div>
+            </div>
+            <!-- ===== 下载模块结束 ===== -->
+
+            <!-- ============================================================
+            赞助玩家榜单（保持不变）
             ============================================================ -->
             <div class="sponsor-section">
                 <div class="sponsor-board">
-
-                    <!-- 星光环绕轨道（12颗星星，由JS动态生成） -->
                     <div class="star-orbit" id="starOrbit"></div>
-
-                    <!-- 榜单内容 -->
                     <div class="sponsor-title">🏆 赞助玩家榜单</div>
                     <div class="sponsor-name">菠菜卷饼（网易服赞助玩家 30元）</div>
-                    <!-- ↓↓↓ 新增第二名玩家，风格完全一致 ↓↓↓ -->
                     <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
                     <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
                 </div>
@@ -1366,6 +1661,9 @@
             );
         }
 
+        // ============================================================
+        //  3. 生成星光 + 下载按钮点击统计（可选）
+        // ============================================================
         window.onload = function() {
             document.body.style.opacity = 0;
             let op = 0;
@@ -1375,14 +1673,27 @@
                 op += 0.08;
             }, 30);
 
-            // ============================================================
-            //  3. 动态生成星光环绕的星星（12颗，适应屏幕）
-            // ============================================================
             generateStars();
             window.addEventListener('resize', generateStars);
+
+            // 下载按钮点击日志（可选，方便统计）
+            const btnMc = document.getElementById('downloadMc');
+            const btnFcl = document.getElementById('downloadFcl');
+
+            if (btnMc) {
+                btnMc.addEventListener('click', function(e) {
+                    console.log('[下载] 国际版MC 已触发下载');
+                    // 如果文件不存在，浏览器会自动显示错误，不影响体验
+                });
+            }
+            if (btnFcl) {
+                btnFcl.addEventListener('click', function(e) {
+                    console.log('[下载] FCL启动器 已触发下载');
+                });
+            }
         };
 
-        // ----- 生成星星函数 -----
+        // 生成星星函数（原样）
         function generateStars() {
             const orbit = document.getElementById('starOrbit');
             if (!orbit) return;
