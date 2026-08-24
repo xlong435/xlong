@@ -846,7 +846,7 @@
         }
 
         /* ================================================================
-           下载按钮模块 —— 替代原视频模块
+           下载按钮模块 —— 单按钮，跳转夸克网盘
            ================================================================ */
         .download-section {
             margin: 40px auto 30px;
@@ -903,7 +903,7 @@
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
-            align-items: stretch;
+            align-items: center;
         }
 
         /* 单个下载按钮 */
@@ -924,7 +924,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.06), inset 0 0 20px rgba(255, 215, 0, 0.02);
             min-width: 240px;
-            flex: 1 1 auto;
+            flex: 0 1 auto;
             justify-content: center;
             letter-spacing: 0.5px;
             position: relative;
@@ -1048,7 +1048,6 @@
             }
 
             .download-buttons {
-                gap: 14px;
                 flex-direction: column;
                 align-items: center;
             }
@@ -1324,7 +1323,7 @@
             </div>
 
             <!-- ============================================================
-            下载按钮模块 —— 替代原视频模块
+            下载按钮模块 —— 单按钮，跳转夸克网盘
             ============================================================ -->
             <div class="download-section">
                 <div class="download-board">
@@ -1334,29 +1333,22 @@
                     </div>
                     <div class="download-buttons">
 
-                        <!-- 按钮1：下载国际版MC -->
-                        <a class="download-btn" href="国际版MC.apk" download="国际版MC.apk" id="downloadMc">
+                        <!-- 单按钮：前往下载国际版MC -->
+                        <a href="https://pan.quark.cn/s/863cd40d1b0d?pwd=mAPv" 
+                           target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="download-btn">
                             <img src="国际.webp" alt="国际版" class="btn-icon">
                             <span class="btn-text">
-                                <span class="main">国际版 MC</span>
-                                <span class="sub">.apk · 点击下载</span>
-                            </span>
-                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
-                        </a>
-
-                        <!-- 按钮2：下载FCL启动器 -->
-                        <a class="download-btn" href="FCL.apk" download="FCL启动器.apk" id="downloadFcl">
-                            <img src="FCL.webp" alt="FCL" class="btn-icon">
-                            <span class="btn-text">
-                                <span class="main">FCL 启动器</span>
-                                <span class="sub">.apk · 点击下载</span>
+                                <span class="main">前往下载国际版MC</span>
+                                <span class="sub">夸克网盘 · 输入提取码 mAPv</span>
                             </span>
                             <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                         </a>
 
                     </div>
                     <div class="download-hint">
-                        <i class="fas fa-info-circle"></i> 文件放置于网站同目录下 · 点击即开始下载
+                        <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
                     </div>
                 </div>
             </div>
@@ -1662,7 +1654,7 @@
         }
 
         // ============================================================
-        //  3. 生成星光 + 下载按钮点击统计（可选）
+        //  3. 生成星光
         // ============================================================
         window.onload = function() {
             document.body.style.opacity = 0;
@@ -1675,22 +1667,6 @@
 
             generateStars();
             window.addEventListener('resize', generateStars);
-
-            // 下载按钮点击日志（可选，方便统计）
-            const btnMc = document.getElementById('downloadMc');
-            const btnFcl = document.getElementById('downloadFcl');
-
-            if (btnMc) {
-                btnMc.addEventListener('click', function(e) {
-                    console.log('[下载] 国际版MC 已触发下载');
-                    // 如果文件不存在，浏览器会自动显示错误，不影响体验
-                });
-            }
-            if (btnFcl) {
-                btnFcl.addEventListener('click', function(e) {
-                    console.log('[下载] FCL启动器 已触发下载');
-                });
-            }
         };
 
         // 生成星星函数（原样）
