@@ -558,29 +558,6 @@
             box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25);
         }
 
-        .donate-section {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .donate-btn {
-            padding: 14px 40px;
-            background: #8B5A2B;
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
-        }
-
-        .donate-btn:hover {
-            background: #A67C52;
-            transform: scale(1.05);
-        }
-
         .donate-modal {
             position: fixed;
             top: 0;
@@ -653,16 +630,42 @@
             font-weight: 500;
         }
 
+        /* ===== 底部 footer 整合 ===== */
         .footer {
             text-align: center;
             margin-top: 60px;
-            padding: 20px;
+            padding: 30px 20px;
             background: rgba(25, 18, 12, 0.9);
             border-radius: 10px;
             color: #ccc;
             font-size: 1rem;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             border: 2px solid #8B5A2B;
+        }
+
+        .footer .footer-text {
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .footer .donate-btn {
+            padding: 12px 36px;
+            background: #8B5A2B;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .footer .donate-btn:hover {
+            background: #A67C52;
+            transform: scale(1.04);
         }
 
         .mask {
@@ -701,6 +704,10 @@
             .studio-img {
                 width: 120px;
             }
+            .footer .donate-btn {
+                padding: 10px 28px;
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 400px) {
@@ -718,6 +725,10 @@
             }
             .studio-img {
                 width: 100px;
+            }
+            .footer .donate-btn {
+                padding: 8px 22px;
+                font-size: 0.9rem;
             }
         }
 
@@ -906,7 +917,6 @@
             align-items: center;
         }
 
-        /* 单个下载按钮 */
         .download-btn {
             display: inline-flex;
             align-items: center;
@@ -931,7 +941,6 @@
             overflow: hidden;
         }
 
-        /* 按钮金色光晕动画 */
         .download-btn::after {
             content: '';
             position: absolute;
@@ -994,7 +1003,6 @@
             margin-left: 4px;
         }
 
-        /* hover 效果 */
         .download-btn:hover {
             transform: translateY(-4px) scale(1.02);
             border-color: #FFE44D;
@@ -1017,7 +1025,6 @@
             transition-duration: 0.08s;
         }
 
-        /* 按钮下方小提示 */
         .download-hint {
             text-align: center;
             margin-top: 16px;
@@ -1036,22 +1043,18 @@
             .download-section {
                 margin: 30px auto 20px;
             }
-
             .download-board {
                 padding: 20px 16px 24px;
                 border-radius: 14px;
             }
-
             .download-title {
                 font-size: 1.2rem;
                 margin-bottom: 16px;
             }
-
             .download-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
             .download-btn {
                 padding: 14px 24px 14px 18px;
                 font-size: 1rem;
@@ -1060,20 +1063,16 @@
                 max-width: 380px;
                 gap: 12px;
             }
-
             .download-btn .btn-icon {
                 width: 36px;
                 height: 36px;
             }
-
             .download-btn .btn-text .main {
                 font-size: 0.95rem;
             }
-
             .download-btn .btn-text .sub {
                 font-size: 0.6rem;
             }
-
             .download-hint {
                 font-size: 0.7rem;
             }
@@ -1084,11 +1083,9 @@
                 padding: 14px 12px 18px;
                 border-width: 2px;
             }
-
             .download-title {
                 font-size: 1rem;
             }
-
             .download-btn {
                 padding: 12px 16px 12px 14px;
                 font-size: 0.9rem;
@@ -1096,17 +1093,14 @@
                 gap: 10px;
                 border-radius: 12px;
             }
-
             .download-btn .btn-icon {
                 width: 30px;
                 height: 30px;
                 padding: 3px;
             }
-
             .download-btn .btn-text .main {
                 font-size: 0.85rem;
             }
-
             .download-btn .btn-arrow {
                 font-size: 1rem;
             }
@@ -1116,24 +1110,21 @@
             .download-title {
                 font-size: 1.7rem;
             }
-
             .download-btn {
                 padding: 20px 44px 20px 30px;
                 font-size: 1.3rem;
                 min-width: 280px;
             }
-
             .download-btn .btn-icon {
                 width: 52px;
                 height: 52px;
             }
-
             .download-btn .btn-text .main {
                 font-size: 1.25rem;
             }
         }
 
-        /* ========== 赞助榜单响应式适配（保留） ========== */
+        /* ========== 赞助榜单响应式适配 ========== */
         @media (max-width: 768px) {
             .sponsor-board {
                 padding: 20px 16px 24px;
@@ -1315,16 +1306,8 @@
                     </div>
                 </div>
             </div>
-            <div class="donate-section">
-                <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
-            </div>
-            <div class="footer">
-                <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
-            </div>
 
-            <!-- ============================================================
-            下载按钮模块 —— 单按钮，跳转夸克网盘
-            ============================================================ -->
+            <!-- ===== 下载按钮模块 ===== -->
             <div class="download-section">
                 <div class="download-board">
                     <div class="download-title">
@@ -1332,8 +1315,6 @@
                         <i class="fas fa-download"></i>
                     </div>
                     <div class="download-buttons">
-
-                        <!-- 单按钮：前往下载国际版MC -->
                         <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ" 
                            target="_blank" 
                            rel="noopener noreferrer" 
@@ -1345,7 +1326,6 @@
                             </span>
                             <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                         </a>
-
                     </div>
                     <div class="download-hint">
                         <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
@@ -1354,25 +1334,32 @@
             </div>
             <!-- ===== 下载模块结束 ===== -->
 
-            <!-- ============================================================
-            赞助玩家榜单（新增一位）
-            ============================================================ -->
+            <!-- ===== 赞助玩家榜单 ===== -->
             <div class="sponsor-section">
                 <div class="sponsor-board">
                     <div class="star-orbit" id="starOrbit"></div>
                     <div class="sponsor-title">🏆 赞助玩家榜单</div>
                     <div class="sponsor-name">菠菜卷饼（网易服赞助玩家 30元）</div>
                     <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
-                    <!-- ↓↓↓ 新增 ↓↓↓ -->
-                    <div class="sponsor-name">鱼的七秒记忆（网易服玩家 10元）</div>
+                    <div class="sponsor-name">鱼的七秒记忆（网易服赞助玩家 10元）</div>
                     <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
                 </div>
             </div>
             <!-- ===== 赞助玩家榜单结束 ===== -->
 
+            <!-- ===== 底部 footer（整合了赞助按钮和版权信息） ===== -->
+            <div class="footer">
+                <div class="footer-text">
+                    <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
+                </div>
+                <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
+            </div>
+            <!-- ===== footer 结束 ===== -->
+
         </div>
         <!-- container 结束 -->
 
+        <!-- 赞助弹窗 -->
         <div class="donate-modal" id="donateModal">
             <div class="donate-box">
                 <button class="donate-close" onclick="closeDonate()">×</button>
@@ -1671,7 +1658,6 @@
             window.addEventListener('resize', generateStars);
         };
 
-        // 生成星星函数（原样）
         function generateStars() {
             const orbit = document.getElementById('starOrbit');
             if (!orbit) return;
