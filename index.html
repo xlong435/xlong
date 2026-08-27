@@ -846,35 +846,7 @@
             text-shadow: 0 0 16px rgba(79, 195, 247, 0.9), 0 0 40px rgba(79, 195, 247, 0.5), 0 0 70px rgba(79, 195, 247, 0.3);
         }
 
-        .sponsor-partner {
-            font-family: "Source Han Sans CN", "思源黑体", sans-serif;
-            font-size: 1.7rem;
-            font-weight: 600;
-            color: #4FC3F7;
-            text-shadow: 0 0 10px rgba(79, 195, 247, 0.7), 0 0 25px rgba(79, 195, 247, 0.4), 0 0 50px rgba(79, 195, 247, 0.2);
-            letter-spacing: 1px;
-            padding: 4px 0;
-            transition: text-shadow 0.3s ease;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .sponsor-partner:hover {
-            text-shadow: 0 0 16px rgba(79, 195, 247, 0.9), 0 0 40px rgba(79, 195, 247, 0.5), 0 0 70px rgba(79, 195, 247, 0.3);
-        }
-
-        .partner-logo {
-            height: 0.9em;
-            width: auto;
-            display: inline-block;
-            filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.4));
-            border-radius: 4px;
-            vertical-align: middle;
-        }
+        /* 移除 sponsor-partner 相关样式，不再需要 */
 
         .sponsor-badge {
             display: inline-block;
@@ -1190,12 +1162,6 @@
             .sponsor-name {
                 font-size: 1.3rem;
             }
-            .sponsor-partner {
-                font-size: 1.3rem;
-            }
-            .partner-logo {
-                height: 0.9em;
-            }
             /* 友情合作响应式 */
             .friend-title {
                 font-size: 1.3rem;
@@ -1239,13 +1205,6 @@
             .sponsor-name {
                 font-size: 1.1rem;
             }
-            .sponsor-partner {
-                font-size: 1.1rem;
-                gap: 6px;
-            }
-            .partner-logo {
-                height: 0.9em;
-            }
             .friend-title {
                 font-size: 1.1rem;
             }
@@ -1278,12 +1237,6 @@
             .sponsor-name {
                 font-size: 2.0rem;
                 margin-bottom: 10px;
-            }
-            .sponsor-partner {
-                font-size: 2.0rem;
-            }
-            .partner-logo {
-                height: 0.9em;
             }
             .sponsor-title {
                 font-size: 1.8rem;
@@ -1503,7 +1456,7 @@
             </div>
             <!-- ===== 下载模块结束 ===== -->
 
-            <!-- ===== 赞助玩家榜单 ===== -->
+            <!-- ===== 赞助玩家榜单（已移除友情合作条目） ===== -->
             <div class="sponsor-section">
                 <div class="sponsor-board">
                     <div class="star-orbit" id="starOrbit"></div>
@@ -1512,16 +1465,12 @@
                     <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
                     <div class="sponsor-name">鱼的七秒记忆（网易服赞助玩家 10元）</div>
                     <div class="sponsor-name">PHAGE_A（国际服赞助玩家 9.1元）</div>
-                    <div class="sponsor-partner">
-                        <span>友情合作空日噬魂</span>
-                        <img src="krsh.webp" alt="空日噬魂" class="partner-logo">
-                    </div>
                     <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
                 </div>
             </div>
             <!-- ===== 赞助玩家榜单结束 ===== -->
 
-            <!-- ===== 新增：友情合作独立框 ===== -->
+            <!-- ===== 独立友情合作框 ===== -->
             <div class="friend-link-section">
                 <div class="friend-link-board">
                     <div class="friend-title">友情合作</div>
