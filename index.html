@@ -846,7 +846,6 @@
             text-shadow: 0 0 16px rgba(79, 195, 247, 0.9), 0 0 40px rgba(79, 195, 247, 0.5), 0 0 70px rgba(79, 195, 247, 0.3);
         }
 
-        /* ===== 新增：友情合作样式 ===== */
         .sponsor-partner {
             font-family: "Source Han Sans CN", "思源黑体", sans-serif;
             font-size: 1.7rem;
@@ -861,7 +860,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            flex-wrap: wrap; /* 防止在小屏幕上溢出 */
+            flex-wrap: wrap;
         }
 
         .sponsor-partner:hover {
@@ -869,7 +868,7 @@
         }
 
         .partner-logo {
-            height: 0.9em; /* 比玩家名字的 1.7rem 略小 */
+            height: 0.9em;
             width: auto;
             display: inline-block;
             filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.4));
@@ -885,6 +884,86 @@
             letter-spacing: 1px;
             border-top: 1px solid rgba(255, 215, 0, 0.15);
             padding-top: 8px;
+        }
+
+        /* ================================================================
+           友情合作框 —— 独立风格，与其他框一致
+           ================================================================ */
+        .friend-link-section {
+            margin: 30px auto 10px;
+            max-width: 700px;
+            position: relative;
+        }
+
+        .friend-link-board {
+            position: relative;
+            background: rgba(20, 14, 10, 0.95);
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            padding: 28px 24px 32px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.12), 0 0 60px rgba(255, 215, 0, 0.06), inset 0 0 40px rgba(255, 215, 0, 0.04);
+            overflow: visible;
+            min-height: 140px;
+            transition: box-shadow 0.4s ease;
+        }
+
+        .friend-link-board::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .friend-link-board>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .friend-title {
+            font-family: "Source Han Sans CN", "思源黑体", sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .friend-btn {
+            display: inline-block;
+            font-family: "Source Han Sans CN", "思源黑体", sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #FFD700;
+            background: rgba(255, 215, 0, 0.05);
+            border: 2px solid #FFD700;
+            border-radius: 50px;
+            padding: 12px 48px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.05);
+            cursor: pointer;
+            letter-spacing: 2px;
+        }
+
+        .friend-btn:hover {
+            background: rgba(255, 215, 0, 0.15);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .friend-logo {
+            display: block;
+            margin: 25px auto 0;
+            width: 180px;
+            max-width: 60%;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.15));
+            border-radius: 8px;
         }
 
         /* ================================================================
@@ -1117,6 +1196,18 @@
             .partner-logo {
                 height: 0.9em;
             }
+            /* 友情合作响应式 */
+            .friend-title {
+                font-size: 1.3rem;
+            }
+            .friend-btn {
+                font-size: 1.4rem;
+                padding: 10px 30px;
+            }
+            .friend-logo {
+                width: 140px;
+                max-width: 50%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1155,6 +1246,17 @@
             .partner-logo {
                 height: 0.9em;
             }
+            .friend-title {
+                font-size: 1.1rem;
+            }
+            .friend-btn {
+                font-size: 1.2rem;
+                padding: 8px 20px;
+            }
+            .friend-logo {
+                width: 100px;
+                max-width: 40%;
+            }
         }
 
         @media (min-width: 1200px) {
@@ -1186,6 +1288,16 @@
             .sponsor-title {
                 font-size: 1.8rem;
             }
+            .friend-title {
+                font-size: 1.8rem;
+            }
+            .friend-btn {
+                font-size: 2.0rem;
+                padding: 14px 56px;
+            }
+            .friend-logo {
+                width: 220px;
+            }
         }
 
         /* ========== 赞助榜单其余响应式适配 ========== */
@@ -1216,6 +1328,10 @@
                     transform: translate(-50%, -50%) scale(1.2);
                 }
             }
+            .friend-link-board {
+                padding: 20px 16px 24px;
+                border-radius: 14px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1234,6 +1350,10 @@
             }
             .star-orbit {
                 animation-duration: 16s;
+            }
+            .friend-link-board {
+                padding: 16px 12px 20px;
+                border-width: 2px;
             }
         }
 
@@ -1391,9 +1511,7 @@
                     <div class="sponsor-name">菠菜卷饼（网易服赞助玩家 30元）</div>
                     <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
                     <div class="sponsor-name">鱼的七秒记忆（网易服赞助玩家 10元）</div>
-                    <!-- ↓↓↓ 新增 ↓↓↓ -->
                     <div class="sponsor-name">PHAGE_A（国际服赞助玩家 9.1元）</div>
-                    <!-- 友情合作 -->
                     <div class="sponsor-partner">
                         <span>友情合作空日噬魂</span>
                         <img src="krsh.webp" alt="空日噬魂" class="partner-logo">
@@ -1402,6 +1520,18 @@
                 </div>
             </div>
             <!-- ===== 赞助玩家榜单结束 ===== -->
+
+            <!-- ===== 新增：友情合作独立框 ===== -->
+            <div class="friend-link-section">
+                <div class="friend-link-board">
+                    <div class="friend-title">友情合作</div>
+                    <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">
+                        空日噬魂
+                    </a>
+                    <img src="krsh.webp" alt="空日噬魂" class="friend-logo">
+                </div>
+            </div>
+            <!-- ===== 友情合作框结束 ===== -->
 
             <!-- ===== 底部 footer ===== -->
             <div class="footer">
