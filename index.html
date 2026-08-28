@@ -450,6 +450,149 @@
             line-height: 1.5;
         }
 
+        /* ========== 新增：服务器宣传片框 ========== */
+        .video-section {
+            margin: 30px auto 10px;
+            max-width: 820px;
+            position: relative;
+        }
+
+        .video-board {
+            position: relative;
+            background: rgba(20, 14, 10, 0.95);
+            border: 3px solid #FFD700;
+            border-radius: 16px;
+            padding: 28px 24px 32px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.12), 0 0 60px rgba(255, 215, 0, 0.06), inset 0 0 40px rgba(255, 215, 0, 0.04);
+            transition: box-shadow 0.4s ease;
+            overflow: visible;
+        }
+
+        .video-board::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: radial-gradient(ellipse at 50% 50%, rgba(255, 215, 0, 0.06), transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .video-board>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.5), 0 0 20px rgba(255, 215, 0, 0.2);
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .video-thumb {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #5A3D1F;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.04);
+        }
+
+        .video-thumb:hover {
+            transform: scale(1.02);
+            border-color: #FFD700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
+        }
+
+        .video-thumb:active {
+            transform: scale(0.97);
+        }
+
+        /* ========== 视频播放模态框 ========== */
+        .video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 20px;
+        }
+
+        .video-modal.show {
+            display: flex;
+        }
+
+        .video-box {
+            background: rgba(20, 14, 10, 0.96);
+            padding: 20px 20px 24px;
+            border-radius: 18px;
+            width: 92%;
+            max-width: 960px;
+            position: relative;
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 80px rgba(255, 215, 0, 0.15), 0 0 160px rgba(255, 215, 0, 0.06);
+            animation: videoFadeIn 0.35s ease;
+        }
+
+        @keyframes videoFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92) translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .video-close {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-size: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #aaa;
+            z-index: 10;
+            transition: color 0.25s ease, transform 0.2s ease;
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .video-close:hover {
+            color: #FFD700;
+            transform: scale(1.15);
+        }
+
+        .video-box video {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+            background: #0a0806;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        /* ============================================================ */
+
         .server-card {
             display: flex;
             flex-wrap: wrap;
@@ -708,9 +851,30 @@
                 padding: 10px 28px;
                 font-size: 1rem;
             }
+            /* 宣传片响应式 */
+            .video-title {
+                font-size: 1.3rem;
+            }
+            .video-board {
+                padding: 20px 16px 24px;
+            }
+            .video-box {
+                padding: 14px 14px 18px;
+                width: 95%;
+                border-radius: 14px;
+            }
+            .video-close {
+                font-size: 26px;
+                top: 4px;
+                right: 10px;
+            }
+            .video-box video {
+                max-height: 70vh;
+                border-radius: 10px;
+            }
         }
 
-        @media (max-width: 400px) {
+        @media (max-width: 480px) {
             .header h1 {
                 font-size: 1.8rem;
             }
@@ -729,6 +893,47 @@
             .footer .donate-btn {
                 padding: 8px 22px;
                 font-size: 0.9rem;
+            }
+            .video-title {
+                font-size: 1.1rem;
+            }
+            .video-board {
+                padding: 16px 12px 20px;
+                border-width: 2px;
+                border-radius: 12px;
+            }
+            .video-thumb {
+                border-radius: 8px;
+            }
+            .video-box {
+                padding: 10px 10px 14px;
+                border-width: 2px;
+                border-radius: 12px;
+                width: 98%;
+            }
+            .video-close {
+                font-size: 22px;
+                top: 2px;
+                right: 8px;
+            }
+            .video-box video {
+                max-height: 60vh;
+                border-radius: 8px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .video-title {
+                font-size: 1.8rem;
+            }
+            .video-board {
+                padding: 32px 28px 36px;
+            }
+            .video-box {
+                padding: 24px 24px 28px;
+            }
+            .video-box video {
+                max-height: 82vh;
             }
         }
 
@@ -845,8 +1050,6 @@
         .sponsor-name:hover {
             text-shadow: 0 0 16px rgba(79, 195, 247, 0.9), 0 0 40px rgba(79, 195, 247, 0.5), 0 0 70px rgba(79, 195, 247, 0.3);
         }
-
-        /* 移除 sponsor-partner 相关样式，不再需要 */
 
         .sponsor-badge {
             display: inline-block;
@@ -1158,11 +1361,9 @@
             .download-hint {
                 font-size: 0.7rem;
             }
-            /* 赞助榜单响应式 */
             .sponsor-name {
                 font-size: 1.3rem;
             }
-            /* 友情合作响应式 */
             .friend-title {
                 font-size: 1.3rem;
             }
@@ -1396,6 +1597,16 @@
                 <h1><i class="fas fa-cube"></i> 我的世界专属服务器</h1>
                 <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
             </div>
+
+            <!-- ===== 新增：服务器宣传片框 ===== -->
+            <div class="video-section">
+                <div class="video-board">
+                    <div class="video-title">📹 服务器宣传片</div>
+                    <img src="vedio.webp" alt="服务器宣传片封面" class="video-thumb" onclick="openVideo()">
+                </div>
+            </div>
+            <!-- ===== 宣传片框结束 ===== -->
+
             <div class="server-card">
                 <div class="card">
                     <h2><i class="fas fa-globe-asia icon-red-glow"></i> 网易版专属服</h2>
@@ -1437,397 +1648,450 @@
                         <i class="fas fa-download"></i>
                     </div>
                     <div class="download-buttons">
-                        <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ" 
-                           target="_blank" 
-                           rel="noopener noreferrer" 
-                           class="download-btn">
-                            <img src="国际.webp" alt="国际版" class="btn-icon">
-                            <span class="btn-text">
-                                <span class="main">前往下载国际版MC</span>
-                                <span class="sub">夸克网盘 · 输入提取码 e8mQ</span>
-                            </span>
-                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
-                        </a>
-                    </div>
-                    <div class="download-hint">
-                        <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
-                    </div>
-                </div>
-            </div>
-            <!-- ===== 下载模块结束 ===== -->
-
-            <!-- ===== 赞助玩家榜单（已移除友情合作条目） ===== -->
-            <div class="sponsor-section">
-                <div class="sponsor-board">
-                    <div class="star-orbit" id="starOrbit"></div>
-                    <div class="sponsor-title">🏆 赞助玩家榜单</div>
-                    <div class="sponsor-name">菠菜卷饼（网易服赞助玩家 30元）</div>
-                    <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
-                    <div class="sponsor-name">鱼的七秒记忆（网易服赞助玩家 10元）</div>
-                    <div class="sponsor-name">PHAGE_A（国际服赞助玩家 9.1元）</div>
-                    <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
-                </div>
-            </div>
-            <!-- ===== 赞助玩家榜单结束 ===== -->
-
-            <!-- ===== 独立友情合作框 ===== -->
-            <div class="friend-link-section">
-                <div class="friend-link-board">
-                    <div class="friend-title">友情合作</div>
-                    <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">
-                        空日噬魂
+                        <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="download-btn">
+                        <img src="国际.webp" alt="国际版" class="btn-icon">
+                        <span class="btn-text">
+                            <span class="main">前往下载国际版MC</span>
+                            <span class="sub">夸克网盘 · 输入提取码 e8mQ</span>
+                        </span>
+                        <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
                     </a>
-                    <img src="krsh.webp" alt="空日噬魂" class="friend-logo">
+                </div>
+                <div class="download-hint">
+                    <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
                 </div>
             </div>
-            <!-- ===== 友情合作框结束 ===== -->
-
-            <!-- ===== 底部 footer ===== -->
-            <div class="footer">
-                <div class="footer-text">
-                    <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
-                </div>
-                <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
-            </div>
-            <!-- ===== footer 结束 ===== -->
-
         </div>
-        <!-- container 结束 -->
+        <!-- ===== 下载模块结束 ===== -->
 
-        <!-- 赞助弹窗 -->
-        <div class="donate-modal" id="donateModal">
-            <div class="donate-box">
-                <button class="donate-close" onclick="closeDonate()">×</button>
-                <div class="donate-title">服务器赞助支持</div>
-                <div class="donate-qrcode">
-                    <div class="qrcode-item">
-                        <img src="微信收款码.png" alt="微信收款">
-                        <p>微信支付</p>
-                    </div>
-                    <div class="qrcode-item">
-                        <img src="支付宝收款码.png" alt="支付宝收款">
-                        <p>支付宝支付</p>
-                    </div>
+        <!-- ===== 赞助玩家榜单（已移除友情合作条目） ===== -->
+        <div class="sponsor-section">
+            <div class="sponsor-board">
+                <div class="star-orbit" id="starOrbit"></div>
+                <div class="sponsor-title">🏆 赞助玩家榜单</div>
+                <div class="sponsor-name">菠菜卷饼（网易服赞助玩家 30元）</div>
+                <div class="sponsor-name">虎青（网易服赞助玩家 13.56元）</div>
+                <div class="sponsor-name">鱼的七秒记忆（网易服赞助玩家 10元）</div>
+                <div class="sponsor-name">PHAGE_A（国际服赞助玩家 9.1元）</div>
+                <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
+            </div>
+        </div>
+        <!-- ===== 赞助玩家榜单结束 ===== -->
+
+        <!-- ===== 独立友情合作框 ===== -->
+        <div class="friend-link-section">
+            <div class="friend-link-board">
+                <div class="friend-title">友情合作</div>
+                <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">
+                    空日噬魂
+                </a>
+                <img src="krsh.webp" alt="空日噬魂" class="friend-logo">
+            </div>
+        </div>
+        <!-- ===== 友情合作框结束 ===== -->
+
+        <!-- ===== 底部 footer ===== -->
+        <div class="footer">
+            <div class="footer-text">
+                <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
+            </div>
+            <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
+        </div>
+        <!-- ===== footer 结束 ===== -->
+
+    </div>
+    <!-- container 结束 -->
+
+    <!-- 赞助弹窗 -->
+    <div class="donate-modal" id="donateModal">
+        <div class="donate-box">
+            <button class="donate-close" onclick="closeDonate()">×</button>
+            <div class="donate-title">服务器赞助支持</div>
+            <div class="donate-qrcode">
+                <div class="qrcode-item">
+                    <img src="微信收款码.png" alt="微信收款">
+                    <p>微信支付</p>
+                </div>
+                <div class="qrcode-item">
+                    <img src="支付宝收款码.png" alt="支付宝收款">
+                    <p>支付宝支付</p>
                 </div>
             </div>
         </div>
     </div>
-    <!-- main-page 结束 -->
 
-    <script>
-        // ============================================================
-        //  1. 火焰粒子系统（原样保留）
-        // ============================================================
-        (function() {
-            const canvas = document.getElementById('fireCanvas');
-            const ctx = canvas.getContext('2d');
-            const splash = document.getElementById('splash');
+    <!-- ===== 新增：视频播放模态框 ===== -->
+    <div class="video-modal" id="videoModal" onclick="closeVideoOnBg(event)">
+        <div class="video-box" onclick="event.stopPropagation();">
+            <button class="video-close" onclick="closeVideo()">✕</button>
+            <video src="vedio.mp4" controls playsinline preload="metadata"></video>
+        </div>
+    </div>
+    <!-- ===== 视频模态框结束 ===== -->
 
-            let W, H;
-            let particles = [];
-            let sparkles = [];
-            let animId = null;
-            let isRunning = true;
+</div>
+<!-- main-page 结束 -->
 
-            const isMobile = window.innerWidth < 768;
-            const PARTICLE_COUNT = isMobile ? 100 : 200;
-            const SPARKLE_COUNT = isMobile ? 30 : 60;
-
-            function resize() {
-                W = canvas.width = window.innerWidth;
-                H = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            class Particle {
-                constructor() { this.reset(); }
-                reset() {
-                    this.x = Math.random() * W;
-                    this.y = H + 20 + Math.random() * 40;
-                    this.size = Math.random() * 28 + 8;
-                    this.speedY = -(Math.random() * 1.8 + 0.6);
-                    this.speedX = (Math.random() - 0.5) * 0.6;
-                    this.hue = Math.random() * 35 + 10;
-                    this.light = Math.random() * 30 + 45;
-                    this.alpha = Math.random() * 0.5 + 0.5;
-                    this.life = 1;
-                    this.decay = Math.random() * 0.004 + 0.002;
-                    this.wobble = Math.random() * 0.03 + 0.01;
-                    this.phase = Math.random() * Math.PI * 2;
-                    this.sizeDecay = Math.random() * 0.006 + 0.004;
-                }
-                update() {
-                    this.y += this.speedY;
-                    this.x += this.speedX + Math.sin(this.phase) * this.wobble;
-                    this.phase += 0.02;
-                    this.size -= this.sizeDecay;
-                    this.life -= this.decay;
-                    this.alpha = this.life * 0.7 + 0.1;
-                    this.light = 45 + this.life * 30;
-                    this.hue = 10 + (1 - this.life) * 35;
-                    if (this.life <= 0 || this.size < 2 || this.y < -50) {
-                        this.reset();
-                        this.x = Math.random() * W;
-                        this.y = H + 10 + Math.random() * 30;
-                        this.size = Math.random() * 28 + 8;
-                        this.life = 1;
-                        this.alpha = Math.random() * 0.5 + 0.5;
-                    }
-                }
-                draw() {
-                    const gradient = ctx.createRadialGradient(
-                        this.x, this.y, 0,
-                        this.x, this.y, this.size * 1.2
-                    );
-                    const a = this.alpha;
-                    const h = this.hue;
-                    const l = this.light;
-                    gradient.addColorStop(0, `hsla(${h + 10}, 100%, ${Math.min(l + 20, 90)}%, ${a})`);
-                    gradient.addColorStop(0.3, `hsla(${h}, 100%, ${l}%, ${a * 0.9})`);
-                    gradient.addColorStop(0.7, `hsla(${h - 10}, 100%, ${l - 15}%, ${a * 0.6})`);
-                    gradient.addColorStop(1, `hsla(${h - 20}, 100%, ${l - 30}%, 0)`);
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size * 1.2, 0, Math.PI * 2);
-                    ctx.fillStyle = gradient;
-                    ctx.fill();
-                }
-            }
-
-            class Sparkle {
-                constructor() { this.reset(); }
-                reset() {
-                    this.x = Math.random() * W;
-                    this.y = H - Math.random() * 100;
-                    this.size = Math.random() * 5 + 2;
-                    this.speedY = -(Math.random() * 4 + 2);
-                    this.speedX = (Math.random() - 0.5) * 2.5;
-                    this.hue = Math.random() * 25 + 30;
-                    this.light = Math.random() * 30 + 55;
-                    this.alpha = Math.random() * 0.7 + 0.3;
-                    this.life = 1;
-                    this.decay = Math.random() * 0.015 + 0.008;
-                    this.gravity = 0.02;
-                }
-                update() {
-                    this.y += this.speedY;
-                    this.speedY += this.gravity;
-                    this.x += this.speedX;
-                    this.life -= this.decay;
-                    this.alpha = this.life * 0.8;
-                    this.size *= 0.995;
-                    if (this.life <= 0 || this.size < 0.5 || this.y < -30) {
-                        this.reset();
-                        this.y = H - Math.random() * 80;
-                        this.x = Math.random() * W;
-                        this.life = 1;
-                    }
-                }
-                draw() {
-                    const a = this.alpha;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `hsla(${this.hue}, 100%, ${this.light}%, ${a})`;
-                    ctx.fill();
-                    ctx.shadowColor = `hsla(${this.hue}, 100%, 70%, ${a * 0.3})`;
-                    ctx.shadowBlur = 10;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
-            }
-
-            function initParticles() {
-                particles = [];
-                for (let i = 0; i < PARTICLE_COUNT; i++) {
-                    const p = new Particle();
-                    p.y = Math.random() * H * 0.6 + H * 0.3;
-                    p.x = Math.random() * W;
-                    p.life = Math.random() * 0.8 + 0.2;
-                    p.alpha = p.life * 0.6;
-                    particles.push(p);
-                }
-                sparkles = [];
-                for (let i = 0; i < SPARKLE_COUNT; i++) {
-                    const s = new Sparkle();
-                    s.y = Math.random() * H * 0.5 + H * 0.3;
-                    s.x = Math.random() * W;
-                    s.life = Math.random() * 0.6 + 0.2;
-                    s.alpha = s.life * 0.7;
-                    sparkles.push(s);
-                }
-            }
-            initParticles();
-
-            function draw() {
-                if (!isRunning) return;
-                ctx.clearRect(0, 0, W, H);
-                for (const p of particles) { p.update();
-                    p.draw(); }
-                for (const s of sparkles) { s.update();
-                    s.draw(); }
-                const grad = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, H * 0.6);
-                grad.addColorStop(0, 'rgba(255, 120, 20, 0.08)');
-                grad.addColorStop(0.5, 'rgba(255, 80, 10, 0.04)');
-                grad.addColorStop(1, 'rgba(255, 0, 0, 0)');
-                ctx.fillStyle = grad;
-                ctx.fillRect(0, 0, W, H);
-                animId = requestAnimationFrame(draw);
-            }
-
-            function startAnimation() {
-                if (animId) return;
-                isRunning = true;
-                draw();
-            }
-
-            function stopAnimation() {
-                isRunning = false;
-                if (animId) {
-                    cancelAnimationFrame(animId);
-                    animId = null;
-                }
-            }
-
-            const observer = new MutationObserver(() => {
-                if (splash.classList.contains('hidden')) {
-                    stopAnimation();
-                } else {
-                    startAnimation();
-                }
-            });
-            observer.observe(splash, { attributes: true, attributeFilter: ['class'] });
-
-            startAnimation();
-
-            window.addEventListener('resize', () => {
-                resize();
-                for (const p of particles) {
-                    p.x = Math.random() * W;
-                    p.y = Math.random() * H * 0.5 + H * 0.3;
-                }
-                for (const s of sparkles) {
-                    s.x = Math.random() * W;
-                    s.y = Math.random() * H * 0.5 + H * 0.3;
-                }
-            });
-
-            window.__stopFire = stopAnimation;
-        })();
-
-        // ============================================================
-        //  2. 原有交互逻辑
-        // ============================================================
+<script>
+    // ============================================================
+    //  1. 火焰粒子系统（原样保留）
+    // ============================================================
+    (function() {
+        const canvas = document.getElementById('fireCanvas');
+        const ctx = canvas.getContext('2d');
         const splash = document.getElementById('splash');
-        const mainPage = document.getElementById('mainPage');
-        const startBtn = document.getElementById('startBtn');
 
-        startBtn.addEventListener('click', () => {
-            if (window.__stopFire) window.__stopFire();
-            splash.classList.add('hidden');
-            setTimeout(() => {
-                mainPage.style.display = 'block';
-                window.scrollTo(0, 0);
-            }, 800);
-        });
+        let W, H;
+        let particles = [];
+        let sparkles = [];
+        let animId = null;
+        let isRunning = true;
 
-        const menuBtn = document.getElementById('menuBtn');
-        const sidebar = document.getElementById('sidebar');
-        const mask = document.getElementById('mask');
-        const toolMenu = document.getElementById('toolMenu');
-        const toolSub = document.getElementById('toolSub');
-        const launcherMenu = document.getElementById('launcherMenu');
-        const launcherSub = document.getElementById('launcherSub');
+        const isMobile = window.innerWidth < 768;
+        const PARTICLE_COUNT = isMobile ? 100 : 200;
+        const SPARKLE_COUNT = isMobile ? 30 : 60;
 
-        menuBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('show');
-            mask.classList.toggle('show');
-        });
-
-        mask.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-            mask.classList.remove('show');
-        });
-
-        toolMenu.addEventListener('click', () => {
-            toolSub.classList.toggle('show');
-        });
-
-        launcherMenu.addEventListener('click', () => {
-            launcherSub.classList.toggle('show');
-        });
-
-        function goHome() {
-            window.scrollTo(0, 0);
-            sidebar.classList.remove('show');
-            mask.classList.remove('show');
+        function resize() {
+            W = canvas.width = window.innerWidth;
+            H = canvas.height = window.innerHeight;
         }
+        window.addEventListener('resize', resize);
+        resize();
 
-        function openDonate() {
-            document.getElementById('donateModal').classList.add('show');
-        }
-
-        function closeDonate() {
-            document.getElementById('donateModal').classList.remove('show');
-        }
-
-        function joinStudioGroup() {
-            window.open(
-                "https://qun.qq.com/universal-share/share?ac=1&authKey=YjihLgMMRmflo%2BB833GHJjTAXFGJCHn2%2BzRqMzMLXQEKQwzV9ZNw1S0c49OJwWrQ&busi_data=eyJncm91cENvZGUiOiIxMDQyNzc0OTE5IiwidG9rZW4iOiJ5bzQzbDlVT0ZLZWFWWlpPOU1EV2NTUEMrcitnT3pXa3lCWk9GR3Rla2JMMzlnbXRxNldwY0U5UjJHZnhRM0tlIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=tZCRyt3EV0s6YJ0UzAE8UALqdupNIMPxBOTbEVSrUPiy1NkXd7GesD3-f8FNMInFpjMAn6XYeuKiaYe-_lcEiw&svctype=4&tempid=h5_group_info",
-                "_blank"
-            );
-        }
-
-        // ============================================================
-        //  3. 生成星光
-        // ============================================================
-        window.onload = function() {
-            document.body.style.opacity = 0;
-            let op = 0;
-            const timer = setInterval(() => {
-                if (op >= 1) clearInterval(timer);
-                document.body.style.opacity = op;
-                op += 0.08;
-            }, 30);
-
-            generateStars();
-            window.addEventListener('resize', generateStars);
-        };
-
-        function generateStars() {
-            const orbit = document.getElementById('starOrbit');
-            if (!orbit) return;
-            orbit.innerHTML = '';
-
-            const isMobile = window.innerWidth < 768;
-            const isSmall = window.innerWidth < 480;
-
-            let count = 12;
-            if (isSmall) count = 6;
-            else if (isMobile) count = 8;
-
-            let radius = 310;
-            if (isSmall) radius = 150;
-            else if (isMobile) radius = 210;
-
-            const starChar = '✦';
-
-            for (let i = 0; i < count; i++) {
-                const angle = (i / count) * 360;
-                const rad = (angle * Math.PI) / 180;
-                const x = Math.cos(rad) * radius;
-                const y = Math.sin(rad) * radius;
-
-                const span = document.createElement('span');
-                span.className = 'star';
-                span.textContent = starChar;
-                span.style.setProperty('--i', i);
-                span.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-                const jitter = 4;
-                span.style.marginLeft = (Math.random() - 0.5) * jitter + 'px';
-                span.style.marginTop = (Math.random() - 0.5) * jitter + 'px';
-                orbit.appendChild(span);
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * W;
+                this.y = H + 20 + Math.random() * 40;
+                this.size = Math.random() * 28 + 8;
+                this.speedY = -(Math.random() * 1.8 + 0.6);
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.hue = Math.random() * 35 + 10;
+                this.light = Math.random() * 30 + 45;
+                this.alpha = Math.random() * 0.5 + 0.5;
+                this.life = 1;
+                this.decay = Math.random() * 0.004 + 0.002;
+                this.wobble = Math.random() * 0.03 + 0.01;
+                this.phase = Math.random() * Math.PI * 2;
+                this.sizeDecay = Math.random() * 0.006 + 0.004;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.phase) * this.wobble;
+                this.phase += 0.02;
+                this.size -= this.sizeDecay;
+                this.life -= this.decay;
+                this.alpha = this.life * 0.7 + 0.1;
+                this.light = 45 + this.life * 30;
+                this.hue = 10 + (1 - this.life) * 35;
+                if (this.life <= 0 || this.size < 2 || this.y < -50) {
+                    this.reset();
+                    this.x = Math.random() * W;
+                    this.y = H + 10 + Math.random() * 30;
+                    this.size = Math.random() * 28 + 8;
+                    this.life = 1;
+                    this.alpha = Math.random() * 0.5 + 0.5;
+                }
+            }
+            draw() {
+                const gradient = ctx.createRadialGradient(
+                    this.x, this.y, 0,
+                    this.x, this.y, this.size * 1.2
+                );
+                const a = this.alpha;
+                const h = this.hue;
+                const l = this.light;
+                gradient.addColorStop(0, `hsla(${h + 10}, 100%, ${Math.min(l + 20, 90)}%, ${a})`);
+                gradient.addColorStop(0.3, `hsla(${h}, 100%, ${l}%, ${a * 0.9})`);
+                gradient.addColorStop(0.7, `hsla(${h - 10}, 100%, ${l - 15}%, ${a * 0.6})`);
+                gradient.addColorStop(1, `hsla(${h - 20}, 100%, ${l - 30}%, 0)`);
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size * 1.2, 0, Math.PI * 2);
+                ctx.fillStyle = gradient;
+                ctx.fill();
             }
         }
-    </script>
+
+        class Sparkle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * W;
+                this.y = H - Math.random() * 100;
+                this.size = Math.random() * 5 + 2;
+                this.speedY = -(Math.random() * 4 + 2);
+                this.speedX = (Math.random() - 0.5) * 2.5;
+                this.hue = Math.random() * 25 + 30;
+                this.light = Math.random() * 30 + 55;
+                this.alpha = Math.random() * 0.7 + 0.3;
+                this.life = 1;
+                this.decay = Math.random() * 0.015 + 0.008;
+                this.gravity = 0.02;
+            }
+            update() {
+                this.y += this.speedY;
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.life -= this.decay;
+                this.alpha = this.life * 0.8;
+                this.size *= 0.995;
+                if (this.life <= 0 || this.size < 0.5 || this.y < -30) {
+                    this.reset();
+                    this.y = H - Math.random() * 80;
+                    this.x = Math.random() * W;
+                    this.life = 1;
+                }
+            }
+            draw() {
+                const a = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `hsla(${this.hue}, 100%, ${this.light}%, ${a})`;
+                ctx.fill();
+                ctx.shadowColor = `hsla(${this.hue}, 100%, 70%, ${a * 0.3})`;
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const p = new Particle();
+                p.y = Math.random() * H * 0.6 + H * 0.3;
+                p.x = Math.random() * W;
+                p.life = Math.random() * 0.8 + 0.2;
+                p.alpha = p.life * 0.6;
+                particles.push(p);
+            }
+            sparkles = [];
+            for (let i = 0; i < SPARKLE_COUNT; i++) {
+                const s = new Sparkle();
+                s.y = Math.random() * H * 0.5 + H * 0.3;
+                s.x = Math.random() * W;
+                s.life = Math.random() * 0.6 + 0.2;
+                s.alpha = s.life * 0.7;
+                sparkles.push(s);
+            }
+        }
+        initParticles();
+
+        function draw() {
+            if (!isRunning) return;
+            ctx.clearRect(0, 0, W, H);
+            for (const p of particles) { p.update();
+                p.draw(); }
+            for (const s of sparkles) { s.update();
+                s.draw(); }
+            const grad = ctx.createRadialGradient(W / 2, H, 0, W / 2, H, H * 0.6);
+            grad.addColorStop(0, 'rgba(255, 120, 20, 0.08)');
+            grad.addColorStop(0.5, 'rgba(255, 80, 10, 0.04)');
+            grad.addColorStop(1, 'rgba(255, 0, 0, 0)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+            animId = requestAnimationFrame(draw);
+        }
+
+        function startAnimation() {
+            if (animId) return;
+            isRunning = true;
+            draw();
+        }
+
+        function stopAnimation() {
+            isRunning = false;
+            if (animId) {
+                cancelAnimationFrame(animId);
+                animId = null;
+            }
+        }
+
+        const observer = new MutationObserver(() => {
+            if (splash.classList.contains('hidden')) {
+                stopAnimation();
+            } else {
+                startAnimation();
+            }
+        });
+        observer.observe(splash, { attributes: true, attributeFilter: ['class'] });
+
+        startAnimation();
+
+        window.addEventListener('resize', () => {
+            resize();
+            for (const p of particles) {
+                p.x = Math.random() * W;
+                p.y = Math.random() * H * 0.5 + H * 0.3;
+            }
+            for (const s of sparkles) {
+                s.x = Math.random() * W;
+                s.y = Math.random() * H * 0.5 + H * 0.3;
+            }
+        });
+
+        window.__stopFire = stopAnimation;
+    })();
+
+    // ============================================================
+    //  2. 原有交互逻辑
+    // ============================================================
+    const splash = document.getElementById('splash');
+    const mainPage = document.getElementById('mainPage');
+    const startBtn = document.getElementById('startBtn');
+
+    startBtn.addEventListener('click', () => {
+        if (window.__stopFire) window.__stopFire();
+        splash.classList.add('hidden');
+        setTimeout(() => {
+            mainPage.style.display = 'block';
+            window.scrollTo(0, 0);
+        }, 800);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const mask = document.getElementById('mask');
+    const toolMenu = document.getElementById('toolMenu');
+    const toolSub = document.getElementById('toolSub');
+    const launcherMenu = document.getElementById('launcherMenu');
+    const launcherSub = document.getElementById('launcherSub');
+
+    menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+        mask.classList.toggle('show');
+    });
+
+    mask.addEventListener('click', () => {
+        sidebar.classList.remove('show');
+        mask.classList.remove('show');
+    });
+
+    toolMenu.addEventListener('click', () => {
+        toolSub.classList.toggle('show');
+    });
+
+    launcherMenu.addEventListener('click', () => {
+        launcherSub.classList.toggle('show');
+    });
+
+    function goHome() {
+        window.scrollTo(0, 0);
+        sidebar.classList.remove('show');
+        mask.classList.remove('show');
+    }
+
+    function openDonate() {
+        document.getElementById('donateModal').classList.add('show');
+    }
+
+    function closeDonate() {
+        document.getElementById('donateModal').classList.remove('show');
+    }
+
+    function joinStudioGroup() {
+        window.open(
+            "https://qun.qq.com/universal-share/share?ac=1&authKey=YjihLgMMRmflo%2BB833GHJjTAXFGJCHn2%2BzRqMzMLXQEKQwzV9ZNw1S0c49OJwWrQ&busi_data=eyJncm91cENvZGUiOiIxMDQyNzc0OTE5IiwidG9rZW4iOiJ5bzQzbDlVT0ZLZWFWWlpPOU1EV2NTUEMrcitnT3pXa3lCWk9GR3Rla2JMMzlnbXRxNldwY0U5UjJHZnhRM0tlIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=tZCRyt3EV0s6YJ0UzAE8UALqdupNIMPxBOTbEVSrUPiy1NkXd7GesD3-f8FNMInFpjMAn6XYeuKiaYe-_lcEiw&svctype=4&tempid=h5_group_info",
+            "_blank"
+        );
+    }
+
+    // ============================================================
+    //  3. 视频模态框控制（新增）
+    // ============================================================
+    const videoModal = document.getElementById('videoModal');
+    const videoEl = videoModal.querySelector('video');
+
+    function openVideo() {
+        videoModal.classList.add('show');
+        // 加载并播放
+        if (videoEl) {
+            videoEl.load();
+            videoEl.play().catch(() => { /* 自动播放被阻止，用户可手动点击播放 */ });
+        }
+        // 禁止页面滚动
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeVideo() {
+        videoModal.classList.remove('show');
+        if (videoEl) {
+            videoEl.pause();
+            // 不重置 currentTime，让用户下次打开可以继续看（也可重置，按需）
+            // videoEl.currentTime = 0;
+        }
+        document.body.style.overflow = '';
+    }
+
+    // 点击背景关闭
+    function closeVideoOnBg(e) {
+        if (e.target === videoModal) {
+            closeVideo();
+        }
+    }
+
+    // ESC 键关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && videoModal.classList.contains('show')) {
+            closeVideo();
+        }
+    });
+
+    // 视频播放结束时自动关闭？（可选），这里不自动关闭，让用户手动关闭
+
+    // ============================================================
+    //  4. 生成星光
+    // ============================================================
+    window.onload = function() {
+        document.body.style.opacity = 0;
+        let op = 0;
+        const timer = setInterval(() => {
+            if (op >= 1) clearInterval(timer);
+            document.body.style.opacity = op;
+            op += 0.08;
+        }, 30);
+
+        generateStars();
+        window.addEventListener('resize', generateStars);
+    };
+
+    function generateStars() {
+        const orbit = document.getElementById('starOrbit');
+        if (!orbit) return;
+        orbit.innerHTML = '';
+
+        const isMobile = window.innerWidth < 768;
+        const isSmall = window.innerWidth < 480;
+
+        let count = 12;
+        if (isSmall) count = 6;
+        else if (isMobile) count = 8;
+
+        let radius = 310;
+        if (isSmall) radius = 150;
+        else if (isMobile) radius = 210;
+
+        const starChar = '✦';
+
+        for (let i = 0; i < count; i++) {
+            const angle = (i / count) * 360;
+            const rad = (angle * Math.PI) / 180;
+            const x = Math.cos(rad) * radius;
+            const y = Math.sin(rad) * radius;
+
+            const span = document.createElement('span');
+            span.className = 'star';
+            span.textContent = starChar;
+            span.style.setProperty('--i', i);
+            span.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+            const jitter = 4;
+            span.style.marginLeft = (Math.random() - 0.5) * jitter + 'px';
+            span.style.marginTop = (Math.random() - 0.5) * jitter + 'px';
+            orbit.appendChild(span);
+        }
+    }
+</script>
 </body>
 </html>
