@@ -851,7 +851,6 @@
                 padding: 10px 28px;
                 font-size: 1rem;
             }
-            /* 宣传片响应式 */
             .video-title {
                 font-size: 1.3rem;
             }
@@ -1723,11 +1722,24 @@
         </div>
     </div>
 
-    <!-- ===== 新增：视频播放模态框 ===== -->
+    <!-- ===== 新增：视频播放模态框（无 src，由 JS 动态加载） ===== -->
     <div class="video-modal" id="videoModal" onclick="closeVideoOnBg(event)">
         <div class="video-box" onclick="event.stopPropagation();">
             <button class="video-close" onclick="closeVideo()">✕</button>
-            <video src="vedio.mp4" controls playsinline preload="metadata"></video>
+            <!-- 关键：移除 src，添加 controlsList 和 oncontextmenu -->
+            <video 
+                controls 
+                playsinline 
+                preload="metadata" 
+                controlsList="nodownload" 
+                disablePictureInPicture 
+                oncontextmenu="return false;"
+                id="dynamicVideo"
+            ></video>
+            <!-- 加载提示（可选） -->
+            <div id="videoLoadingHint" style="color: #aaa; text-align: center; margin-top: 10px; font-size: 0.9rem; display: none;">
+                <i class="fas fa-spinner fa-spin"></i> 视频加载中...
+            </div>
         </div>
     </div>
     <!-- ===== 视频模态框结束 ===== -->
@@ -1999,30 +2011,64 @@
     }
 
     // ============================================================
-    //  3. 视频模态框控制（新增）
+    //  3. 视频模态框 —— 动态加载（方案3）+ controlsList + 禁用右键
     // ============================================================
     const videoModal = document.getElementById('videoModal');
-    const videoEl = videoModal.querySelector('video');
+    const videoEl = document.getElementById('dynamicVideo');
+    const loadingHint = document.getElementById('videoLoadingHint');
+    let blobUrl = null; // 用于释放
 
-    function openVideo() {
+    async function openVideo() {
+        // 显示模态框
         videoModal.classList.add('show');
-        // 加载并播放
-        if (videoEl) {
-            videoEl.load();
-            videoEl.play().catch(() => { /* 自动播放被阻止，用户可手动点击播放 */ });
-        }
-        // 禁止页面滚动
         document.body.style.overflow = 'hidden';
+
+        // 显示加载提示
+        if (loadingHint) loadingHint.style.display = 'block';
+
+        try {
+            // 从服务器获取视频文件（同目录）
+            const response = await fetch('vedio.mp4');
+            if (!response.ok) throw new Error('视频文件加载失败 (HTTP ' + response.status + ')');
+
+            // 转为 Blob
+            const blob = await response.blob();
+            // 创建对象 URL
+            blobUrl = URL.createObjectURL(blob);
+
+            // 赋值给 video
+            videoEl.src = blobUrl;
+
+            // 等待元数据加载后再播放
+            await videoEl.load();
+            await videoEl.play();
+        } catch (error) {
+            console.error('视频加载出错:', error);
+            alert('视频加载失败，请检查网络或文件是否存在。');
+            // 关闭模态框
+            closeVideo();
+            return;
+        } finally {
+            if (loadingHint) loadingHint.style.display = 'none';
+        }
     }
 
     function closeVideo() {
-        videoModal.classList.remove('show');
+        // 暂停视频
         if (videoEl) {
             videoEl.pause();
-            // 不重置 currentTime，让用户下次打开可以继续看（也可重置，按需）
-            // videoEl.currentTime = 0;
+            // 清除 src，释放内存
+            if (blobUrl) {
+                URL.revokeObjectURL(blobUrl);
+                blobUrl = null;
+            }
+            videoEl.src = '';
+            videoEl.load(); // 重置
         }
+        // 隐藏模态框
+        videoModal.classList.remove('show');
         document.body.style.overflow = '';
+        if (loadingHint) loadingHint.style.display = 'none';
     }
 
     // 点击背景关闭
@@ -2038,8 +2084,6 @@
             closeVideo();
         }
     });
-
-    // 视频播放结束时自动关闭？（可选），这里不自动关闭，让用户手动关闭
 
     // ============================================================
     //  4. 生成星光
