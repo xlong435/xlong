@@ -348,6 +348,77 @@
             color: #FFD700;
         }
 
+        /* ===== 侧边栏 · 龙宝AI助手 ===== */
+        .ai-side-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0 4px;
+        }
+
+        .ai-side-btn {
+            width: 112px;
+            height: 112px;
+            border-radius: 50%;
+            object-fit: contain;
+            display: block;
+            cursor: pointer;
+            padding: 12px;
+            background: radial-gradient(circle at 50% 40%, rgba(60, 42, 24, 0.9), rgba(25, 18, 12, 0.95));
+            border: 3px solid #FFD700;
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.25), inset 0 0 16px rgba(255, 215, 0, 0.06);
+            animation: aiSidePulse 2s ease-in-out infinite alternate;
+            transition: transform 0.25s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .ai-side-btn:hover {
+            transform: scale(1.08);
+            border-color: #FFE44D;
+            box-shadow: 0 0 36px rgba(255, 215, 0, 0.6), 0 0 70px rgba(255, 170, 0, 0.3), inset 0 0 20px rgba(255, 215, 0, 0.12);
+        }
+
+        .ai-side-btn:active {
+            transform: scale(0.94);
+        }
+
+        @keyframes aiSidePulse {
+            0% {
+                box-shadow: 0 0 14px rgba(255, 215, 0, 0.2), inset 0 0 12px rgba(255, 215, 0, 0.05);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.55), 0 0 55px rgba(255, 170, 0, 0.22), inset 0 0 20px rgba(255, 215, 0, 0.10);
+            }
+        }
+
+        .ai-side-tip {
+            font-size: 0.78rem;
+            color: rgba(255, 215, 0, 0.55);
+            letter-spacing: 1px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .ai-side-btn {
+                width: 92px;
+                height: 92px;
+                padding: 10px;
+            }
+            .ai-side-tip {
+                font-size: 0.72rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ai-side-btn {
+                width: 78px;
+                height: 78px;
+                padding: 8px;
+                border-width: 2px;
+            }
+        }
+
         .container {
             max-width: 1200px;
             margin: 70px auto 0;
@@ -450,7 +521,7 @@
             line-height: 1.5;
         }
 
-        /* ========== 新增：服务器宣传片框 ========== */
+        /* ========== 服务器宣传片框 ========== */
         .video-section {
             margin: 30px auto 10px;
             max-width: 820px;
@@ -1322,99 +1393,6 @@
             margin: 0 4px;
         }
 
-        /* ================================================================
-           龙宝AI助手模块
-           ================================================================ */
-        .ai-section {
-            margin: 40px auto 30px;
-            max-width: 820px;
-            position: relative;
-        }
-
-        .ai-board {
-            position: relative;
-            background: rgba(20, 14, 10, 0.92);
-            border: 3px solid #FFD700;
-            border-radius: 16px;
-            padding: 28px 30px 34px;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.08), 0 0 80px rgba(255, 215, 0, 0.04), inset 0 0 30px rgba(255, 215, 0, 0.03);
-            transition: box-shadow 0.4s ease;
-            text-align: center;
-        }
-
-        .ai-board::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 18px;
-            background: radial-gradient(ellipse at 70% 30%, rgba(255, 215, 0, 0.05), transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .ai-board > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .ai-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #FFD700;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .ai-title i {
-            font-size: 1.3rem;
-            color: #FFD700;
-        }
-
-        .ai-icon {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            margin: 10px auto 15px;
-            display: block;
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
-        }
-
-        .ai-desc {
-            font-size: 1.2rem;
-            color: #ccc;
-            margin-bottom: 20px;
-            line-height: 1.6;
-            letter-spacing: 1px;
-        }
-
-        .ai-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 40px;
-            background: rgba(25, 18, 12, 0.85);
-            border: 2.5px solid #FFD700;
-            border-radius: 50px;
-            color: #FFD700;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.06), inset 0 0 20px rgba(255, 215, 0, 0.02);
-            cursor: pointer;
-        }
-
-        .ai-btn:hover {
-            background: rgba(255, 215, 0, 0.15);
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.15);
-        }
-
         /* 响应式 */
         @media (max-width: 768px) {
             .download-section {
@@ -1467,29 +1445,6 @@
                 width: 140px;
                 max-width: 50%;
             }
-            /* AI 模块响应式 */
-            .ai-section {
-                margin: 30px auto 20px;
-            }
-            .ai-board {
-                padding: 20px 16px 24px;
-                border-radius: 14px;
-            }
-            .ai-title {
-                font-size: 1.2rem;
-                margin-bottom: 16px;
-            }
-            .ai-icon {
-                width: 70px;
-                height: 70px;
-            }
-            .ai-desc {
-                font-size: 1rem;
-            }
-            .ai-btn {
-                font-size: 1rem;
-                padding: 10px 30px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1532,25 +1487,6 @@
                 width: 100px;
                 max-width: 40%;
             }
-            /* AI 模块响应式 */
-            .ai-board {
-                padding: 14px 12px 18px;
-                border-width: 2px;
-            }
-            .ai-title {
-                font-size: 1rem;
-            }
-            .ai-icon {
-                width: 55px;
-                height: 55px;
-            }
-            .ai-desc {
-                font-size: 0.9rem;
-            }
-            .ai-btn {
-                font-size: 0.9rem;
-                padding: 8px 20px;
-            }
         }
 
         @media (min-width: 1200px) {
@@ -1585,21 +1521,6 @@
             }
             .friend-logo {
                 width: 220px;
-            }
-            /* AI 模块响应式 */
-            .ai-title {
-                font-size: 1.7rem;
-            }
-            .ai-icon {
-                width: 120px;
-                height: 120px;
-            }
-            .ai-desc {
-                font-size: 1.4rem;
-            }
-            .ai-btn {
-                font-size: 1.4rem;
-                padding: 16px 50px;
             }
         }
 
@@ -1727,6 +1648,18 @@
                     <span>网易版 MC</span>
                 </div>
             </div>
+
+            <!-- ===== 新增：侧边栏 · 龙宝AI助手 ===== -->
+            <div class="menu-item" id="aiMenu">🐉 龙宝AI助手</div>
+            <div class="submenu" id="aiSub">
+                <div class="ai-side-wrap">
+                    <img src="ai.svg" alt="龙宝AI助手" class="ai-side-btn"
+                         onclick="window.open('https://ai.longvalley.cn/','_blank')">
+                    <div class="ai-side-tip">有不会的欢迎来问龙宝喵~</div>
+                </div>
+            </div>
+            <!-- ===== 龙宝AI助手结束 ===== -->
+
         </div>
         <div class="mask" id="mask"></div>
         <div class="container">
@@ -1747,7 +1680,7 @@
                 <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
             </div>
 
-            <!-- ===== 新增：服务器宣传片框 ===== -->
+            <!-- ===== 服务器宣传片框 ===== -->
             <div class="video-section">
                 <div class="video-board">
                     <div class="video-title">📹 服务器宣传片</div>
@@ -1789,19 +1722,6 @@
                 </div>
             </div>
 
-            <!-- ===== 新增：龙宝AI助手模块 ===== -->
-            <div class="ai-section">
-                <div class="ai-board">
-                    <div class="ai-title"><i class="fas fa-robot"></i> 龙宝AI助手</div>
-                    <img src="ai.svg" alt="龙宝AI助手" class="ai-icon">
-                    <div class="ai-desc">有不会的欢迎来问龙宝喵~</div>
-                    <a href="https://ai.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="ai-btn">
-                        <i class="fas fa-comments"></i> 立即体验
-                    </a>
-                </div>
-            </div>
-            <!-- ===== 龙宝AI助手模块结束 ===== -->
-
             <!-- ===== 下载按钮模块 ===== -->
             <div class="download-section">
                 <div class="download-board">
@@ -1829,7 +1749,7 @@
         </div>
         <!-- ===== 下载模块结束 ===== -->
 
-        <!-- ===== 赞助玩家榜单（已移除友情合作条目） ===== -->
+        <!-- ===== 赞助玩家榜单 ===== -->
         <div class="sponsor-section">
             <div class="sponsor-board">
                 <div class="star-orbit" id="starOrbit"></div>
@@ -1885,11 +1805,10 @@
         </div>
     </div>
 
-    <!-- ===== 新增：视频播放模态框（无 src，由 JS 动态加载） ===== -->
+    <!-- ===== 视频播放模态框（无 src，由 JS 动态加载） ===== -->
     <div class="video-modal" id="videoModal" onclick="closeVideoOnBg(event)">
         <div class="video-box" onclick="event.stopPropagation();">
             <button class="video-close" onclick="closeVideo()">✕</button>
-            <!-- 关键：移除 src，添加 controlsList 和 oncontextmenu -->
             <video 
                 controls 
                 playsinline 
@@ -1899,7 +1818,6 @@
                 oncontextmenu="return false;"
                 id="dynamicVideo"
             ></video>
-            <!-- 加载提示（可选） -->
             <div id="videoLoadingHint" style="color: #aaa; text-align: center; margin-top: 10px; font-size: 0.9rem; display: none;">
                 <i class="fas fa-spinner fa-spin"></i> 视频加载中...
             </div>
@@ -2133,6 +2051,8 @@
     const toolSub = document.getElementById('toolSub');
     const launcherMenu = document.getElementById('launcherMenu');
     const launcherSub = document.getElementById('launcherSub');
+    const aiMenu = document.getElementById('aiMenu');
+    const aiSub = document.getElementById('aiSub');
 
     menuBtn.addEventListener('click', () => {
         sidebar.classList.toggle('show');
@@ -2150,6 +2070,11 @@
 
     launcherMenu.addEventListener('click', () => {
         launcherSub.classList.toggle('show');
+    });
+
+    // 龙宝AI助手：点击展开 / 收起
+    aiMenu.addEventListener('click', () => {
+        aiSub.classList.toggle('show');
     });
 
     function goHome() {
@@ -2174,41 +2099,33 @@
     }
 
     // ============================================================
-    //  3. 视频模态框 —— 动态加载（方案3）+ controlsList + 禁用右键
+    //  3. 视频模态框 —— 动态加载 + controlsList + 禁用右键
     // ============================================================
     const videoModal = document.getElementById('videoModal');
     const videoEl = document.getElementById('dynamicVideo');
     const loadingHint = document.getElementById('videoLoadingHint');
-    let blobUrl = null; // 用于释放
+    let blobUrl = null;
 
     async function openVideo() {
-        // 显示模态框
         videoModal.classList.add('show');
         document.body.style.overflow = 'hidden';
 
-        // 显示加载提示
         if (loadingHint) loadingHint.style.display = 'block';
 
         try {
-            // 从服务器获取视频文件（同目录）
             const response = await fetch('vedio.mp4');
             if (!response.ok) throw new Error('视频文件加载失败 (HTTP ' + response.status + ')');
 
-            // 转为 Blob
             const blob = await response.blob();
-            // 创建对象 URL
             blobUrl = URL.createObjectURL(blob);
 
-            // 赋值给 video
             videoEl.src = blobUrl;
 
-            // 等待元数据加载后再播放
             await videoEl.load();
             await videoEl.play();
         } catch (error) {
             console.error('视频加载出错:', error);
             alert('视频加载失败，请检查网络或文件是否存在。');
-            // 关闭模态框
             closeVideo();
             return;
         } finally {
@@ -2217,31 +2134,26 @@
     }
 
     function closeVideo() {
-        // 暂停视频
         if (videoEl) {
             videoEl.pause();
-            // 清除 src，释放内存
             if (blobUrl) {
                 URL.revokeObjectURL(blobUrl);
                 blobUrl = null;
             }
             videoEl.src = '';
-            videoEl.load(); // 重置
+            videoEl.load();
         }
-        // 隐藏模态框
         videoModal.classList.remove('show');
         document.body.style.overflow = '';
         if (loadingHint) loadingHint.style.display = 'none';
     }
 
-    // 点击背景关闭
     function closeVideoOnBg(e) {
         if (e.target === videoModal) {
             closeVideo();
         }
     }
 
-    // ESC 键关闭
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && videoModal.classList.contains('show')) {
             closeVideo();
