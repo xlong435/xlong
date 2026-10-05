@@ -113,20 +113,14 @@
             pointer-events: none;
             transition: opacity 1s ease-in-out;
             will-change: opacity;
-            /* 关键：让每个视频层自带不透明底，叠化时不会叠加出暗色 */
-            background-color: #0f1a24;
         }
 
         .bg-video.active {
             opacity: 1;
         }
 
-        /* 正在淡出的层压在下层，保证画面始终由不透明层托底 */
-        .bg-video.fading-out {
-            z-index: 1;
-        }
-
-        /* 正在淡入的层盖在最上面 */
+        /* 淡入的层始终盖在淡出层之上：
+           叠化时画面由上层覆盖，不会出现两层半透明叠加导致的忽明忽暗 */
         .bg-video.fading-in {
             z-index: 2;
         }
@@ -1637,17 +1631,15 @@
         const fadingOut = bgCurrent;
         const fadingIn = bgNext;
 
-        // 淡出层保持完全不透明压在下面，淡入层盖在上面渐显，
-        // 这样两层不会同时半透明叠出暗色。
-        fadingOut.classList.add('fading-out');
-        fadingOut.classList.remove('fading-in');
-        fadingIn.classList.remove('fading-out');
+        // 淡入层放到最上层，避免两层同时半透明时透出深色底
         fadingIn.classList.add('fading-in');
+        fadingOut.classList.remove('fading-in');
 
-        // 备用视频从头播放，并淡入
+        // 备用视频从头播放，并淡入；当前视频同步淡出（正常交叉淡化）
         try { fadingIn.currentTime = 0; } catch (e) {}
         safePlay(fadingIn);
         fadingIn.classList.add('active');
+        fadingOut.classList.remove('active');
 
         // 交换角色，让下一轮继续用同一个循环
         bgCurrent = fadingIn;
@@ -1656,7 +1648,6 @@
         // 等过渡结束后，把刚淡出的那个归零，准备下一轮淡入
         setTimeout(() => {
             resetVideo(fadingOut);
-            fadingOut.classList.remove('fading-out');
             isCrossfading = false;
         }, CROSSFADE_MS + 100);
     }
