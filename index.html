@@ -1285,7 +1285,7 @@
         <!-- ===== 背景视频层 ===== -->
         <div class="bg-video-wrap" aria-hidden="true">
             <video class="bg-video" id="bgVideoA" src="minecraft.mp4" muted playsinline preload="auto"></video>
-            <video class="bg-video" id="bgVideoB" src="minecraft2.mp4" muted playsinline preload="auto"></video>
+            <video class="bg-video" id="bgVideoB" src="minecraft.mp4" muted playsinline preload="auto"></video>
             <div class="bg-overlay"></div>
         </div>
 
@@ -1588,92 +1588,107 @@
     }
 
     // ============================================================
-    //  2. 背景双视频叠化循环（提前交叉淡化，彻底告别黑屏）
+    //  2. 背景单视频自我叠化循环
+    //     只有 1 个视频（minecraft.mp4），用 A/B 两个 <video> 播放同一个源，
+    //     视频即将结束时提前交叉淡化：B 淡入的同时 A 淡出，
+    //     完成后 A 归零待命，如此往复，做到无黑屏、无缝衔接。
     // ============================================================
     const bgVideoA = document.getElementById('bgVideoA');
     const bgVideoB = document.getElementById('bgVideoB');
 
-    let bgCurrent = bgVideoA;
-    let bgNext = bgVideoB;
+    const CROSSFADE_MS = 1000;          // 与 CSS transition 时长保持一致
+    const CROSSFADE_LEAD = 1.2;         // 提前 1.2 秒开始过渡
+
+    let bgCurrent = bgVideoA;           // 当前正在显示的
+    let bgNext = bgVideoB;              // 即将淡入的
     let isCrossfading = false;
     let bgStarted = false;
+    let bgRafId = null;
 
     function safePlay(video) {
         const p = video.play();
         if (p && typeof p.catch === 'function') p.catch(() => {});
     }
 
-    // 核心检查函数：当当前视频剩余时间小于 1.2 秒时开始交叉淡化
-    function checkAndCrossfade() {
-        if (!bgStarted || isCrossfading) return;
-
-        // 如果视频元数据还没加载好，先跳过
-        if (!bgCurrent.duration || isNaN(bgCurrent.duration)) {
-            requestAnimationFrame(checkAndCrossfade);
-            return;
-        }
-
-        const remaining = bgCurrent.duration - bgCurrent.currentTime;
-        // 提前 1.2 秒开始过渡（过渡动画本身是 1 秒）
-        if (remaining <= 1.2) {
-            startCrossfade();
-        }
-
-        requestAnimationFrame(checkAndCrossfade);
+    // 把视频重启到开头（用于淡出后归零待命）
+    function resetVideo(video) {
+        try {
+            video.pause();
+            video.currentTime = 0;
+        } catch (e) {}
     }
 
     function startCrossfade() {
         if (isCrossfading) return;
         isCrossfading = true;
 
-        // 让下一个视频从头开始，并播放
-        bgNext.currentTime = 0;
+        // 备用视频从头播放，并淡入；当前视频同步淡出
+        try { bgNext.currentTime = 0; } catch (e) {}
         safePlay(bgNext);
 
-        // 触发透明度过渡：next 淡入，current 淡出
         bgNext.classList.add('active');
         bgCurrent.classList.remove('active');
 
-        // 等待过渡完成（1 秒）后再进行收尾
+        const fadingOut = bgCurrent;
+        const fadingIn = bgNext;
+
+        // 交换角色，让下一轮继续用同一个循环
+        bgCurrent = fadingIn;
+        bgNext = fadingOut;
+
+        // 等过渡结束后，把刚淡出的那个归零，准备下一轮淡入
         setTimeout(() => {
-            // 暂停并重置旧视频，为下一次切换做准备
-            try {
-                bgCurrent.pause();
-                bgCurrent.currentTime = 0;
-            } catch (e) {}
-
-            // 交换角色
-            const temp = bgCurrent;
-            bgCurrent = bgNext;
-            bgNext = temp;
-
+            resetVideo(fadingOut);
             isCrossfading = false;
-        }, 1100); // 略大于过渡时间，确保动画完成
+        }, CROSSFADE_MS + 100);
     }
 
-    // 初始化：第一个视频直接显示并播放
+    // 检查循环：快结束时触发叠化（即使标签页卡顿也不会漏掉）
+    function checkAndCrossfade() {
+        if (!bgStarted) return;
+
+        if (!isCrossfading) {
+            const d = bgCurrent.duration;
+            // 元数据就绪且接近结尾时触发；ended 作为兜底
+            if (bgCurrent.ended) {
+                startCrossfade();
+            } else if (d && !isNaN(d) && d > 0) {
+                if (d - bgCurrent.currentTime <= CROSSFADE_LEAD) startCrossfade();
+            }
+        }
+
+        bgRafId = requestAnimationFrame(checkAndCrossfade);
+    }
+
+    // 初始化：A 直接显示并播放，B 预加载同一个视频备用
     function initBgVideo() {
         if (bgStarted) return;
         bgStarted = true;
 
-        // 给 A 加上 active（透明度 1）
         bgVideoA.classList.add('active');
         safePlay(bgVideoA);
 
-        // 同时预加载 B
         try { bgVideoB.load(); } catch (e) {}
 
-        // 启动检查循环
-        requestAnimationFrame(checkAndCrossfade);
+        bgRafId = requestAnimationFrame(checkAndCrossfade);
     }
+
+    // 视频播放出错（例如文件缺失）时给出提示，避免静默黑屏
+    [bgVideoA, bgVideoB].forEach((v) => {
+        v.addEventListener('error', () => {
+            console.error('背景视频加载失败：', v.currentSrc || v.src);
+        });
+    });
 
     // 页面隐藏时暂停，显示时恢复
     document.addEventListener('visibilitychange', () => {
         if (!bgStarted) return;
         if (document.hidden) {
             try { bgCurrent.pause(); } catch (e) {}
+            if (bgRafId) { cancelAnimationFrame(bgRafId); bgRafId = null; }
         } else {
             safePlay(bgCurrent);
+            if (!bgRafId) bgRafId = requestAnimationFrame(checkAndCrossfade);
         }
     });
 
