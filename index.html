@@ -6,9 +6,6 @@
     <link rel="icon" type="image/webp" href="龙之谷图标.webp">
     <title>龙之谷官方社区</title>
     <style>
-        /* ============================================================
-           Minecraft 原版 GUI 风格设计系统
-           ============================================================ */
         :root {
             --mc-black: #000000;
             --mc-panel: #c6c6c6;
@@ -23,7 +20,6 @@
             --mc-text-mid: #5a5a5a;
             --mc-gold: #ffaa00;
             --mc-gold-dark: #7f5500;
-            --mc-green: #3fa63f;
             --mc-cyan: #007a7a;
         }
 
@@ -53,17 +49,6 @@
             border-radius: 0;
         }
 
-        /* ========== 通用 MC 凹槽 ========== */
-        .mc-slot {
-            background-color: var(--mc-slot);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
-        }
-
-        /* ========== 通用 MC 按钮 ========== */
         .mc-btn {
             display: inline-flex;
             align-items: center;
@@ -100,7 +85,7 @@
         }
 
         /* ============================================================
-           主页面（直接显示，无启动页）
+           主页面
            ============================================================ */
         .main-page {
             width: 100%;
@@ -108,14 +93,13 @@
             position: relative;
         }
 
-        /* ---------- 背景视频层（双视频叠化） ---------- */
+        /* ---------- 背景视频层 ---------- */
         .bg-video-wrap {
             position: fixed;
             inset: 0;
             z-index: 0;
             overflow: hidden;
             background-color: #0a0a0a;
-            background-image: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
         }
 
         .bg-video {
@@ -134,7 +118,6 @@
             opacity: 1;
         }
 
-        /* 修改：遮罩层从 0.45 降低到 0.15，让背景更亮 */
         .bg-overlay {
             position: absolute;
             inset: 0;
@@ -175,7 +158,6 @@
             cursor: pointer;
             z-index: 1000;
             border-radius: 0;
-            transition: background-color 0.08s linear;
         }
 
         .menu-btn:hover {
@@ -188,7 +170,6 @@
             height: 3px;
             background: var(--mc-text);
             border-radius: 0;
-            transition: 0.2s;
         }
 
         .top-logo {
@@ -234,29 +215,13 @@
             overflow-y: auto;
         }
 
-        .sidebar.show {
-            left: 0;
-        }
+        .sidebar.show { left: 0; }
 
-        .sidebar::-webkit-scrollbar {
-            width: 10px;
-        }
+        .sidebar::-webkit-scrollbar { width: 10px; }
+        .sidebar::-webkit-scrollbar-track { background: var(--mc-slot); border-left: 2px solid var(--mc-black); }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--mc-panel); border: 2px solid var(--mc-black); }
 
-        .sidebar::-webkit-scrollbar-track {
-            background: var(--mc-slot);
-            border-left: 2px solid var(--mc-black);
-        }
-
-        .sidebar::-webkit-scrollbar-thumb {
-            background: var(--mc-panel);
-            border: 2px solid var(--mc-black);
-        }
-
-        .sidebar-logo {
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
+        .sidebar-logo { text-align: center; margin-bottom: 16px; }
         .sidebar-logo img {
             width: 110px;
             height: 110px;
@@ -273,7 +238,6 @@
             font-weight: bold;
             color: var(--mc-text);
             cursor: pointer;
-            transition: 0.15s;
             border-left: 4px solid transparent;
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
         }
@@ -291,9 +255,7 @@
             box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.08);
         }
 
-        .submenu.show {
-            display: block;
-        }
+        .submenu.show { display: block; }
 
         .tool-grid {
             display: grid;
@@ -301,6 +263,21 @@
             gap: 8px;
         }
 
+        /* ============================================================
+           【统一字体样式核心部分】
+           这部分样式将同时应用于 MC工具、启动器、AI助手
+           效果：白色字体 + 2px 深灰色立体阴影（与图2一致）
+           ============================================================ */
+        .tool-item,
+        .launcher-item,
+        .ai-side-tip {
+            color: #ffffff;                           /* 白色字体 */
+            text-shadow: 2px 2px 0 var(--mc-text);    /* 深灰色立体阴影 */
+        }
+
+        /* ============================================================
+           【MC工具子菜单】
+           ============================================================ */
         .tool-item {
             background-color: var(--mc-btn);
             border-style: solid;
@@ -311,8 +288,6 @@
             text-align: center;
             font-size: 0.85rem;
             font-weight: bold;
-            color: #ffffff;
-            text-shadow: 1px 1px 0 var(--mc-text);
             cursor: pointer;
             border-radius: 0;
             transition: background-color 0.08s linear;
@@ -322,13 +297,12 @@
         .tool-item:hover {
             background-color: var(--mc-btn-hover);
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
+            color: var(--mc-text); /* 悬停时文字变为深色，可选 */
         }
 
-        .tool-item:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
+        /* ============================================================
+           【启动器子菜单】
+           ============================================================ */
         .launcher-item {
             display: flex;
             align-items: center;
@@ -337,33 +311,30 @@
             cursor: pointer;
             font-size: 0.98rem;
             font-weight: bold;
-            color: var(--mc-text);
             background-color: var(--mc-btn);
             border-style: solid;
             border-width: 3px;
             border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black);
             margin-bottom: 8px;
-            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25);
-            transition: background-color 0.08s linear;
         }
 
         .launcher-item:hover {
             background-color: var(--mc-btn-hover);
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-            color: var(--mc-black);
         }
 
         .launcher-item img {
             width: 28px;
             height: 28px;
             object-fit: contain;
-            display: inline-block;
-            border: none;
             border-radius: 0;
             image-rendering: pixelated;
         }
 
+        /* ============================================================
+           【龙宝AI助手】
+           ============================================================ */
         .ai-side-wrap {
             display: flex;
             flex-direction: column;
@@ -385,7 +356,6 @@
             border-width: 3px;
             border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black);
-            transition: background-color 0.08s linear;
             image-rendering: pixelated;
         }
 
@@ -394,38 +364,20 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .ai-side-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
         .ai-side-tip {
             font-size: 0.76rem;
-            color: var(--mc-text-mid);
-            letter-spacing: 0.5px;
             text-align: center;
             line-height: 1.4;
             font-weight: bold;
         }
 
         @media (max-width: 768px) {
-            .ai-side-btn {
-                width: 84px;
-                height: 84px;
-                padding: 8px;
-            }
-            .ai-side-tip {
-                font-size: 0.7rem;
-            }
+            .ai-side-btn { width: 84px; height: 84px; padding: 8px; }
+            .ai-side-tip { font-size: 0.7rem; }
         }
 
         @media (max-width: 480px) {
-            .ai-side-btn {
-                width: 72px;
-                height: 72px;
-                padding: 6px;
-                border-width: 2px;
-            }
+            .ai-side-btn { width: 72px; height: 72px; padding: 6px; border-width: 2px; }
         }
 
         /* ---------- 内容容器 ---------- */
@@ -465,26 +417,19 @@
         }
 
         /* ---------- 工作室 ---------- */
-        .studio-section {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        .studio-section { text-align: center; margin-bottom: 30px; }
 
         .studio-img {
             width: 150px;
             height: auto;
             margin-bottom: 12px;
             cursor: pointer;
-            transition: transform 0.15s;
             image-rendering: pixelated;
             border: 3px solid var(--mc-slot-sh);
             box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
         }
 
-        .studio-img:hover {
-            transform: scale(1.05);
-        }
+        .studio-img:hover { transform: scale(1.05); }
 
         .studio-desc {
             font-size: 1.05rem;
@@ -513,8 +458,6 @@
             text-decoration: none;
             text-shadow: 2px 2px 0 var(--mc-text);
             cursor: pointer;
-            border-radius: 0;
-            transition: background-color 0.08s linear;
         }
 
         .studio-btn:hover {
@@ -522,16 +465,8 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .studio-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
-        /* ---------- 官方论坛板块 ---------- */
-        .forum-section {
-            margin: 0 auto 30px;
-            position: relative;
-        }
+        /* ---------- 官方论坛 ---------- */
+        .forum-section { margin: 0 auto 30px; position: relative; }
 
         .forum-board {
             position: relative;
@@ -546,7 +481,6 @@
             align-items: center;
             justify-content: center;
             gap: 12px 26px;
-            border-radius: 0;
         }
 
         .forum-logo-link {
@@ -560,19 +494,12 @@
             width: 66px;
             height: 66px;
             object-fit: contain;
-            display: block;
             cursor: pointer;
-            transition: transform 0.15s;
             image-rendering: pixelated;
             background-color: var(--mc-slot);
             border: 3px solid var(--mc-slot-sh);
             box-shadow: 0 0 0 2px var(--mc-black);
             padding: 4px;
-            border-radius: 0;
-        }
-
-        .forum-logo:hover {
-            transform: scale(1.06);
         }
 
         .forum-title {
@@ -582,7 +509,6 @@
             color: var(--mc-text);
             text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
             letter-spacing: 2px;
-            line-height: 1.2;
             margin: 0;
         }
 
@@ -613,8 +539,6 @@
             letter-spacing: 1px;
             text-shadow: 2px 2px 0 var(--mc-text);
             cursor: pointer;
-            border-radius: 0;
-            transition: background-color 0.08s linear;
         }
 
         .forum-btn:hover {
@@ -622,51 +546,22 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .forum-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
         @media (max-width: 768px) {
-            .forum-board {
-                flex-direction: column;
-                gap: 10px;
-                padding: 18px 16px;
-            }
-            .forum-logo {
-                width: 54px;
-                height: 54px;
-            }
-            .forum-title {
-                font-size: 1.4rem;
-            }
-            .forum-desc {
-                font-size: 0.95rem;
-                text-align: center;
-            }
+            .forum-board { flex-direction: column; gap: 10px; padding: 18px 16px; }
+            .forum-logo { width: 54px; height: 54px; }
+            .forum-title { font-size: 1.4rem; }
+            .forum-desc { font-size: 0.95rem; text-align: center; }
         }
 
         @media (max-width: 480px) {
-            .forum-board {
-                padding: 14px 12px;
-                border-width: 3px;
-            }
-            .forum-title {
-                font-size: 1.15rem;
-            }
-            .forum-logo {
-                width: 46px;
-                height: 46px;
-            }
-            .forum-desc {
-                font-size: 0.85rem;
-            }
+            .forum-board { padding: 14px 12px; border-width: 3px; }
+            .forum-title { font-size: 1.15rem; }
+            .forum-logo { width: 46px; height: 46px; }
+            .forum-desc { font-size: 0.85rem; }
         }
 
         @media (min-width: 1200px) {
-            .forum-title {
-                font-size: 2.1rem;
-            }
+            .forum-title { font-size: 2.1rem; }
         }
 
         /* ---------- 主标题面板 ---------- */
@@ -679,7 +574,6 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
         }
 
         .header h1 {
@@ -702,11 +596,7 @@
         }
 
         /* ---------- 服务器宣传片 ---------- */
-        .video-section {
-            margin: 30px auto 10px;
-            max-width: 820px;
-            position: relative;
-        }
+        .video-section { margin: 30px auto 10px; max-width: 820px; position: relative; }
 
         .video-board {
             position: relative;
@@ -717,7 +607,6 @@
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
             padding: 26px 24px 30px;
             text-align: center;
-            border-radius: 0;
         }
 
         .video-title {
@@ -733,32 +622,21 @@
             width: 100%;
             max-width: 700px;
             height: auto;
-            border-radius: 0;
             border-style: solid;
             border-width: 3px;
             border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
             box-shadow: 0 0 0 2px var(--mc-black);
-            transition: transform 0.2s;
             cursor: pointer;
             display: block;
             margin: 0 auto;
         }
 
-        .video-thumb:hover {
-            transform: scale(1.015);
-        }
+        .video-thumb:hover { transform: scale(1.015); }
 
-        .video-thumb:active {
-            transform: scale(0.985);
-        }
-
-        /* ---------- 视频播放模态框 ---------- */
+        /* ---------- 视频模态框 ---------- */
         .video-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            inset: 0;
             background: rgba(0, 0, 0, 0.85);
             display: none;
             align-items: center;
@@ -767,9 +645,7 @@
             padding: 20px;
         }
 
-        .video-modal.show {
-            display: flex;
-        }
+        .video-modal.show { display: flex; }
 
         .video-box {
             background-color: var(--mc-panel);
@@ -781,13 +657,6 @@
             width: 92%;
             max-width: 960px;
             position: relative;
-            border-radius: 0;
-            animation: videoFadeIn 0.3s ease;
-        }
-
-        @keyframes videoFadeIn {
-            0% { opacity: 0; transform: scale(0.94); }
-            100% { opacity: 1; transform: scale(1); }
         }
 
         .video-close {
@@ -809,8 +678,6 @@
             color: #ffffff;
             text-shadow: 2px 2px 0 var(--mc-text);
             z-index: 10;
-            border-radius: 0;
-            line-height: 1;
             padding: 0;
             font-family: inherit;
         }
@@ -822,7 +689,6 @@
 
         .video-box video {
             width: 100%;
-            border-radius: 0;
             display: block;
             background: #000;
             border: 3px solid var(--mc-slot-sh);
@@ -847,17 +713,10 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
             padding: 26px;
             text-align: center;
-            transition: transform 0.2s;
             display: flex;
             flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black), 0 12px 0 rgba(0, 0, 0, 0.4);
         }
 
         .card h2 {
@@ -897,7 +756,6 @@
             width: 32%;
             height: 90px;
             object-fit: cover;
-            border-radius: 0;
             border-style: solid;
             border-width: 3px;
             border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
@@ -910,7 +768,6 @@
             border-width: 3px;
             border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
             box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
             padding: 22px;
             margin-top: auto;
         }
@@ -929,7 +786,7 @@
             color: #ffffff;
             letter-spacing: 3px;
             margin-bottom: 18px;
-            text-shadow: 3px 3px 0 var(--mc-gold-dark), 0 0 0 #000;
+            text-shadow: 3px 3px 0 var(--mc-gold-dark);
         }
 
         .join-btn {
@@ -949,8 +806,6 @@
             font-weight: bold;
             text-shadow: 2px 2px 0 var(--mc-text);
             cursor: pointer;
-            border-radius: 0;
-            transition: background-color 0.08s linear;
             font-family: inherit;
         }
 
@@ -959,18 +814,10 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .join-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
         /* ---------- 赞助弹窗 ---------- */
         .donate-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            inset: 0;
             background: rgba(0, 0, 0, 0.8);
             display: none;
             align-items: center;
@@ -978,9 +825,7 @@
             z-index: 9999;
         }
 
-        .donate-modal.show {
-            display: flex;
-        }
+        .donate-modal.show { display: flex; }
 
         .donate-box {
             background-color: var(--mc-panel);
@@ -989,7 +834,6 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 12px 0 rgba(0, 0, 0, 0.5);
-            border-radius: 0;
             width: 90%;
             max-width: 600px;
             text-align: center;
@@ -1014,15 +858,8 @@
             cursor: pointer;
             color: #ffffff;
             text-shadow: 2px 2px 0 var(--mc-text);
-            border-radius: 0;
             padding: 0;
             font-family: inherit;
-            line-height: 1;
-        }
-
-        .donate-close:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
         .donate-title {
@@ -1040,13 +877,10 @@
             flex-wrap: wrap;
         }
 
-        .qrcode-item {
-            width: 180px;
-        }
+        .qrcode-item { width: 180px; }
 
         .qrcode-item img {
             width: 100%;
-            border-radius: 0;
             border-style: solid;
             border-width: 3px;
             border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
@@ -1073,16 +907,11 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
             color: var(--mc-text-mid);
             font-size: 1rem;
         }
 
-        .footer .footer-text {
-            margin-bottom: 16px;
-            line-height: 1.6;
-            font-weight: bold;
-        }
+        .footer .footer-text { margin-bottom: 16px; line-height: 1.6; font-weight: bold; }
 
         .footer .donate-btn {
             display: inline-flex;
@@ -1100,8 +929,6 @@
             border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black);
             cursor: pointer;
-            border-radius: 0;
-            transition: background-color 0.08s linear;
             font-family: inherit;
         }
 
@@ -1110,35 +937,23 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .footer .donate-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
         .mask {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            inset: 0;
             background: rgba(0, 0, 0, 0.6);
             z-index: 997;
             display: none;
         }
 
-        .mask.show {
-            display: block;
-        }
+        .mask.show { display: block; }
 
         /* ---------- 响应式 ---------- */
         @media (max-width: 768px) {
             .header h1 { font-size: 1.9rem; }
             .card { width: 100%; padding: 22px 18px; }
             .qun-num { font-size: 2rem; letter-spacing: 2px; }
-            .join-btn { padding: 10px 26px; }
             .map-preview img { height: 70px; }
             .studio-img { width: 110px; }
-            .footer .donate-btn { padding: 10px 26px; font-size: 0.95rem; }
             .video-title { font-size: 1.2rem; }
             .video-board { padding: 18px 14px 22px; }
             .video-box { padding: 16px 14px 20px; width: 95%; }
@@ -1151,7 +966,6 @@
             .notice-text { font-size: 0.9rem; }
             .map-preview img { height: 60px; }
             .studio-img { width: 96px; }
-            .footer .donate-btn { padding: 8px 20px; font-size: 0.9rem; }
             .video-title { font-size: 1rem; }
             .video-board { padding: 14px 10px 18px; border-width: 3px; }
             .video-box { padding: 12px 10px 16px; border-width: 3px; width: 98%; }
@@ -1159,11 +973,7 @@
         }
 
         /* ---------- 下载模块 ---------- */
-        .download-section {
-            margin: 40px auto 30px;
-            max-width: 820px;
-            position: relative;
-        }
+        .download-section { margin: 40px auto 30px; max-width: 820px; position: relative; }
 
         .download-board {
             position: relative;
@@ -1172,7 +982,6 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
             padding: 26px 28px 30px;
             text-align: center;
         }
@@ -1215,13 +1024,11 @@
             border-width: 3px;
             border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
             color: #ffffff;
             font-size: 1.1rem;
             font-weight: bold;
             text-decoration: none;
             cursor: pointer;
-            transition: background-color 0.08s linear;
             min-width: 260px;
             letter-spacing: 0.5px;
         }
@@ -1231,19 +1038,10 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .download-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            transform: translateY(1px);
-        }
-
         .download-btn .btn-icon {
             width: 42px;
             height: 42px;
             object-fit: contain;
-            display: block;
-            border-radius: 0;
-            flex-shrink: 0;
             background-color: var(--mc-slot);
             padding: 4px;
             border: 2px solid var(--mc-slot-sh);
@@ -1268,7 +1066,6 @@
             font-size: 0.7rem;
             font-weight: bold;
             color: #e8e8e8;
-            letter-spacing: 0.5px;
             text-shadow: 1px 1px 0 var(--mc-text);
         }
 
@@ -1276,7 +1073,6 @@
             font-size: 1.1rem;
             color: #ffffff;
             text-shadow: 2px 2px 0 var(--mc-text);
-            margin-left: 2px;
         }
 
         .download-hint {
@@ -1284,14 +1080,7 @@
             margin-top: 16px;
             font-size: 0.85rem;
             color: var(--mc-text-mid);
-            letter-spacing: 0.5px;
             font-weight: bold;
-        }
-
-        .download-hint i {
-            margin: 0 4px;
-            color: var(--mc-text-mid);
-            text-shadow: none;
         }
 
         @media (max-width: 768px) {
@@ -1299,27 +1088,17 @@
             .download-board { padding: 18px 14px 22px; }
             .download-title { font-size: 1.15rem; margin-bottom: 16px; }
             .download-buttons { flex-direction: column; align-items: center; }
-            .download-btn { padding: 13px 20px; font-size: 1rem; min-width: 200px; width: 100%; max-width: 380px; gap: 12px; }
+            .download-btn { padding: 13px 20px; font-size: 1rem; min-width: 200px; width: 100%; max-width: 380px; }
             .download-btn .btn-icon { width: 36px; height: 36px; }
             .download-btn .btn-text .main { font-size: 0.92rem; }
-            .download-btn .btn-text .sub { font-size: 0.62rem; }
-            .download-hint { font-size: 0.72rem; }
         }
 
         @media (max-width: 480px) {
             .download-board { padding: 14px 10px 18px; border-width: 3px; }
             .download-title { font-size: 1rem; }
-            .download-btn { padding: 11px 14px; font-size: 0.9rem; min-width: 160px; gap: 10px; }
+            .download-btn { padding: 11px 14px; font-size: 0.9rem; min-width: 160px; }
             .download-btn .btn-icon { width: 30px; height: 30px; padding: 3px; }
             .download-btn .btn-text .main { font-size: 0.82rem; }
-            .download-btn .btn-arrow { font-size: 0.95rem; }
-        }
-
-        @media (min-width: 1200px) {
-            .download-title { font-size: 1.6rem; }
-            .download-btn { padding: 18px 40px; font-size: 1.2rem; min-width: 300px; }
-            .download-btn .btn-icon { width: 50px; height: 50px; }
-            .download-btn .btn-text .main { font-size: 1.2rem; }
         }
 
         /* ============================================================
@@ -1340,17 +1119,13 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
             padding: 26px 24px 28px;
             text-align: center;
             overflow: visible;
             min-height: 140px;
         }
 
-        .sponsor-board>*:not(.star-orbit) {
-            position: relative;
-            z-index: 1;
-        }
+        .sponsor-board>*:not(.star-orbit) { position: relative; z-index: 1; }
 
         .star-orbit {
             position: absolute;
@@ -1361,7 +1136,6 @@
             pointer-events: none;
             z-index: 0;
             animation: orbitSpin 22s linear infinite;
-            will-change: transform;
         }
 
         @keyframes orbitSpin {
@@ -1375,14 +1149,10 @@
             width: 18px;
             height: 18px;
             font-size: 18px;
-            line-height: 1;
-            text-align: center;
             color: var(--mc-gold);
             text-shadow: 1px 1px 0 var(--mc-gold-dark), 0 0 6px rgba(255, 170, 0, 0.9);
-            transform-origin: center;
             animation: twinkle 2.4s ease-in-out infinite alternate;
             animation-delay: calc(var(--i) * 0.18s);
-            will-change: transform, opacity;
             font-family: "Segoe UI Symbol", "Arial Unicode MS", sans-serif;
         }
 
@@ -1405,14 +1175,8 @@
             font-weight: bold;
             color: var(--mc-cyan);
             text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-            letter-spacing: 1px;
             padding: 4px 0;
-            transition: color 0.2s ease;
             margin-bottom: 6px;
-        }
-
-        .sponsor-name:hover {
-            color: #00a0a0;
         }
 
         .sponsor-badge {
@@ -1420,7 +1184,6 @@
             margin-top: 8px;
             font-size: 0.85rem;
             color: var(--mc-gold-dark);
-            letter-spacing: 1px;
             font-weight: bold;
             border-top: 2px solid rgba(0, 0, 0, 0.15);
             padding-top: 10px;
@@ -1444,7 +1207,6 @@
             border-width: 4px;
             border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
             padding: 26px 24px 28px;
             text-align: center;
             overflow: visible;
@@ -1473,10 +1235,8 @@
             border-width: 3px;
             border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
             box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
             padding: 12px 44px;
             text-decoration: none;
-            transition: background-color 0.08s linear;
             cursor: pointer;
             letter-spacing: 2px;
         }
@@ -1486,28 +1246,19 @@
             box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
         }
 
-        .friend-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-        }
-
         .friend-logo {
             display: block;
             margin: 25px auto 0;
             width: 180px;
             max-width: 60%;
-            height: auto;
             border: 3px solid var(--mc-slot-sh);
             box-shadow: 0 0 0 2px var(--mc-black);
-            border-radius: 0;
             image-rendering: pixelated;
         }
 
         @media (max-width: 768px) {
-            .sponsor-board,
-            .friend-link-board { padding: 20px 16px 22px; min-height: 120px; }
-            .sponsor-title,
-            .friend-title { font-size: 1.2rem; }
+            .sponsor-board, .friend-link-board { padding: 20px 16px 22px; min-height: 120px; }
+            .sponsor-title, .friend-title { font-size: 1.2rem; }
             .sponsor-name { font-size: 1.15rem; }
             .friend-btn { font-size: 1.25rem; padding: 10px 30px; }
             .friend-logo { width: 140px; max-width: 55%; }
@@ -1516,10 +1267,8 @@
         }
 
         @media (max-width: 480px) {
-            .sponsor-board,
-            .friend-link-board { padding: 16px 12px 18px; min-height: 100px; border-width: 3px; }
-            .sponsor-title,
-            .friend-title { font-size: 1.05rem; }
+            .sponsor-board, .friend-link-board { padding: 16px 12px 18px; min-height: 100px; border-width: 3px; }
+            .sponsor-title, .friend-title { font-size: 1.05rem; }
             .sponsor-name { font-size: 1rem; }
             .friend-btn { font-size: 1.05rem; padding: 8px 20px; }
             .friend-logo { width: 110px; max-width: 45%; }
@@ -1529,8 +1278,7 @@
 
         @media (min-width: 1200px) {
             .sponsor-name { font-size: 1.7rem; }
-            .sponsor-title,
-            .friend-title { font-size: 1.7rem; }
+            .sponsor-title, .friend-title { font-size: 1.7rem; }
             .friend-btn { font-size: 1.8rem; padding: 14px 52px; }
             .friend-logo { width: 220px; }
             .star { width: 22px; height: 22px; font-size: 22px; }
@@ -1542,19 +1290,15 @@
 </head>
 <body>
 
-    <!-- ===== 背景音乐（把 minecraft_bgm.mp3 换成你的文件名） ===== -->
     <audio id="bgm" src="minecraft_bgm.mp3" loop preload="auto"></audio>
 
-    <!-- ===== 主页面（直接显示） ===== -->
     <div class="main-page" id="mainPage">
 
-        <!-- ===== 背景视频层（双视频叠化） ===== -->
         <div class="bg-video-wrap" aria-hidden="true">
-            <video class="bg-video" id="bgVideoA" src="minecraft.mp4" muted playsinline preload="auto"></video>
+            <video class="bg-video active" id="bgVideoA" src="minecraft.mp4" muted playsinline preload="auto"></video>
             <video class="bg-video" id="bgVideoB" src="minecraft2.mp4" muted playsinline preload="auto"></video>
             <div class="bg-overlay"></div>
         </div>
-        <!-- ===== 背景视频层结束 ===== -->
 
         <div class="top-bar">
             <button class="menu-btn" id="menuBtn">
@@ -1563,7 +1307,7 @@
                 <span></span>
             </button>
             <img src="封面.webp" alt="LOGO" class="top-logo">
-            <button id="bgmToggle" class="mc-btn" title="背景音乐开关">🔇 音乐</button>
+            <button id="bgmToggle" class="mc-btn" title="背景音乐开关" type="button">🔇 音乐</button>
         </div>
 
         <div class="sidebar" id="sidebar">
@@ -1587,30 +1331,23 @@
             <div class="menu-item" id="launcherMenu">🚀 启动器</div>
             <div class="submenu" id="launcherSub">
                 <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
-                    <img src="龙腾猫跃.webp" alt="PCL2">
-                    <span>PCL2 启动器</span>
+                    <img src="龙腾猫跃.webp" alt="PCL2"><span>PCL2 启动器</span>
                 </div>
                 <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
-                    <img src="FCL.webp" alt="FCL">
-                    <span>FCL 启动器</span>
+                    <img src="FCL.webp" alt="FCL"><span>FCL 启动器</span>
                 </div>
                 <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
-                    <img src="网易.webp" alt="网易版">
-                    <span>网易版 MC</span>
+                    <img src="网易.webp" alt="网易版"><span>网易版 MC</span>
                 </div>
             </div>
 
-            <!-- ===== 侧边栏 · 龙宝AI助手 ===== -->
             <div class="menu-item" id="aiMenu">🐉 龙宝AI助手</div>
             <div class="submenu" id="aiSub">
                 <div class="ai-side-wrap">
-                    <img src="ai.svg" alt="龙宝AI助手" class="ai-side-btn"
-                         onclick="window.open('https://ai.longvalley.cn/','_blank')">
+                    <img src="ai.svg" alt="龙宝AI助手" class="ai-side-btn" onclick="window.open('https://ai.longvalley.cn/','_blank')">
                     <div class="ai-side-tip">有不会的欢迎来问龙宝喵~</div>
                 </div>
             </div>
-            <!-- ===== 龙宝AI助手结束 ===== -->
-
         </div>
 
         <div class="mask" id="mask"></div>
@@ -1622,26 +1359,20 @@
                 </div>
             </div>
 
-            <!-- ===== 官方论坛板块 ===== -->
             <div class="forum-section">
                 <div class="forum-board">
                     <div class="forum-title">官方论坛</div>
                     <a class="forum-logo-link" href="https://pd.qq.com/s/c3b85f58g?b=5" target="_blank" rel="noopener noreferrer">
                         <img src="bbs.svg" alt="官方论坛LOGO" class="forum-logo">
                     </a>
-                    <div class="forum-desc">
-                        发帖交流 · 攻略分享 · 问题反馈，和更多玩家一起讨论方块世界！
-                    </div>
+                    <div class="forum-desc">发帖交流 · 攻略分享 · 问题反馈，和更多玩家一起讨论方块世界！</div>
                     <a class="forum-btn" href="https://pd.qq.com/s/c3b85f58g?b=5" target="_blank" rel="noopener noreferrer">进入官方论坛</a>
                 </div>
             </div>
-            <!-- ===== 官方论坛板块结束 ===== -->
 
             <div class="studio-section">
                 <img src="工作室.webp" alt="工作室LOGO" class="studio-img" onclick="joinStudioGroup()">
-                <div class="studio-desc">
-                    专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！
-                </div>
+                <div class="studio-desc">专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！</div>
                 <a class="studio-btn" onclick="joinStudioGroup()">加入工作室交流群</a>
             </div>
 
@@ -1650,20 +1381,17 @@
                 <p>网易版 × 国际互通版 双服同步运营 | 纯享游玩体验 | 优质玩家社区</p>
             </div>
 
-            <!-- ===== 服务器宣传片框 ===== -->
             <div class="video-section">
                 <div class="video-board">
                     <div class="video-title">服务器宣传片</div>
                     <img src="vedio.webp" alt="服务器宣传片封面" class="video-thumb" onclick="openVideo()">
                 </div>
             </div>
-            <!-- ===== 宣传片框结束 ===== -->
 
             <div class="server-card">
                 <div class="card">
                     <h2><i class="fas fa-globe-asia"></i> 网易版专属服</h2>
-                    <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！
-                        纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
+                    <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
                     <div class="map-preview">
                         <img src="预览一.webp" alt="预览一">
                         <img src="预览二.webp" alt="预览二">
@@ -1677,8 +1405,7 @@
                 </div>
                 <div class="card">
                     <h2><i class="fas fa-earth"></i> 国际互通版</h2>
-                    <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！
-                        丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
+                    <p class="desc">Java/基岩版全互通，支持正版/离线登录，适配多版本客户端！丰富模组+自由探索+竞技玩法，高自由度打造专属世界，还有专属公益服活动，和全球玩家一起联机冒险～</p>
                     <div class="map-preview">
                         <img src="国际一.webp" alt="国际一">
                         <img src="国际二.webp" alt="国际二">
@@ -1692,35 +1419,28 @@
                 </div>
             </div>
 
-            <!-- ===== 下载按钮模块 ===== -->
             <div class="download-section">
                 <div class="download-board">
                     <div class="download-title">
-                        <i class="fas fa-download"></i> 游戏下载
-                        <i class="fas fa-download"></i>
+                        <i class="fas fa-download"></i> 游戏下载 <i class="fas fa-download"></i>
                     </div>
                     <div class="download-buttons">
-                        <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="download-btn">
-                        <img src="国际.webp" alt="国际版" class="btn-icon">
-                        <span class="btn-text">
-                            <span class="main">前往下载国际版MC</span>
-                            <span class="sub">夸克网盘 · 输入提取码 e8mQ</span>
-                        </span>
-                        <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
+                        <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ" target="_blank" rel="noopener noreferrer" class="download-btn">
+                            <img src="国际.webp" alt="国际版" class="btn-icon">
+                            <span class="btn-text">
+                                <span class="main">前往下载国际版MC</span>
+                                <span class="sub">夸克网盘 · 输入提取码 e8mQ</span>
+                            </span>
+                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
+                        </a>
                     </div>
                     <div class="download-hint">
                         <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
                     </div>
                 </div>
             </div>
-            <!-- ===== 下载模块结束 ===== -->
         </div>
 
-        <!-- ===== 赞助玩家榜单 ===== -->
         <div class="sponsor-section">
             <div class="sponsor-board">
                 <div class="star-orbit" id="starOrbit"></div>
@@ -1732,31 +1452,23 @@
                 <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
             </div>
         </div>
-        <!-- ===== 赞助玩家榜单结束 ===== -->
 
-        <!-- ===== 独立友情合作框 ===== -->
         <div class="friend-link-section">
             <div class="friend-link-board">
                 <div class="friend-title">友情合作</div>
-                <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">
-                    空日噬魂
-                </a>
+                <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">空日噬魂</a>
                 <img src="krsh.webp" alt="空日噬魂" class="friend-logo">
             </div>
         </div>
-        <!-- ===== 友情合作框结束 ===== -->
 
-        <!-- ===== 底部 footer ===== -->
         <div class="footer">
             <div class="footer-text">
                 <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
             </div>
             <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
         </div>
-        <!-- ===== footer 结束 ===== -->
 
     </div>
-    <!-- main-page 结束 -->
 
     <!-- 赞助弹窗 -->
     <div class="donate-modal" id="donateModal">
@@ -1765,80 +1477,81 @@
             <div class="donate-title">服务器赞助支持</div>
             <div class="donate-qrcode">
                 <div class="qrcode-item">
-                    <img src="微信收款码.png" alt="微信收款">
-                    <p>微信支付</p>
+                    <img src="微信收款码.png" alt="微信收款"><p>微信支付</p>
                 </div>
                 <div class="qrcode-item">
-                    <img src="支付宝收款码.png" alt="支付宝收款">
-                    <p>支付宝支付</p>
+                    <img src="支付宝收款码.png" alt="支付宝收款"><p>支付宝支付</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== 视频播放模态框 ===== -->
+    <!-- 视频模态框 -->
     <div class="video-modal" id="videoModal" onclick="closeVideoOnBg(event)">
         <div class="video-box" onclick="event.stopPropagation();">
             <button class="video-close" onclick="closeVideo()">✕</button>
-            <video 
-                controls 
-                playsinline 
-                preload="metadata" 
-                controlsList="nodownload" 
-                disablePictureInPicture 
-                oncontextmenu="return false;"
-                id="dynamicVideo"
-            ></video>
+            <video controls playsinline preload="metadata" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;" id="dynamicVideo"></video>
             <div id="videoLoadingHint" style="color: #3f3f3f; text-align: center; margin-top: 10px; font-size: 0.9rem; font-weight: bold; display: none;">
                 <i class="fas fa-spinner fa-spin"></i> 视频加载中...
             </div>
         </div>
     </div>
-    <!-- ===== 视频模态框结束 ===== -->
 
 <script>
     // ============================================================
-    //  0. Minecraft 风格点击音效（Web Audio API 合成，无需外部文件）
+    //  0. Minecraft 风格点击音效
     // ============================================================
-    const mcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let mcAudioCtx = null;
+
+    function getAudioCtx() {
+        if (!mcAudioCtx) {
+            try {
+                mcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                return null;
+            }
+        }
+        return mcAudioCtx;
+    }
 
     function playMinecraftClick() {
-        if (mcAudioCtx.state === 'suspended') {
-            mcAudioCtx.resume();
+        const ctx = getAudioCtx();
+        if (!ctx) return;
+
+        if (ctx.state === 'suspended') {
+            ctx.resume();
         }
 
-        const osc = mcAudioCtx.createOscillator();
-        const gainNode = mcAudioCtx.createGain();
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
 
         osc.type = 'triangle';
+        osc.frequency.setValueAtTime(900, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.05);
 
-        osc.frequency.setValueAtTime(900, mcAudioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(180, mcAudioCtx.currentTime + 0.05);
-
-        gainNode.gain.setValueAtTime(0.12, mcAudioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, mcAudioCtx.currentTime + 0.06);
+        gainNode.gain.setValueAtTime(0.12, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.06);
 
         osc.connect(gainNode);
-        gainNode.connect(mcAudioCtx.destination);
+        gainNode.connect(ctx.destination);
 
         osc.start();
-        osc.stop(mcAudioCtx.currentTime + 0.07);
+        osc.stop(ctx.currentTime + 0.07);
     }
 
     document.addEventListener('click', (e) => {
+        if (e.target.closest && e.target.closest('#bgmToggle')) return;
         const clickable = e.target.closest(
             'button, a, .mc-btn, .menu-btn, .tool-item, .menu-item, ' +
             '.launcher-item, .download-btn, .join-btn, .friend-btn, ' +
             '.studio-btn, .forum-btn, .video-thumb, .studio-img, .forum-logo, ' +
             '.ai-side-btn, .video-close, .donate-close'
         );
-        if (clickable) {
-            playMinecraftClick();
-        }
+        if (clickable) playMinecraftClick();
     }, true);
 
     // ============================================================
-    //  1. 主页面交互与背景视频逻辑
+    //  1. 主页面交互
     // ============================================================
     const menuBtn = document.getElementById('menuBtn');
     const sidebar = document.getElementById('sidebar');
@@ -1860,17 +1573,9 @@
         mask.classList.remove('show');
     });
 
-    toolMenu.addEventListener('click', () => {
-        toolSub.classList.toggle('show');
-    });
-
-    launcherMenu.addEventListener('click', () => {
-        launcherSub.classList.toggle('show');
-    });
-
-    aiMenu.addEventListener('click', () => {
-        aiSub.classList.toggle('show');
-    });
+    toolMenu.addEventListener('click', () => toolSub.classList.toggle('show'));
+    launcherMenu.addEventListener('click', () => launcherSub.classList.toggle('show'));
+    aiMenu.addEventListener('click', () => aiSub.classList.toggle('show'));
 
     function goHome() {
         window.scrollTo(0, 0);
@@ -1913,10 +1618,7 @@
     function initBgVideo() {
         if (bgStarted) return;
         bgStarted = true;
-
-        bgVideoA.classList.add('active');
         safePlay(bgVideoA);
-
         try { bgVideoB.load(); } catch (e) {}
     }
 
@@ -1980,15 +1682,23 @@
         }
 
         function bindFirstInteraction() {
-            const handler = () => {
-                if (!userMuted) bgm.play().catch(() => {});
+            const handler = (e) => {
+                if (e.target && e.target.closest && e.target.closest('#bgmToggle')) {
+                    return;
+                }
+                if (!userMuted && bgm.paused) {
+                    bgm.play().catch(() => {});
+                }
+                cleanup();
+            };
+            const cleanup = () => {
                 document.removeEventListener('click', handler);
                 document.removeEventListener('touchstart', handler);
                 document.removeEventListener('keydown', handler);
             };
-            document.addEventListener('click', handler, { once: true });
-            document.addEventListener('touchstart', handler, { once: true });
-            document.addEventListener('keydown', handler, { once: true });
+            document.addEventListener('click', handler);
+            document.addEventListener('touchstart', handler);
+            document.addEventListener('keydown', handler);
         }
 
         if (toggle) {
@@ -1996,12 +1706,15 @@
                 e.stopPropagation();
                 if (bgm.paused) {
                     userMuted = false;
-                    bgm.play().catch(() => {});
+                    const p = bgm.play();
+                    if (p && typeof p.catch === 'function') {
+                        p.catch(() => {});
+                    }
                 } else {
                     userMuted = true;
                     bgm.pause();
                 }
-                updateBtn();
+                setTimeout(updateBtn, 50);
             });
         }
 
@@ -2060,9 +1773,7 @@
     }
 
     function closeVideoOnBg(e) {
-        if (e.target === videoModal) {
-            closeVideo();
-        }
+        if (e.target === videoModal) closeVideo();
     }
 
     document.addEventListener('keydown', (e) => {
@@ -2072,7 +1783,7 @@
     });
 
     // ============================================================
-    //  5. 生成星光（删除了原来的页面透明度渐入逻辑）
+    //  5. 生成星光
     // ============================================================
     window.addEventListener('load', function() {
         generateStars();
