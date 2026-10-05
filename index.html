@@ -134,10 +134,11 @@
             opacity: 1;
         }
 
+        /* 修改：遮罩层从 0.45 降低到 0.15，让背景更亮 */
         .bg-overlay {
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.15);
             pointer-events: none;
         }
 
@@ -1802,7 +1803,6 @@
     const mcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playMinecraftClick() {
-        // 如果上下文被浏览器挂起，先唤醒（用户点击时一定会成功）
         if (mcAudioCtx.state === 'suspended') {
             mcAudioCtx.resume();
         }
@@ -1810,14 +1810,11 @@
         const osc = mcAudioCtx.createOscillator();
         const gainNode = mcAudioCtx.createGain();
 
-        // 原版点击声偏“木质/清脆”，用三角波模拟
         osc.type = 'triangle';
 
-        // 频率短促下滑，形成“啵/哒”的听感
         osc.frequency.setValueAtTime(900, mcAudioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(180, mcAudioCtx.currentTime + 0.05);
 
-        // 极快的衰减包络，让声音不拖泥带水
         gainNode.gain.setValueAtTime(0.12, mcAudioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.0001, mcAudioCtx.currentTime + 0.06);
 
@@ -1828,7 +1825,6 @@
         osc.stop(mcAudioCtx.currentTime + 0.07);
     }
 
-    // 事件委托：凡是点击到可交互元素，都播放点击音效
     document.addEventListener('click', (e) => {
         const clickable = e.target.closest(
             'button, a, .mc-btn, .menu-btn, .tool-item, .menu-item, ' +
@@ -1839,7 +1835,7 @@
         if (clickable) {
             playMinecraftClick();
         }
-    }, true); // 用捕获阶段，保证在事件被拦截前触发
+    }, true);
 
     // ============================================================
     //  1. 主页面交互与背景视频逻辑
@@ -2076,7 +2072,7 @@
     });
 
     // ============================================================
-    //  5. 生成星光
+    //  5. 生成星光（删除了原来的页面透明度渐入逻辑）
     // ============================================================
     window.addEventListener('load', function() {
         generateStars();
