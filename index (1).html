@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 关键：3秒后自动跳转到你的主站 -->
+    <meta http-equiv="refresh" content="3; url=https://longvalley.cn">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>珑谷纪官方 · 正在跳转</title>
+    <style>
+        body {
+            background: radial-gradient(900px 600px at 20% 0%, rgba(226, 56, 43, .12), transparent 60%), #07080c;
+            color: #f4f6fa;
+            font-family: "Inter", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container { text-align: center; padding: 24px; }
+        .logo {
+            width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 20px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: 0 10px 30px rgba(226, 56, 43, .25);
+        }
+        h1 { font-size: 24px; letter-spacing: .1em; margin: 0 0 10px; }
+        p { color: #9ba5b6; font-size: 14px; margin: 6px 0; }
+        a { color: #ff5a45; text-decoration: none; font-weight: 600; }
+        a:hover { text-decoration: underline; }
+        .bar { width: 180px; height: 3px; margin: 22px auto 0; background: rgba(255, 255, 255, .1); border-radius: 3px; overflow: hidden; }
+        .bar::after { content: ""; display: block; height: 100%; width: 40%; background: linear-gradient(90deg, #ff5a45, #e2382b); animation: load 1s ease-in-out infinite; border-radius: 3px; }
+        @keyframes load { 0% { transform: translateX(-120%); } 100% { transform: translateX(320%); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="logo" src="../龙之谷图标.webp" alt="珑谷纪官方">
+        <h1>珑谷纪官方</h1>
+        <p>页面正在加载中，3 秒后自动跳转…</p>
+        <div class="bar"></div>
+        <p style="margin-top:20px;">如果没有自动跳转，请 <a href="https://longvalley.cn">点击这里</a></p>
+    </div>
+</body>
+</html>

@@ -3,1993 +3,880 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/webp" href="龙之谷图标.webp">
-    <title>龙之谷官方社区</title>
+    <title>MC基岩版1.21.11 完整指令大全 - 珑谷纪官方</title>
     <style>
-        :root {
-            --mc-black: #000000;
-            --mc-panel: #c6c6c6;
-            --mc-panel-hi: #ffffff;
-            --mc-panel-sh: #555555;
-            --mc-slot: #8b8b8b;
-            --mc-slot-sh: #373737;
-            --mc-btn: #8b8b8b;
-            --mc-btn-hover: #a5a5a5;
-            --mc-btn-active: #6f6f6f;
-            --mc-text: #3f3f3f;
-            --mc-text-mid: #5a5a5a;
-            --mc-gold: #ffaa00;
-            --mc-gold-dark: #7f5500;
-            --mc-cyan: #007a7a;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Minecraft", "Source Han Sans CN", "思源黑体", "Microsoft YaHei", sans-serif;
+            font-family: "微软雅黑", Helvetica, Arial, sans-serif;
         }
 
-        html,
+        :root {
+            --mc-main-green: #43B96E;
+            --mc-dark-bg: #121714;
+            --mc-card-bg: #1A211D;
+            --mc-border: #2A332E;
+            --mc-text-normal: #E8E8E8;
+            --mc-text-gray: #8A998F;
+            --mc-text-gold: #FFD352;
+            --mc-hover-bg: #232C28;
+        }
+
         body {
-            width: 100%;
-            min-height: 100vh;
-            overflow-x: hidden;
-            background: #0a0a0a;
+            background-color: var(--mc-dark-bg);
+            color: var(--mc-text-normal);
+            line-height: 1.7;
         }
 
-        /* ========== 通用 MC 面板 ========== */
-        .mc-panel {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            border-radius: 0;
-        }
-
-        .mc-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 10px 26px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-decoration: none;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            cursor: pointer;
-            border-radius: 0;
-            user-select: none;
-            transition: background-color 0.08s linear;
-            font-family: inherit;
-        }
-
-        .mc-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .mc-btn:active {
-            background-color: var(--mc-btn-active);
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            transform: translateY(1px);
-        }
-
-        /* ============================================================
-           主页面
-           ============================================================ */
-        .main-page {
-            width: 100%;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* ---------- 背景视频层 ---------- */
-        .bg-video-wrap {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            /* 深色渐变底色，防止视频加载时黑屏 */
-            background: linear-gradient(135deg, #1a2a3a 0%, #0f1a24 100%);
-        }
-
-        .bg-video {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            pointer-events: none;
-            will-change: opacity;
-        }
-
-        /* 底层：正在播放、始终不透明的当前视频 */
-        .bg-video.bg-base {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        /* 顶层：淡入的下一个视频，用 0→1 的透明度覆盖在底层之上。
-           只有这一层在动，底层始终 100% 不透明，
-           因此合成结果永远是满亮度，不会出现叠化变暗。 */
-        .bg-video.bg-top {
-            z-index: 2;
-            transition: opacity var(--fade-dur, 1.5s) linear;
-        }
-
-        .bg-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.15);
-            pointer-events: none;
-        }
-
-        /* ---------- 顶栏 ---------- */
-        .top-bar {
-            position: fixed;
+        /* 顶部导航栏 */
+        .header {
+            background-color: var(--mc-card-bg);
+            border-bottom: 1px solid var(--mc-border);
+            padding: 18px 50px;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 64px;
-            background-color: var(--mc-panel);
-            border-bottom: 4px solid var(--mc-black);
-            box-shadow: inset 0 3px 0 var(--mc-panel-hi), inset 0 -3px 0 var(--mc-slot);
-            z-index: 999;
+            z-index: 100;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 15px;
-        }
-
-        .menu-btn {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            cursor: pointer;
-            z-index: 1000;
-            border-radius: 0;
-        }
-
-        .menu-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .menu-btn span {
-            width: 24px;
-            height: 3px;
-            background: var(--mc-text);
-            border-radius: 0;
-        }
-
-        .top-logo {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 44px;
-            width: 44px;
-            border-radius: 0;
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            object-fit: cover;
-            image-rendering: pixelated;
-        }
-
-        #bgmToggle {
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            letter-spacing: 0;
-            gap: 4px;
-        }
-
-        @media (max-width: 480px) {
-            #bgmToggle {
-                padding: 5px 8px;
-                font-size: 0.72rem;
-            }
-        }
-
-        /* ---------- 侧边栏 ---------- */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 300px;
-            height: 100vh;
-            background-color: var(--mc-panel);
-            border-right: 4px solid var(--mc-black);
-            box-shadow: inset -4px 0 0 var(--mc-slot), inset 4px 0 0 var(--mc-panel-hi);
-            z-index: 998;
-            transition: left 0.3s ease;
-            padding: 76px 0 20px;
-            overflow-y: auto;
-        }
-
-        .sidebar.show { left: 0; }
-
-        .sidebar::-webkit-scrollbar { width: 10px; }
-        .sidebar::-webkit-scrollbar-track { background: var(--mc-slot); border-left: 2px solid var(--mc-black); }
-        .sidebar::-webkit-scrollbar-thumb { background: var(--mc-panel); border: 2px solid var(--mc-black); }
-
-        .sidebar-logo { text-align: center; margin-bottom: 16px; }
-        .sidebar-logo img {
-            width: 110px;
-            height: 110px;
-            border-radius: 0;
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            object-fit: cover;
-            image-rendering: pixelated;
-        }
-
-        .menu-item {
-            padding: 14px 22px;
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            cursor: pointer;
-            border-left: 4px solid transparent;
-            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
-        }
-
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            border-left: 4px solid var(--mc-gold);
-            color: var(--mc-black);
-        }
-
-        .submenu {
-            display: none;
-            padding: 10px 18px 10px 30px;
-            background: rgba(0, 0, 0, 0.06);
-            box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.08);
-        }
-
-        .submenu.show { display: block; }
-
-        .tool-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        /* 统一字体样式：MC工具、启动器、AI助手 */
-        .tool-item,
-        .launcher-item,
-        .ai-side-tip {
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-        }
-
-        .tool-item {
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            padding: 10px 6px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 0;
-            transition: background-color 0.08s linear;
-            line-height: 1.3;
-        }
-
-        .tool-item:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-            color: var(--mc-text);
-        }
-
-        .launcher-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px;
-            cursor: pointer;
-            font-size: 0.98rem;
-            font-weight: bold;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            margin-bottom: 8px;
-        }
-
-        .launcher-item:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .launcher-item img {
-            width: 28px;
-            height: 28px;
-            object-fit: contain;
-            border-radius: 0;
-            image-rendering: pixelated;
-        }
-
-        .ai-side-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0 4px;
-        }
-
-        .ai-side-btn {
-            width: 100px;
-            height: 100px;
-            border-radius: 0;
-            object-fit: contain;
-            display: block;
-            cursor: pointer;
-            padding: 10px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            image-rendering: pixelated;
-        }
-
-        .ai-side-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .ai-side-tip {
-            font-size: 0.76rem;
-            text-align: center;
-            line-height: 1.4;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .ai-side-btn { width: 84px; height: 84px; padding: 8px; }
-            .ai-side-tip { font-size: 0.7rem; }
-        }
-
-        @media (max-width: 480px) {
-            .ai-side-btn { width: 72px; height: 72px; padding: 6px; border-width: 2px; }
-        }
-
-        /* ---------- 内容容器 ---------- */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 1200px;
-            margin: 84px auto 0;
-            padding: 30px 20px;
-        }
-
-        /* ---------- 公告栏（Minecraft 原版聊天栏样式） ---------- */
-        .notice {
-            /* 原版聊天栏：半透明黑底，无边框、无圆角、无立体高光 */
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            box-shadow: none;
-            border-radius: 0;
-            padding: 6px 10px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .notice-text {
-            white-space: nowrap;
-            animation: scroll 18s linear infinite;
-            /* 原版聊天文字：纯白、不加粗，右下 1px 深灰硬阴影 */
-            font-size: 1rem;
-            font-weight: normal;
-            letter-spacing: 0;
-            color: #ffffff;
-            line-height: 1.25;
-            text-shadow: 1px 1px 0 #3f3f3f;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* ---------- 工作室 ---------- */
-        .studio-section { text-align: center; margin-bottom: 30px; }
-
-        .studio-img {
-            width: 150px;
-            height: auto;
-            margin-bottom: 12px;
-            cursor: pointer;
-            image-rendering: pixelated;
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-        }
-
-        .studio-img:hover { transform: scale(1.05); }
-
-        .studio-desc {
-            font-size: 1.05rem;
-            color: #ffffff;
-            font-weight: bold;
-            line-height: 1.6;
-            max-width: 700px;
-            margin: 0 auto 14px;
-            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.85);
-        }
-
-        .studio-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 26px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-decoration: none;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            cursor: pointer;
-        }
-
-        .studio-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        /* ---------- 官方论坛 ---------- */
-        .forum-section { margin: 0 auto 30px; position: relative; }
-
-        .forum-board {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 20px;
-            display: flex;
+            gap: 18px;
             flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 12px 26px;
         }
 
-        .forum-logo-link {
-            order: 1;
+        .back-home {
             display: inline-flex;
             align-items: center;
-            text-decoration: none;
+            gap: 6px;
+            padding: 8px 14px;
+            border: 1px solid var(--mc-border);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--mc-text-gray);
+            white-space: nowrap;
+            transition: color .2s, border-color .2s, background .2s;
         }
 
-        .forum-logo {
-            width: 66px;
-            height: 66px;
-            object-fit: contain;
-            cursor: pointer;
-            image-rendering: pixelated;
-            background-color: var(--mc-slot);
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            padding: 4px;
+        .back-home:hover {
+            color: var(--mc-main-green);
+            border-color: var(--mc-main-green);
+            background: var(--mc-hover-bg);
         }
 
-        .forum-title {
-            order: 2;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            margin: 0;
-        }
-
-        .forum-desc {
-            order: 3;
-            font-size: 1.02rem;
-            color: var(--mc-text-mid);
-            font-weight: bold;
-            line-height: 1.5;
-            margin: 0;
-        }
-
-        .forum-btn {
-            order: 4;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 26px;
-            background-color: var(--mc-btn);
-            color: #ffffff;
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            font-size: 1rem;
-            font-weight: bold;
-            text-decoration: none;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            cursor: pointer;
-        }
-
-        .forum-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        @media (max-width: 768px) {
-            .forum-board { flex-direction: column; gap: 10px; padding: 18px 16px; }
-            .forum-logo { width: 54px; height: 54px; }
-            .forum-title { font-size: 1.4rem; }
-            .forum-desc { font-size: 0.95rem; text-align: center; }
-        }
-
-        @media (max-width: 480px) {
-            .forum-board { padding: 14px 12px; border-width: 3px; }
-            .forum-title { font-size: 1.15rem; }
-            .forum-logo { width: 46px; height: 46px; }
-            .forum-desc { font-size: 0.85rem; }
-        }
-
-        @media (min-width: 1200px) {
-            .forum-title { font-size: 2.1rem; }
-        }
-
-        /* ---------- 主标题面板 ---------- */
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 24px 20px;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
+        @media (max-width: 640px) {
+            .header { padding: 14px 18px; }
+            .header h1 { font-size: 19px; }
+            .header .desc { font-size: 12.5px; }
         }
 
         .header h1 {
-            font-size: 2.6rem;
-            margin-bottom: 10px;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.65);
+            color: var(--mc-main-green);
+            font-size: 24px;
+            letter-spacing: 1px;
         }
 
-        .header h1 i {
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
+        .header .desc {
+            color: var(--mc-text-gray);
+            font-size: 14px;
+            margin-top: 4px;
         }
 
-        .header p {
-            font-size: 1.1rem;
-            color: var(--mc-text-mid);
-            font-weight: bold;
-            line-height: 1.5;
-        }
-
-        /* ---------- 服务器宣传片 ---------- */
-        .video-section { margin: 30px auto 10px; max-width: 820px; position: relative; }
-
-        .video-board {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 26px 24px 30px;
-            text-align: center;
-        }
-
-        .video-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-        }
-
-        .video-thumb {
-            width: 100%;
-            max-width: 700px;
-            height: auto;
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            cursor: pointer;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .video-thumb:hover { transform: scale(1.015); }
-
-        /* ---------- 视频模态框 ---------- */
-        .video-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-
-        .video-modal.show { display: flex; }
-
-        .video-box {
-            background-color: var(--mc-panel);
-            padding: 22px 22px 26px;
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 12px 0 rgba(0, 0, 0, 0.5);
-            width: 92%;
-            max-width: 960px;
-            position: relative;
-        }
-
-        .video-close {
-            position: absolute;
-            top: 6px;
-            right: 10px;
-            font-size: 22px;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            cursor: pointer;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            z-index: 10;
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .video-close:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .video-box video {
-            width: 100%;
-            display: block;
-            background: #000;
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            max-height: 80vh;
-            object-fit: contain;
-        }
-
-        /* ---------- 服务器卡片 ---------- */
-        .server-card {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            align-items: stretch;
-        }
-
-        .card {
-            width: 400px;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 26px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card h2 {
-            font-size: 1.7rem;
-            margin-bottom: 18px;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-height: 56px;
-        }
-
-        .card h2 i {
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
-        }
-
-        .card .desc {
-            font-size: 1.02rem;
-            color: var(--mc-text-mid);
-            font-weight: bold;
-            margin-bottom: 26px;
-            line-height: 1.7;
-            flex: 1;
-            min-height: 120px;
-        }
-
-        .map-preview {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 22px;
-        }
-
-        .map-preview img {
-            width: 32%;
-            height: 90px;
-            object-fit: cover;
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-        }
-
-        .qun-box {
-            background-color: var(--mc-slot);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            padding: 22px;
-            margin-top: auto;
-        }
-
-        .qun-box p {
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            color: var(--mc-text);
-            font-weight: bold;
-            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.35);
-        }
-
-        .qun-num {
-            font-size: 2.4rem;
-            font-weight: bold;
-            color: #ffffff;
-            letter-spacing: 3px;
-            margin-bottom: 18px;
-            text-shadow: 3px 3px 0 var(--mc-gold-dark);
-        }
-
-        .join-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 auto;
-            padding: 10px 30px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            color: #ffffff;
-            font-size: 1.05rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .join-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        /* ---------- 赞助弹窗 ---------- */
-        .donate-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .donate-modal.show { display: flex; }
-
-        .donate-box {
-            background-color: var(--mc-panel);
-            padding: 28px;
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 12px 0 rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 600px;
-            text-align: center;
-            position: relative;
-        }
-
-        .donate-close {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            cursor: pointer;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .donate-title {
-            font-size: 1.4rem;
-            color: var(--mc-text);
-            margin-bottom: 20px;
-            font-weight: bold;
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-        }
-
-        .donate-qrcode {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .qrcode-item { width: 180px; }
-
-        .qrcode-item img {
-            width: 100%;
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-slot-sh) var(--mc-panel-hi) var(--mc-panel-hi) var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-        }
-
-        .qrcode-item p {
-            margin-top: 10px;
-            font-size: 0.98rem;
-            color: var(--mc-text);
-            font-weight: bold;
-        }
-
-        /* ---------- 底部 footer ---------- */
-        .footer {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            margin: 60px auto 0;
+        /* 搜索区域 */
+        .search-wrap {
             max-width: 1200px;
-            padding: 26px 20px;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            color: var(--mc-text-mid);
-            font-size: 1rem;
-        }
-
-        .footer .footer-text { margin-bottom: 16px; line-height: 1.6; font-weight: bold; }
-
-        .footer .donate-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 11px 34px;
-            background-color: var(--mc-btn);
-            color: #ffffff;
-            font-size: 1.05rem;
-            font-weight: bold;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .footer .donate-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .mask {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 997;
-            display: none;
-        }
-
-        .mask.show { display: block; }
-
-        /* ---------- 响应式 ---------- */
-        @media (max-width: 768px) {
-            .header h1 { font-size: 1.9rem; }
-            .card { width: 100%; padding: 22px 18px; }
-            .qun-num { font-size: 2rem; letter-spacing: 2px; }
-            .map-preview img { height: 70px; }
-            .studio-img { width: 110px; }
-            .video-title { font-size: 1.2rem; }
-            .video-board { padding: 18px 14px 22px; }
-            .video-box { padding: 16px 14px 20px; width: 95%; }
-            .video-box video { max-height: 70vh; }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 { font-size: 1.5rem; }
-            .qun-num { font-size: 1.7rem; }
-            .notice-text { font-size: 0.9rem; }
-            .map-preview img { height: 60px; }
-            .studio-img { width: 96px; }
-            .video-title { font-size: 1rem; }
-            .video-board { padding: 14px 10px 18px; border-width: 3px; }
-            .video-box { padding: 12px 10px 16px; border-width: 3px; width: 98%; }
-            .video-box video { max-height: 60vh; }
-        }
-
-        /* ---------- 下载模块 ---------- */
-        .download-section { margin: 40px auto 30px; max-width: 820px; position: relative; }
-
-        .download-board {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 26px 28px 30px;
-            text-align: center;
-        }
-
-        .download-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-        }
-
-        .download-title i {
-            font-size: 1.2rem;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.4);
-        }
-
-        .download-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            padding: 14px 30px;
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            color: #ffffff;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            min-width: 260px;
-            letter-spacing: 0.5px;
-        }
-
-        .download-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .download-btn .btn-icon {
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-            background-color: var(--mc-slot);
-            padding: 4px;
-            border: 2px solid var(--mc-slot-sh);
-            image-rendering: pixelated;
-        }
-
-        .download-btn .btn-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            line-height: 1.35;
-        }
-
-        .download-btn .btn-text .main {
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-        }
-
-        .download-btn .btn-text .sub {
-            font-size: 0.7rem;
-            font-weight: bold;
-            color: #e8e8e8;
-            text-shadow: 1px 1px 0 var(--mc-text);
-        }
-
-        .download-btn .btn-arrow {
-            font-size: 1.1rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-        }
-
-        .download-hint {
-            text-align: center;
-            margin-top: 16px;
-            font-size: 0.85rem;
-            color: var(--mc-text-mid);
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .download-section { margin: 30px auto 20px; }
-            .download-board { padding: 18px 14px 22px; }
-            .download-title { font-size: 1.15rem; margin-bottom: 16px; }
-            .download-buttons { flex-direction: column; align-items: center; }
-            .download-btn { padding: 13px 20px; font-size: 1rem; min-width: 200px; width: 100%; max-width: 380px; }
-            .download-btn .btn-icon { width: 36px; height: 36px; }
-            .download-btn .btn-text .main { font-size: 0.92rem; }
-        }
-
-        @media (max-width: 480px) {
-            .download-board { padding: 14px 10px 18px; border-width: 3px; }
-            .download-title { font-size: 1rem; }
-            .download-btn { padding: 11px 14px; font-size: 0.9rem; min-width: 160px; }
-            .download-btn .btn-icon { width: 30px; height: 30px; padding: 3px; }
-            .download-btn .btn-text .main { font-size: 0.82rem; }
-        }
-
-        /* ============================================================
-           赞助玩家榜单
-           ============================================================ */
-        .sponsor-section {
-            position: relative;
-            z-index: 1;
-            margin: 30px auto 10px;
-            max-width: 700px;
+            margin: 24px auto;
             padding: 0 20px;
         }
 
-        .sponsor-board {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 26px 24px 28px;
-            text-align: center;
-            overflow: visible;
-            min-height: 140px;
+        #searchInput {
+            width: 100%;
+            background: var(--mc-card-bg);
+            border: 1px solid var(--mc-border);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 3px;
+            font-size: 15px;
+            transition: all 0.3s;
         }
 
-        .sponsor-board>*:not(.star-orbit) { position: relative; z-index: 1; }
-
-        .star-orbit {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            pointer-events: none;
-            z-index: 0;
-            animation: orbitSpin 22s linear infinite;
+        #searchInput:focus {
+            outline: none;
+            border-color: var(--mc-main-green);
+            box-shadow: 0 0 8px rgba(67, 185, 110, 0.25);
         }
 
-        @keyframes orbitSpin {
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
         }
 
-        .star {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 18px;
-            color: var(--mc-gold);
-            text-shadow: 1px 1px 0 var(--mc-gold-dark), 0 0 6px rgba(255, 170, 0, 0.9);
-            animation: twinkle 2.4s ease-in-out infinite alternate;
-            animation-delay: calc(var(--i) * 0.18s);
-            font-family: "Segoe UI Symbol", "Arial Unicode MS", sans-serif;
+        /* 分类标题 */
+        .category-title {
+            color: var(--mc-text-gold);
+            font-size: 20px;
+            margin: 36px 0 16px;
+            padding-left: 10px;
+            border-left: 4px solid var(--mc-main-green);
         }
 
-        @keyframes twinkle {
-            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.7); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1.3); }
+        /* 指令卡片 */
+        .cmd-card {
+            background: var(--mc-card-bg);
+            border: 1px solid var(--mc-border);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: background 0.2s;
         }
 
-        .sponsor-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            margin-bottom: 14px;
+        .cmd-card:hover {
+            background: var(--mc-hover-bg);
         }
 
-        .sponsor-name {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--mc-cyan);
-            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
-            padding: 4px 0;
-            margin-bottom: 6px;
-            /* 名字与前面的名次图标水平对齐 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        /* 名次图标：金块 / 铁块 / 铜块 / 铁粒 */
-        .sponsor-medal {
-            width: 34px;
-            height: 34px;
-            object-fit: contain;
-            image-rendering: pixelated;
-            flex: 0 0 auto;
-        }
-
-        /* 第四名及以后，折叠时隐藏 */
-        .sponsor-extra {
-            display: none;
-        }
-
-        .sponsor-board.expanded .sponsor-extra {
-            display: flex;
-        }
-
-        /* 展开／收起三角 */
-        .sponsor-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            margin: 10px auto 0;
-            padding: 4px 14px;
-            background: none;
-            border: none;
-            box-shadow: none;
-            color: var(--mc-text-mid);
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: bold;
+        /* 指令头部 点击展开 */
+        .cmd-header {
+            padding: 14px 20px;
             cursor: pointer;
-            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .sponsor-toggle:hover { color: var(--mc-black); }
-
-        .sponsor-toggle .arrow {
-            display: inline-block;
-            font-size: 0.85rem;
-            line-height: 1;
-            transition: transform 0.25s ease;
+        .cmd-name {
+            color: var(--mc-main-green);
+            font-weight: bold;
+            font-size: 16px;
         }
 
-        .sponsor-board.expanded .sponsor-toggle .arrow {
+        .cmd-desc {
+            color: var(--mc-text-gray);
+            font-size: 14px;
+            margin-left: 12px;
+        }
+
+        .arrow {
+            color: var(--mc-text-gray);
+            transition: transform 0.3s;
+        }
+
+        .arrow.active {
             transform: rotate(180deg);
         }
 
-        .sponsor-badge {
-            display: inline-block;
-            margin-top: 8px;
-            font-size: 0.85rem;
-            color: var(--mc-gold-dark);
-            font-weight: bold;
-            border-top: 2px solid rgba(0, 0, 0, 0.15);
-            padding-top: 10px;
-        }
-
-        /* ============================================================
-           友情合作框
-           ============================================================ */
-        .friend-link-section {
-            position: relative;
-            z-index: 1;
-            margin: 30px auto 10px;
-            max-width: 700px;
+        /* 指令详情区域 */
+        .cmd-detail {
             padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            border-top: 1px solid var(--mc-border);
         }
 
-        .friend-link-board {
-            position: relative;
-            background-color: var(--mc-panel);
-            border-style: solid;
-            border-width: 4px;
-            border-color: var(--mc-panel-hi) var(--mc-panel-sh) var(--mc-panel-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black), 0 8px 0 rgba(0, 0, 0, 0.35);
-            padding: 26px 24px 28px;
-            text-align: center;
-            overflow: visible;
-            min-height: 140px;
+        .cmd-detail.show {
+            padding: 16px 20px;
+            max-height: 3000px;
         }
 
-        .friend-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--mc-text);
-            text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+        /* 代码样式 */
+        pre {
+            background: var(--mc-dark-bg);
+            padding: 12px;
+            border-radius: 3px;
+            overflow-x: auto;
+            color: #7ed899;
+            margin: 10px 0;
         }
 
-        .friend-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-shadow: 2px 2px 0 var(--mc-text);
-            background-color: var(--mc-btn);
-            border-style: solid;
-            border-width: 3px;
-            border-color: var(--mc-panel-hi) var(--mc-slot-sh) var(--mc-slot-sh) var(--mc-panel-hi);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            padding: 12px 44px;
-            text-decoration: none;
-            cursor: pointer;
-            letter-spacing: 2px;
-        }
-
-        .friend-btn:hover {
-            background-color: var(--mc-btn-hover);
-            box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--mc-black);
-        }
-
-        .friend-logo {
-            display: block;
-            margin: 25px auto 0;
-            width: 180px;
-            max-width: 60%;
-            border: 3px solid var(--mc-slot-sh);
-            box-shadow: 0 0 0 2px var(--mc-black);
-            image-rendering: pixelated;
-        }
-
-        @media (max-width: 768px) {
-            .sponsor-board, .friend-link-board { padding: 20px 16px 22px; min-height: 120px; }
-            .sponsor-title, .friend-title { font-size: 1.2rem; }
-            .sponsor-name { font-size: 1.15rem; }
-            .friend-btn { font-size: 1.25rem; padding: 10px 30px; }
-            .friend-logo { width: 140px; max-width: 55%; }
-            .star { width: 14px; height: 14px; font-size: 14px; }
-            .star-orbit { animation-duration: 18s; }
-        }
-
-        @media (max-width: 480px) {
-            .sponsor-board, .friend-link-board { padding: 16px 12px 18px; min-height: 100px; border-width: 3px; }
-            .sponsor-title, .friend-title { font-size: 1.05rem; }
-            .sponsor-name { font-size: 1rem; }
-            .friend-btn { font-size: 1.05rem; padding: 8px 20px; }
-            .friend-logo { width: 110px; max-width: 45%; }
-            .star { width: 11px; height: 11px; font-size: 11px; }
-            .star-orbit { animation-duration: 16s; }
-        }
-
-        @media (min-width: 1200px) {
-            .sponsor-name { font-size: 1.7rem; }
-            .sponsor-title, .friend-title { font-size: 1.7rem; }
-            .friend-btn { font-size: 1.8rem; padding: 14px 52px; }
-            .friend-logo { width: 220px; }
-            .star { width: 22px; height: 22px; font-size: 22px; }
+        .molang-title {
+            color: var(--mc-text-gold);
+            margin: 16px 0 8px;
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta name="description" content="我的世界网易版+国际版互通服务器，纯净生存、免费开服、长期稳定、萌新友好，提供开服教程、启动器下载、模组包。">
-    <meta name="keywords" content="我的世界服务器,MC服务器,网易MC服务器,国际版MC服务器,MC互通服,我的世界开服">
 </head>
 <body>
 
-    <audio id="bgm" src="minecraft_bgm.mp3" loop preload="auto"></audio>
-
-    <div class="main-page" id="mainPage">
-
-        <!-- ===== 背景视频层 ===== -->
-        <div class="bg-video-wrap" aria-hidden="true">
-            <video class="bg-video" id="bgVideoA" src="minecraft.mp4" muted playsinline preload="auto"></video>
-            <video class="bg-video" id="bgVideoB" src="minecraft.mp4" muted playsinline preload="auto"></video>
-            <div class="bg-overlay"></div>
-        </div>
-
-        <div class="top-bar">
-            <button class="menu-btn" id="menuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <img src="封面.webp" alt="LOGO" class="top-logo">
-            <button id="bgmToggle" class="mc-btn" title="背景音乐开关" type="button">🔇 音乐</button>
-        </div>
-
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-logo">
-                <img src="封面.webp" alt="LOGO">
-            </div>
-            <div class="menu-item" onclick="goHome()">🏠 主页</div>
-            <div class="menu-item" id="toolMenu">🧰 MC工具</div>
-            <div class="submenu" id="toolSub">
-                <div class="tool-grid">
-                    <div class="tool-item" onclick="window.open('https://o.xbottle.top/mcsounds/','_blank')">MC音效</div>
-                    <div class="tool-item" onclick="window.open('https://ccvaults.com/','_blank')">MC贴图</div>
-                    <div class="tool-item" onclick="window.open('https://mcpixelart.com/','_blank')">MC艺术画</div>
-                    <div class="tool-item" onclick="window.open('https://3dt.easecation.net/','_blank')">3D字制作</div>
-                    <div class="tool-item" onclick="window.open('https://klpbbs.com/forum.php?mod=guide&view=hot&mobile=2','_blank')">苦力怕论坛</div>
-                    <div class="tool-item" onclick="window.open('https://cmd.longvalley.cn/','_blank')">基岩版指令</div>
-                    <div class="tool-item" onclick="window.open('https://honghemc.cn/','_blank')">红河资源</div>
-                    <div class="tool-item" onclick="window.open('https://creepermc.cn/','_blank')">苦力怕资源</div>
-                </div>
-            </div>
-            <div class="menu-item" id="launcherMenu">🚀 启动器</div>
-            <div class="submenu" id="launcherSub">
-                <div class="launcher-item" onclick="window.open('https://ifdian.net/a/LTcat','_blank')">
-                    <img src="龙腾猫跃.webp" alt="PCL2"><span>PCL2 启动器</span>
-                </div>
-                <div class="launcher-item" onclick="window.open('https://foldcraftlauncher.cn/#tab1','_blank')">
-                    <img src="FCL.webp" alt="FCL"><span>FCL 启动器</span>
-                </div>
-                <div class="launcher-item" onclick="window.open('https://mc.163.com','_blank')">
-                    <img src="网易.webp" alt="网易版"><span>网易版 MC</span>
-                </div>
-            </div>
-
-            <div class="menu-item" id="aiMenu">🐉 龙宝AI助手</div>
-            <div class="submenu" id="aiSub">
-                <div class="ai-side-wrap">
-                    <img src="ai.svg" alt="龙宝AI助手" class="ai-side-btn" onclick="window.open('https://ai.longvalley.cn/','_blank')">
-                    <div class="ai-side-tip">有不会的欢迎来问龙宝喵~</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mask" id="mask"></div>
-
-        <div class="container">
-            <div class="notice">
-                <div class="notice-text">
-                    📢 服务器长期稳定运营 | 每日上线领福利 | 网易/国际版数据互通福利 | 群内有开服教程和专属模组包 📢
-                </div>
-            </div>
-
-            <div class="forum-section">
-                <div class="forum-board">
-                    <div class="forum-title">官方论坛</div>
-                    <a class="forum-logo-link" href="https://pd.qq.com/s/c3b85f58g?b=5" target="_blank" rel="noopener noreferrer">
-                        <img src="bbs.svg" alt="官方论坛LOGO" class="forum-logo">
-                    </a>
-                    <div class="forum-desc">发帖交流 · 攻略分享 · 问题反馈，和更多玩家一起讨论方块世界！</div>
-                    <a class="forum-btn" href="https://pd.qq.com/s/c3b85f58g?b=5" target="_blank" rel="noopener noreferrer">进入官方论坛</a>
-                </div>
-            </div>
-
-            <div class="studio-section">
-                <img src="工作室.webp" alt="工作室LOGO" class="studio-img" onclick="joinStudioGroup()">
-                <div class="studio-desc">专注Minecraft创作，模组·材质·地图全链开发，网易与Java双端适配，打造你的专属方块世界！</div>
-                <a class="studio-btn" onclick="joinStudioGroup()">加入工作室交流群</a>
-            </div>
-
-            <div class="header">
-                <h1><i class="fas fa-cube"></i> 我的世界专属服务器</h1>
-                <p>网易版 × 国际java版 双服持续运营 | 纯享游玩体验 | 优质玩家社区</p>
-            </div>
-
-            <div class="video-section">
-                <div class="video-board">
-                    <div class="video-title">服务器宣传片</div>
-                    <img src="vedio.webp" alt="服务器宣传片封面" class="video-thumb" onclick="openVideo()">
-                </div>
-            </div>
-
-            <div class="server-card">
-                <div class="card">
-                    <h2><i class="fas fa-globe-asia"></i> 网易版专属服</h2>
-                    <p class="desc">适配网易MC全版本，无需正版验证，一键加入即可游玩！纯净生存+趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围超友好，每日还有专属福利哦～</p>
-                    <div class="map-preview">
-                        <img src="预览一.webp" alt="预览一">
-                        <img src="预览二.webp" alt="预览二">
-                        <img src="预览三.webp" alt="预览三">
-                    </div>
-                    <div class="qun-box">
-                        <p>网易服官方交流QQ群</p>
-                        <div class="qun-num">668352250</div>
-                        <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <h2><i class="fas fa-earth"></i> 国际java服</h2>
-                    <p class="desc">分为粘液科技服和1.20.1模组服，支持离线玩家加入，服务器持续更新，腐竹也超听劝！</p>
-                    <div class="map-preview">
-                        <img src="国际一.webp" alt="国际一">
-                        <img src="国际二.webp" alt="国际二">
-                        <img src="国际三.webp" alt="国际三">
-                    </div>
-                    <div class="qun-box">
-                        <p>国际服官方交流QQ群</p>
-                        <div class="qun-num">1059442560</div>
-                        <button class="join-btn" onclick="window.open('https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info','_blank')"><i class="fas fa-user-plus"></i> 一键加入</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="download-section">
-                <div class="download-board">
-                    <div class="download-title">
-                        <i class="fas fa-download"></i> 游戏下载 <i class="fas fa-download"></i>
-                    </div>
-                    <div class="download-buttons">
-                        <a href="https://pan.quark.cn/s/8415d5842602?pwd=e8mQ" target="_blank" rel="noopener noreferrer" class="download-btn">
-                            <img src="国际.webp" alt="国际版" class="btn-icon">
-                            <span class="btn-text">
-                                <span class="main">前往下载国际版MC</span>
-                                <span class="sub">夸克网盘 · 输入提取码 e8mQ</span>
-                            </span>
-                            <span class="btn-arrow"><i class="fas fa-arrow-right"></i></span>
-                        </a>
-                    </div>
-                    <div class="download-hint">
-                        <i class="fas fa-info-circle"></i> 点击按钮跳转至夸克网盘，输入提取码即可下载
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sponsor-section">
-            <div class="sponsor-board">
-                <div class="star-orbit" id="starOrbit"></div>
-                <div class="sponsor-title">赞助玩家榜单</div>
-
-                <!-- 前三名：始终显示 -->
-                <div class="sponsor-name">
-                    <img src="金块.webp" alt="第一名" class="sponsor-medal">evoker（国际服赞助玩家 50元）
-                </div>
-                <div class="sponsor-name">
-                    <img src="铁块.webp" alt="第二名" class="sponsor-medal">菠菜卷饼（网易服赞助玩家 30元）
-                </div>
-                <div class="sponsor-name">
-                    <img src="铜块.webp" alt="第三名" class="sponsor-medal">虎青（网易服赞助玩家 13.56元）
-                </div>
-
-                <!-- 第四名及以后：点击三角后展开 -->
-                <div class="sponsor-name sponsor-extra">
-                    <img src="铁粒.webp" alt="赞助玩家" class="sponsor-medal">鱼的七秒记忆（网易服赞助玩家 10元）
-                </div>
-                <div class="sponsor-name sponsor-extra">
-                    <img src="铁粒.webp" alt="赞助玩家" class="sponsor-medal">PHAGE_A（国际服赞助玩家 9.1元）
-                </div>
-
-                <button class="sponsor-toggle" id="sponsorToggle" type="button"
-                        onclick="toggleSponsors()" aria-expanded="false">
-                    <span class="arrow">▼</span>
-                    <span class="toggle-text">展开全部</span>
-                </button>
-
-                <div class="sponsor-badge">✦ 感谢你的支持 ✦</div>
-            </div>
-        </div>
-
-        <div class="friend-link-section">
-            <div class="friend-link-board">
-                <div class="friend-title">友情合作</div>
-                <a href="https://krsh.longvalley.cn/" target="_blank" rel="noopener noreferrer" class="friend-btn">空日噬魂</a>
-                <img src="krsh.webp" alt="空日噬魂" class="friend-logo">
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="footer-text">
-                <p>玩家自建专属MC社区 | 公平游玩 · 和谐交流 · 长期运营 | 最终解释权归服务器管理团队所有</p>
-            </div>
-            <button class="donate-btn" onclick="openDonate()">❤️ 赞助服务器</button>
-        </div>
-
+<!-- 顶部导航 -->
+<div class="header">
+    <div class="header-main">
+        <h1>Minecraft 基岩版 1.21.11 指令大全</h1>
+        <div class="desc">珑谷纪官方 · MC 工具 | 全指令收录 · 点击展开语法 · 含完整 Molang 文档</div>
     </div>
+    <a class="back-home" href="https://longvalley.cn">← 返回珑谷纪官网</a>
+</div>
 
-    <!-- 赞助弹窗 -->
-    <div class="donate-modal" id="donateModal">
-        <div class="donate-box">
-            <button class="donate-close" onclick="closeDonate()">×</button>
-            <div class="donate-title">服务器赞助支持</div>
-            <div class="donate-qrcode">
-                <div class="qrcode-item">
-                    <img src="微信收款码.png" alt="微信收款"><p>微信支付</p>
-                </div>
-                <div class="qrcode-item">
-                    <img src="支付宝收款码.png" alt="支付宝收款"><p>支付宝支付</p>
-                </div>
+<!-- 搜索框 -->
+<div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="搜索指令、关键词、Molang语法...">
+</div>
+
+<!-- 主内容区 -->
+<div class="container">
+    <!-- 传送类指令 -->
+    <h2 class="category-title">传送类指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tp</span>
+                <span class="cmd-desc">实体传送指令（简化版）</span>
             </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tp &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; [旋转角度X] [旋转角度Y]
+/tp &lt;目标&gt; &lt;目标实体&gt;
+/tp &lt;目标&gt; &lt;目标实体&gt; facing &lt;朝向实体&gt;
+/tp &lt;目标&gt; &lt;目标实体&gt; facing &lt;x&gt; &lt;y&gt; &lt;z&gt;</pre>
+            <p>用途：将玩家或实体传送到指定坐标、目标实体，或朝向指定方向。</p>
         </div>
     </div>
 
-    <!-- 视频模态框 -->
-    <div class="video-modal" id="videoModal" onclick="closeVideoOnBg(event)">
-        <div class="video-box" onclick="event.stopPropagation();">
-            <button class="video-close" onclick="closeVideo()">✕</button>
-            <video controls playsinline preload="metadata" controlsList="nodownload" disablePictureInPicture oncontextmenu="return false;" id="dynamicVideo"></video>
-            <div id="videoLoadingHint" style="color: #3f3f3f; text-align: center; margin-top: 10px; font-size: 0.9rem; font-weight: bold; display: none;">
-                <i class="fas fa-spinner fa-spin"></i> 视频加载中...
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/teleport</span>
+                <span class="cmd-desc">高级传送指令（含安全传送）</span>
             </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/teleport &lt;目标&gt; &lt;x&gt; &lt;y&gt; &lt;z&gt; [rx] [ry] [是否安全传送]
+/teleport &lt;目标&gt; &lt;目标实体&gt; facing &lt;朝向实体&gt;
+/teleport &lt;目标&gt; &lt;目标实体&gt; facing &lt;x&gt; &lt;y&gt; &lt;z&gt;</pre>
+            <p>用途：相比/tp支持安全传送判断，防止玩家卡入方块。</p>
         </div>
     </div>
+
+    <!-- 游戏模式与难度 -->
+    <h2 class="category-title">游戏模式与难度指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/gamemode</span>
+                <span class="cmd-desc">修改游戏模式</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/gamemode &lt;survival|creative|adventure|spectator&gt; [玩家]</pre>
+            <p>用途：修改指定玩家的游戏模式，支持生存/创造/冒险/旁观者模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/difficulty</span>
+                <span class="cmd-desc">修改游戏难度</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/difficulty &lt;peaceful|easy|normal|hard&gt;</pre>
+            <p>用途：修改世界难度，支持和平/简单/普通/困难。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/defaultgamemode</span>
+                <span class="cmd-desc">设置世界默认游戏模式</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/defaultgamemode &lt;survival|creative|adventure&gt;</pre>
+        </div>
+    </div>
+
+    <!-- 实体与动画指令 -->
+    <h2 class="category-title">实体与动画指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/playanimation</span>
+                <span class="cmd-desc">播放实体动画（含完整Molang语法）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>指令基础语法：</strong></p>
+<pre>/playanimation &lt;目标&gt; &lt;动画名称&gt; [时长] [过渡时间] [循环] [Molang表达式]</pre>
+
+            <h3 class="molang-title">完整 Molang 全部语法</h3>
+<pre>
+# 基础数值运算
++  -  *  /  %
+
+# 逻辑运算符
+&& || ! == != > < >= <=
+
+# 内置变量（常用）
+query.position_x       实体X坐标
+query.position_y       实体Y坐标
+query.position_z       实体Z坐标
+query.health           实体生命值
+query.max_health       实体最大生命值
+query.speed            实体移动速度
+query.is_on_ground     是否在地面
+query.is_moving        是否正在移动
+query.age              实体存活刻数
+query.is_burning       是否正在燃烧
+query.is_in_water      是否在水中
+query.is_in_lava       是否在岩浆中
+query.is_sneaking      是否潜行
+query.is_sprinting     是否冲刺
+query.is_riding        是否骑乘
+query.is_dead          是否死亡
+query.variant          实体变体ID
+query.armor_head       头盔护甲值
+query.armor_torso      胸甲护甲值
+query.armor_legs       护腿护甲值
+query.armor_feet       靴子护甲值
+query.hurt_time        受伤后闪烁时间
+query.swing_time       攻击动作时间
+query.is_angry         是否愤怒（狼/猪灵等）
+query.is_baby          是否幼年实体
+query.weather_rain     是否下雨
+query.weather_thunder  是否雷雨
+
+# 常用函数
+math.sin(x)            正弦函数
+math.cos(x)            余弦函数
+math.tan(x)            正切函数
+math.sqrt(x)           开平方
+math.abs(x)            绝对值
+math.floor(x)          向下取整
+math.ceil(x)           向上取整
+math.round(x)          四舍五入
+math.clamp(a,min,max)   数值限制
+math.random(min,max)   生成随机数
+math.pi                圆周率常量
+math.exp(x)            指数函数
+math.log(x)            自然对数
+math.pow(x,y)          x的y次方
+math.min(a,b)          取最小值
+math.max(a,b)          取最大值
+</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/summon</span>
+                <span class="cmd-desc">生成实体</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/summon &lt;实体ID&gt; [x] [y] [z] [旋转角度] [数据标签]</pre>
+            <p>用途：在指定位置生成实体，支持自定义数据标签。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/kill</span>
+                <span class="cmd-desc">杀死实体</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/kill [目标]</pre>
+            <p>用途：杀死指定实体，省略目标则杀死自己。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/effect</span>
+                <span class="cmd-desc">添加/移除状态效果</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/effect &lt;目标&gt; &lt;效果ID&gt; [时长] [等级] [隐藏粒子]
+/effect clear [目标] [效果ID]</pre>
+            <p>用途：给实体添加或移除状态效果，支持隐藏粒子效果。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tp @e</span>
+                <span class="cmd-desc">批量传送实体（示例用法）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tp @e[type=zombie] 100 64 100
+/tp @e[type=!player] @p</pre>
+            <p>用途：批量传送指定类型的实体到指定位置或玩家位置。</p>
+        </div>
+    </div>
+
+    <!-- 物品与方块指令 -->
+    <h2 class="category-title">物品与方块指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/give</span>
+                <span class="cmd-desc">给予玩家物品</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/give &lt;玩家&gt; &lt;物品ID&gt; [数量] [附加值] [JSON标签]</pre>
+            <p>用途：给指定玩家发放物品，支持自定义NBT标签。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/setblock</span>
+                <span class="cmd-desc">放置指定方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/setblock &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;方块ID&gt; [放置模式] [数据标签]</pre>
+            <p>用途：在指定坐标放置方块，支持替换/保留/销毁模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/fill</span>
+                <span class="cmd-desc">填充指定区域方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/fill &lt;x1&gt; &lt;y1&gt; &lt;z1&gt; &lt;x2&gt; &lt;y2&gt; &lt;z2&gt; &lt;方块ID&gt; [放置模式] [过滤方块]</pre>
+            <p>用途：填充两个对角坐标之间的区域，支持替换/空心/保留等模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/clear</span>
+                <span class="cmd-desc">清空玩家物品栏</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/clear [玩家] [物品ID] [附加值] [数量] [数据标签]</pre>
+            <p>用途：清空玩家物品栏，可指定清除特定物品。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/replaceitem</span>
+                <span class="cmd-desc">替换实体/方块的物品</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/replaceitem entity &lt;目标&gt; &lt;槽位&gt; &lt;物品ID&gt; [数量] [附加值] [数据标签]
+/replaceitem block &lt;x&gt; &lt;y&gt; &lt;z&gt; &lt;槽位&gt; &lt;物品ID&gt; [数量] [附加值] [数据标签]</pre>
+            <p>用途：替换实体（玩家/生物）或方块（箱子/发射器）指定槽位的物品。</p>
+        </div>
+    </div>
+
+    <!-- 游戏规则与世界指令 -->
+    <h2 class="category-title">游戏规则与世界指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/gamerule</span>
+                <span class="cmd-desc">修改世界游戏规则</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/gamerule &lt;规则名&gt; [true/false/数值]</pre>
+            <p>常用规则：</p>
+            <ul>
+                <li>doDaylightCycle - 昼夜交替</li>
+                <li>mobGriefing - 生物破坏方块</li>
+                <li>keepInventory - 死亡保留物品</li>
+                <li>doMobSpawning - 生物生成</li>
+                <li>commandBlockOutput - 命令方块输出日志</li>
+                <li>showDeathMessages - 显示死亡信息</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/time</span>
+                <span class="cmd-desc">修改/查询世界时间</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/time set &lt;day|night|noon|midnight|数值&gt;
+/time add &lt;数值&gt;
+/time query &lt;daytime|gametime|day&gt;</pre>
+            <p>用途：设置/增加/查询世界时间。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/weather</span>
+                <span class="cmd-desc">修改天气</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/weather &lt;clear|rain|thunder&gt; [持续时间]</pre>
+            <p>用途：设置世界天气为晴天/雨天/雷雨。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/seed</span>
+                <span class="cmd-desc">查询世界种子</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/seed</pre>
+            <p>用途：显示当前世界的种子代码。</p>
+        </div>
+    </div>
+
+    <!-- 玩家管理指令 -->
+    <h2 class="category-title">玩家管理指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/xp</span>
+                <span class="cmd-desc">给予/设置玩家经验</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/xp &lt;数量&gt;L [玩家]  设置玩家等级
+/xp &lt;数量&gt; [玩家]    给予玩家经验值</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/scoreboard</span>
+                <span class="cmd-desc">计分板管理指令</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法（常用）：</strong></p>
+<pre># 创建计分板
+/scoreboard objectives add &lt;名称&gt; &lt;类型&gt; [显示名称]
+# 设置玩家分数
+/scoreboard players set &lt;玩家&gt; &lt;计分板&gt; &lt;分数&gt;
+# 增加玩家分数
+/scoreboard players add &lt;玩家&gt; &lt;计分板&gt; &lt;数值&gt;
+# 减少玩家分数
+/scoreboard players remove &lt;玩家&gt; &lt;计分板&gt; &lt;数值&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tag</span>
+                <span class="cmd-desc">给实体添加/移除标签</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tag &lt;目标&gt; add &lt;标签名&gt;
+/tag &lt;目标&gt; remove &lt;标签名&gt;
+/tag &lt;目标&gt; list</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/title</span>
+                <span class="cmd-desc">给玩家显示标题/副标题/动作栏文字</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/title &lt;玩家&gt; title &lt;文字&gt;
+/title &lt;玩家&gt; subtitle &lt;文字&gt;
+/title &lt;玩家&gt; actionbar &lt;文字&gt;
+/title &lt;玩家&gt; times &lt;淡入&gt; &lt;停留&gt; &lt;淡出&gt;</pre>
+        </div>
+    </div>
+
+    <!-- 命令方块与调试指令 -->
+    <h2 class="category-title">命令方块与调试指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/execute</span>
+                <span class="cmd-desc">执行复杂指令（核心指令）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法（基岩版）：</strong></p>
+<pre>/execute &lt;执行者&gt; &lt;位置&gt; &lt;指令&gt;
+/execute as &lt;目标&gt; at @s run &lt;指令&gt;
+/execute positioned &lt;x y z&gt; run &lt;指令&gt;
+/execute if &lt;条件&gt; run &lt;指令&gt;
+/execute unless &lt;条件&gt; run &lt;指令&gt;
+/execute align &lt;坐标轴&gt; run &lt;指令&gt;
+/execute anchored &lt;eyes|feet&gt; run &lt;指令&gt;
+/execute facing &lt;x y z|实体&gt; run &lt;指令&gt;
+/execute in &lt;维度&gt; run &lt;指令&gt;
+/execute rotated &lt;rx ry&gt; run &lt;指令&gt;
+/execute run &lt;指令&gt;</pre>
+            <p>用途：改变指令的执行者、执行位置，或添加条件判断执行指令。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/clone</span>
+                <span class="cmd-desc">复制方块区域</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/clone &lt;x1 y1 z1&gt; &lt;x2 y2 z2&gt; &lt;目标x y z&gt; [模式] [过滤方块]</pre>
+            <p>用途：复制一个区域的方块到另一个位置，支持过滤和替换模式。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/testfor</span>
+                <span class="cmd-desc">检测实体/玩家是否存在</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/testfor &lt;目标&gt;
+/testfor @e[type=zombie,r=10]</pre>
+            <p>用途：检测指定范围内是否存在目标实体，常用于命令方块连锁。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/testforblock</span>
+                <span class="cmd-desc">检测指定位置的方块</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/testforblock &lt;x y z&gt; &lt;方块ID&gt; [数据值] [数据标签]</pre>
+            <p>用途：检测指定坐标的方块是否为目标方块，常用于机关/陷阱。</p>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/debug</span>
+                <span class="cmd-desc">调试性能指令</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/debug start
+/debug stop
+/debug report</pre>
+            <p>用途：记录性能数据，用于排查卡顿问题。</p>
+        </div>
+    </div>
+
+    <!-- 其他常用指令 -->
+    <h2 class="category-title">其他常用指令</h2>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/say</span>
+                <span class="cmd-desc">向所有玩家发送消息</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/say &lt;消息内容&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/tell</span>
+                <span class="cmd-desc">向指定玩家发送私信</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/tell &lt;玩家&gt; &lt;消息内容&gt;
+/msg &lt;玩家&gt; &lt;消息内容&gt;
+/w &lt;玩家&gt; &lt;消息内容&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/kick</span>
+                <span class="cmd-desc">踢出玩家</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/kick &lt;玩家&gt; [原因]</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/ban</span>
+                <span class="cmd-desc">封禁玩家（服务器指令）</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/ban &lt;玩家&gt; [原因]
+/banlist ips
+/banlist players
+/pardon &lt;玩家&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/op</span>
+                <span class="cmd-desc">给予玩家管理员权限</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/op &lt;玩家&gt;
+/deop &lt;玩家&gt;</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/list</span>
+                <span class="cmd-desc">列出在线玩家</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/list</pre>
+        </div>
+    </div>
+
+    <div class="cmd-card">
+        <div class="cmd-header" onclick="toggleCmd(this)">
+            <div>
+                <span class="cmd-name">/help</span>
+                <span class="cmd-desc">查看指令帮助</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="cmd-detail">
+            <p><strong>完整语法：</strong></p>
+<pre>/help [页码|指令名]</pre>
+        </div>
+    </div>
+
+</div>
 
 <script>
-    // ============================================================
-    //  0. Minecraft 风格点击音效
-    // ============================================================
-    let mcAudioCtx = null;
+// 展开/折叠指令
+function toggleCmd(el) {
+    const detail = el.nextElementSibling;
+    const arrow = el.querySelector('.arrow');
+    detail.classList.toggle('show');
+    arrow.classList.toggle('active');
+}
 
-    function getAudioCtx() {
-        if (!mcAudioCtx) {
-            try {
-                mcAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            } catch (e) {
-                return null;
-            }
-        }
-        return mcAudioCtx;
-    }
-
-    function playMinecraftClick() {
-        const ctx = getAudioCtx();
-        if (!ctx) return;
-
-        if (ctx.state === 'suspended') {
-            ctx.resume();
-        }
-
-        const osc = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(900, ctx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.05);
-
-        gainNode.gain.setValueAtTime(0.12, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.06);
-
-        osc.connect(gainNode);
-        gainNode.connect(ctx.destination);
-
-        osc.start();
-        osc.stop(ctx.currentTime + 0.07);
-    }
-
-    document.addEventListener('click', (e) => {
-        if (e.target.closest && e.target.closest('#bgmToggle')) return;
-        const clickable = e.target.closest(
-            'button, a, .mc-btn, .menu-btn, .tool-item, .menu-item, ' +
-            '.launcher-item, .download-btn, .join-btn, .friend-btn, ' +
-            '.studio-btn, .forum-btn, .video-thumb, .studio-img, .forum-logo, ' +
-            '.ai-side-btn, .video-close, .donate-close'
-        );
-        if (clickable) playMinecraftClick();
-    }, true);
-
-    // ============================================================
-    //  1. 主页面交互
-    // ============================================================
-    const menuBtn = document.getElementById('menuBtn');
-    const sidebar = document.getElementById('sidebar');
-    const mask = document.getElementById('mask');
-    const toolMenu = document.getElementById('toolMenu');
-    const toolSub = document.getElementById('toolSub');
-    const launcherMenu = document.getElementById('launcherMenu');
-    const launcherSub = document.getElementById('launcherSub');
-    const aiMenu = document.getElementById('aiMenu');
-    const aiSub = document.getElementById('aiSub');
-
-    menuBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('show');
-        mask.classList.toggle('show');
+// 搜索功能
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function() {
+    const keyword = this.value.toLowerCase();
+    const cards = document.querySelectorAll('.cmd-card');
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(keyword) ? 'block' : 'none';
     });
-
-    mask.addEventListener('click', () => {
-        sidebar.classList.remove('show');
-        mask.classList.remove('show');
-    });
-
-    toolMenu.addEventListener('click', () => toolSub.classList.toggle('show'));
-    launcherMenu.addEventListener('click', () => launcherSub.classList.toggle('show'));
-    aiMenu.addEventListener('click', () => aiSub.classList.toggle('show'));
-
-    function goHome() {
-        window.scrollTo(0, 0);
-        sidebar.classList.remove('show');
-        mask.classList.remove('show');
-    }
-
-    function openDonate() {
-        document.getElementById('donateModal').classList.add('show');
-    }
-
-    function closeDonate() {
-        document.getElementById('donateModal').classList.remove('show');
-    }
-
-    function joinStudioGroup() {
-        window.open(
-            "https://qun.qq.com/universal-share/share?ac=1&authKey=YjihLgMMRmflo%2BB833GHJjTAXFGJCHn2%2BzRqMzMLXQEKQwzV9ZNw1S0c49OJwWrQ&busi_data=eyJncm91cENvZGUiOiIxMDQyNzc0OTE5IiwidG9rZW4iOiJ5bzQzbDlVT0ZLZWFWWlpPOU1EV2NTUEMrcitnT3pXa3lCWk9GR3Rla2JMMzlnbXRxNldwY0U5UjJHZnhRM0tlIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=tZCRyt3EV0s6YJ0UzAE8UALqdupNIMPxBOTbEVSrUPiy1NkXd7GesD3-f8FNMInFpjMAn6XYeuKiaYe-_lcEiw&svctype=4&tempid=h5_group_info",
-            "_blank"
-        );
-    }
-
-    // ============================================================
-    //  赞助玩家榜单：展开 / 收起
-    // ============================================================
-    function toggleSponsors() {
-        const board = document.querySelector('.sponsor-board');
-        const toggle = document.getElementById('sponsorToggle');
-        if (!board) return;
-
-        const expanded = board.classList.toggle('expanded');
-
-        if (toggle) {
-            toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-            const text = toggle.querySelector('.toggle-text');
-            if (text) text.textContent = expanded ? '收起' : '展开全部';
-        }
-    }
-
-    // ============================================================
-    //  2. 背景单视频无缝叠化循环（转场期间亮度恒定）
-    //     只有 1 个视频（minecraft.mp4），用 A/B 两个 <video> 播放同一个源。
-    //     做法：底层 base 永远保持 opacity:1 全亮播放，
-    //           顶层 top 从 0 渐显到 1 盖住底层。
-    //     因为底层从不透明，合成画面始终是满亮度，
-    //     不会出现“两层同时半透明 → 叠出暗色”的问题。
-    // ============================================================
-    const bgVideoA = document.getElementById('bgVideoA');
-    const bgVideoB = document.getElementById('bgVideoB');
-
-    const CROSSFADE_LEAD = 1.5;   // 结束前 1.5 秒开始转场
-    const CROSSFADE_MS = 1500;    // 转场时长（与 CSS 变量 --fade-dur 一致）
-
-    let bgBase = bgVideoA;        // 底层：当前画面，始终不透明
-    let bgTop = bgVideoB;         // 顶层：下一段，负责淡入
-    let isCrossfading = false;
-    let bgStarted = false;
-    let bgRafId = null;
-
-    function safePlay(video) {
-        const p = video.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-    }
-
-    // 把视频重启到开头并暂停（转场结束后作为底层待命）
-    function resetVideo(video) {
-        try {
-            video.pause();
-            video.currentTime = 0;
-        } catch (e) {}
-    }
-
-    function startCrossfade() {
-        if (isCrossfading) return;
-        isCrossfading = true;
-
-        const top = bgTop;
-        const base = bgBase;
-
-        // 顶层从 0 开始播放，先确保它是透明且无过渡的初始状态，
-        // 避免上一轮残留的 opacity 造成闪烁。
-        top.style.transition = 'none';
-        top.style.opacity = '0';
-        top.classList.remove('bg-base');
-        top.classList.add('bg-top');
-
-        try { top.currentTime = 0; } catch (e) {}
-        safePlay(top);
-
-        // 强制一次样式重排，让 opacity:0 生效后再开启过渡
-        void top.offsetWidth;
-
-        top.style.transition = `opacity ${CROSSFADE_MS}ms linear`;
-        top.style.opacity = '1';   // 平滑覆盖底层，底层始终保持全亮
-
-        // 转场结束后，把原底层归零、角色互换
-        setTimeout(() => {
-            // 旧底层已经看不见了（被顶层完全盖住），此时才复位
-            base.classList.remove('bg-base');
-            resetVideo(base);
-
-            // 新的顶层撤销内联样式，交回 class 控制
-            top.style.transition = 'none';
-            top.style.opacity = '';
-            top.classList.remove('bg-top');
-            top.classList.add('bg-base');
-
-            bgBase = top;
-            bgTop = base;
-            isCrossfading = false;
-        }, CROSSFADE_MS + 60);
-    }
-
-    // 检查循环：结束前 1.5 秒触发转场
-    function checkAndCrossfade() {
-        if (!bgStarted) return;
-
-        if (!isCrossfading) {
-            const d = bgBase.duration;
-            if (bgBase.ended) {
-                // 兜底：万一卡顿错过了窗口
-                startCrossfade();
-            } else if (d && !isNaN(d) && d > 0) {
-                if (d - bgBase.currentTime <= CROSSFADE_LEAD) startCrossfade();
-            }
-        }
-
-        bgRafId = requestAnimationFrame(checkAndCrossfade);
-    }
-
-    // 初始化：A 作为底层全亮播放，B 预加载同一个视频待命
-    function initBgVideo() {
-        if (bgStarted) return;
-        bgStarted = true;
-
-        bgVideoA.classList.add('bg-base');
-        bgVideoB.classList.remove('bg-base', 'bg-top');
-        safePlay(bgVideoA);
-
-        try { bgVideoB.load(); } catch (e) {}
-
-        bgRafId = requestAnimationFrame(checkAndCrossfade);
-    }
-
-    // 视频播放出错（例如文件缺失）时给出提示，避免静默黑屏
-    [bgVideoA, bgVideoB].forEach((v) => {
-        v.addEventListener('error', () => {
-            console.error('背景视频加载失败：', v.currentSrc || v.src);
-        });
-    });
-
-    // 页面隐藏时暂停，显示时恢复
-    document.addEventListener('visibilitychange', () => {
-        if (!bgStarted) return;
-        if (document.hidden) {
-            try { bgBase.pause(); } catch (e) {}
-            if (bgRafId) { cancelAnimationFrame(bgRafId); bgRafId = null; }
-        } else {
-            safePlay(bgBase);
-            if (!bgRafId) bgRafId = requestAnimationFrame(checkAndCrossfade);
-        }
-    });
-
-    // ============================================================
-    //  3. 背景音乐逻辑
-    // ============================================================
-    (function initBGM() {
-        const bgm = document.getElementById('bgm');
-        const toggle = document.getElementById('bgmToggle');
-        if (!bgm) return;
-
-        bgm.volume = 0.45;
-        let userMuted = false;
-
-        function updateBtn() {
-            if (!toggle) return;
-            toggle.textContent = bgm.paused ? '🔇 音乐' : '🔊 音乐';
-        }
-
-        bgm.addEventListener('play', updateBtn);
-        bgm.addEventListener('pause', updateBtn);
-
-        function tryAutoPlay() {
-            if (userMuted) return;
-            const p = bgm.play();
-            if (p && typeof p.catch === 'function') {
-                p.catch(() => {
-                    bindFirstInteraction();
-                });
-            }
-        }
-
-        function bindFirstInteraction() {
-            const handler = (e) => {
-                if (e.target && e.target.closest && e.target.closest('#bgmToggle')) {
-                    return;
-                }
-                if (!userMuted && bgm.paused) {
-                    bgm.play().catch(() => {});
-                }
-                cleanup();
-            };
-            const cleanup = () => {
-                document.removeEventListener('click', handler);
-                document.removeEventListener('touchstart', handler);
-                document.removeEventListener('keydown', handler);
-            };
-            document.addEventListener('click', handler);
-            document.addEventListener('touchstart', handler);
-            document.addEventListener('keydown', handler);
-        }
-
-        if (toggle) {
-            toggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (bgm.paused) {
-                    userMuted = false;
-                    const p = bgm.play();
-                    if (p && typeof p.catch === 'function') {
-                        p.catch(() => {});
-                    }
-                } else {
-                    userMuted = true;
-                    bgm.pause();
-                }
-                setTimeout(updateBtn, 50);
-            });
-        }
-
-        window.addEventListener('load', tryAutoPlay);
-        updateBtn();
-    })();
-
-    // ============================================================
-    //  4. 视频模态框
-    // ============================================================
-    const videoModal = document.getElementById('videoModal');
-    const videoEl = document.getElementById('dynamicVideo');
-    const loadingHint = document.getElementById('videoLoadingHint');
-    let blobUrl = null;
-
-    async function openVideo() {
-        videoModal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-
-        if (loadingHint) loadingHint.style.display = 'block';
-
-        try {
-            const response = await fetch('vedio.mp4');
-            if (!response.ok) throw new Error('视频文件加载失败 (HTTP ' + response.status + ')');
-
-            const blob = await response.blob();
-            blobUrl = URL.createObjectURL(blob);
-
-            videoEl.src = blobUrl;
-
-            await videoEl.load();
-            await videoEl.play();
-        } catch (error) {
-            console.error('视频加载出错:', error);
-            alert('视频加载失败，请检查网络或文件是否存在。');
-            closeVideo();
-            return;
-        } finally {
-            if (loadingHint) loadingHint.style.display = 'none';
-        }
-    }
-
-    function closeVideo() {
-        if (videoEl) {
-            videoEl.pause();
-            if (blobUrl) {
-                URL.revokeObjectURL(blobUrl);
-                blobUrl = null;
-            }
-            videoEl.src = '';
-            videoEl.load();
-        }
-        videoModal.classList.remove('show');
-        document.body.style.overflow = '';
-        if (loadingHint) loadingHint.style.display = 'none';
-    }
-
-    function closeVideoOnBg(e) {
-        if (e.target === videoModal) closeVideo();
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && videoModal.classList.contains('show')) {
-            closeVideo();
-        }
-    });
-
-    // ============================================================
-    //  5. 生成星光
-    // ============================================================
-    window.addEventListener('load', function() {
-        generateStars();
-        window.addEventListener('resize', generateStars);
-        initBgVideo();
-    });
-
-    function generateStars() {
-        const orbit = document.getElementById('starOrbit');
-        if (!orbit) return;
-        orbit.innerHTML = '';
-
-        const isMobile = window.innerWidth < 768;
-        const isSmall = window.innerWidth < 480;
-
-        let count = 12;
-        if (isSmall) count = 6;
-        else if (isMobile) count = 8;
-
-        let radius = 310;
-        if (isSmall) radius = 150;
-        else if (isMobile) radius = 210;
-
-        const starChar = '✦';
-
-        for (let i = 0; i < count; i++) {
-            const angle = (i / count) * 360;
-            const rad = (angle * Math.PI) / 180;
-            const x = Math.cos(rad) * radius;
-            const y = Math.sin(rad) * radius;
-
-            const span = document.createElement('span');
-            span.className = 'star';
-            span.textContent = starChar;
-            span.style.setProperty('--i', i);
-            span.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
-            const jitter = 4;
-            span.style.marginLeft = (Math.random() - 0.5) * jitter + 'px';
-            span.style.marginTop = (Math.random() - 0.5) * jitter + 'px';
-            orbit.appendChild(span);
-        }
-    }
+});
 </script>
+
 </body>
 </html>
