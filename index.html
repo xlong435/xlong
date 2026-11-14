@@ -368,22 +368,56 @@ ul{list-style:none}
   transition:border-color .3s,transform .3s,box-shadow .3s;
 }
 .server-card:hover{border-color:rgba(226,56,43,.42);transform:translateY(-4px);box-shadow:0 28px 60px rgba(0,0,0,.45)}
-.server-gallery{display:grid;grid-template-columns:1.55fr 1fr 1fr;gap:2px;height:190px;background:#0a0c11}
-.server-gallery figure{position:relative;overflow:hidden;margin:0}
-.server-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);filter:saturate(.95)}
-.server-card:hover .server-gallery img{transform:scale(1.05)}
-.server-gallery figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,8,12,.02) 40%,rgba(7,8,12,.55));pointer-events:none}
-.server-body{padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;flex:1}
-.server-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.server-head h3{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:800;letter-spacing:.02em}
+
+/* 顶部渲染图：底部与卡片背景平滑过渡 */
+.server-hero{
+  position:relative;flex:none;
+  height:clamp(220px,27vw,300px);
+  overflow:hidden;background:#0a0c11;
+}
+.server-hero img{
+  width:100%;height:100%;object-fit:cover;
+  transform:scale(1.02);
+  transition:transform .8s cubic-bezier(.2,.7,.2,1);
+  filter:saturate(1.04);
+}
+.server-card:hover .server-hero img{transform:scale(1.07)}
+.server-hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,
+    rgba(21,25,38,0) 0%,
+    rgba(21,25,38,.08) 40%,
+    rgba(21,25,38,.5) 68%,
+    rgba(21,25,38,.9) 88%,
+    var(--panel-2) 100%);
+}
+
+/* 浮在图片与卡片之间的标签 */
+.server-label{
+  position:relative;z-index:2;
+  display:flex;align-items:center;gap:10px;
+  margin-top:-40px;
+  padding:0 clamp(20px,2.4vw,28px);
+}
+.server-label .chip{
+  height:30px;padding:0 15px;font-size:12.5px;letter-spacing:.12em;border-radius:9px;
+  -webkit-backdrop-filter:blur(10px) saturate(140%);
+  backdrop-filter:blur(10px) saturate(140%);
+  box-shadow:0 8px 22px rgba(0,0,0,.45);
+}
+
+.server-body{
+  padding:clamp(18px,2vw,22px) clamp(20px,2.4vw,28px) clamp(22px,2.6vw,30px);
+  display:flex;flex-direction:column;flex:1;
+}
 .chip{
   display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 10px;border-radius:6px;
   font-size:11px;font-weight:800;letter-spacing:.08em;border:1px solid transparent;
 }
 .chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
-.chip-blue{color:#7fadff;background:rgba(91,147,255,.12);border-color:rgba(91,147,255,.3)}
-.chip-green{color:#5fe0b0;background:rgba(65,211,154,.1);border-color:rgba(65,211,154,.28)}
-.server-desc{margin-top:14px;font-size:14px;line-height:1.9;color:var(--muted);flex:1}
+.chip-blue{color:#7fadff;background:rgba(91,147,255,.14);border-color:rgba(91,147,255,.36)}
+.chip-green{color:#5fe0b0;background:rgba(65,211,154,.12);border-color:rgba(65,211,154,.34)}
+.server-desc{font-size:14px;line-height:1.9;color:var(--muted);flex:1}
 .server-meta{
   margin-top:22px;padding-top:18px;border-top:1px dashed var(--line-2);
   display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
@@ -655,7 +689,8 @@ ul{list-style:none}
   .hero-facts{flex-direction:column;align-items:flex-start;gap:10px;max-width:300px;margin-left:auto;margin-right:auto;text-align:left}
   .hero-facts li{width:100%}
   .scroll-cue{display:none}
-  .server-gallery{height:150px;grid-template-columns:1.4fr 1fr 1fr}
+  .server-hero{height:190px}
+  .server-label{margin-top:-36px}
   .server-meta{flex-direction:column;align-items:stretch}
   .server-actions{justify-content:stretch}
   .server-actions .btn{flex:1}
@@ -890,17 +925,15 @@ ul{list-style:none}
       </div>
 
       <div class="server-grid">
+        <!-- 网易版 -->
         <article class="server-card reveal" style="--d:.05s">
-          <div class="server-gallery">
-            <figure><img src="预览一.webp" alt="网易版服务器主城" loading="lazy"></figure>
-            <figure><img src="预览二.webp" alt="网易版服务器场景" loading="lazy"></figure>
-            <figure><img src="预览三.webp" alt="网易版服务器建筑" loading="lazy"></figure>
+          <div class="server-hero">
+            <img src="预览一.webp" alt="网易版服务器渲染图" loading="lazy">
+          </div>
+          <div class="server-label">
+            <span class="chip chip-blue">网易版</span>
           </div>
           <div class="server-body">
-            <div class="server-head">
-              <span class="chip chip-blue">网易版</span>
-              <h3>网易版专属服</h3>
-            </div>
             <p class="server-desc">适配网易 MC 全版本，无需正版验证，一键加入即可游玩。纯净生存 + 趣味小游戏，萌新快速上手，老玩家带队开荒，社区氛围友好，每日还有专属福利。</p>
             <div class="server-meta">
               <div class="qq-info">
@@ -909,23 +942,21 @@ ul{list-style:none}
               </div>
               <div class="server-actions">
                 <button class="btn btn-quiet btn-sm js-copy" type="button" data-copy="668352250"><svg class="ico"><use href="#i-copy"/></svg> 复制群号</button>
-                <a class="btn btn-primary btn-sm" href="https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener noreferrer"><svg class="ico"><use href="#i-users"/></svg> 一键加入</a>
+                <a class="btn btn-primary btn-sm" href="https://qun.qq.com/universal-share/share?ac=1&authKey=5ELsbxZNPi1rKVe5Dc3RF8TJa3zksa05g4%2BGQ%2B4r0LWkcrTD0ZVjW1I4YzF4m%2Br6&busi_data=eyJncm91cENvZGUiOiI2NjgzNTIyNTAiLCJ0b2tlbiI6IjNrN3JwK2g3N0UyYXVNeGppR0U5WHczTEpnN3BQUmM4WGpPZzZSL2xCRmx1dkd4d2p1MU54dHhzMHl2QmV6ODkiLCJ1aW4iOiIzNzgzMDAyMzIzIn0%3D&data=PMzjAPZ8Ifx8t5Hv6aNNn3HF7_fm5vILxd9NNGcFlJr2v3dsAVKfDEprMZDBzdmLkeRMr0fwhV5f2oa6pdiZjw&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener noreferrer">点击加入 <svg class="ico ico-arrow"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
           </div>
         </article>
 
+        <!-- 国际版 -->
         <article class="server-card reveal" style="--d:.12s">
-          <div class="server-gallery">
-            <figure><img src="国际一.webp" alt="国际服场景" loading="lazy"></figure>
-            <figure><img src="国际二.webp" alt="国际服建筑" loading="lazy"></figure>
-            <figure><img src="国际三.webp" alt="国际服玩法" loading="lazy"></figure>
+          <div class="server-hero">
+            <img src="国际一.webp" alt="国际 Java 版服务器渲染图" loading="lazy">
+          </div>
+          <div class="server-label">
+            <span class="chip chip-green">国际版</span>
           </div>
           <div class="server-body">
-            <div class="server-head">
-              <span class="chip chip-green">国际版</span>
-              <h3>国际 Java 服</h3>
-            </div>
             <p class="server-desc">分为粘液科技服与 1.20.1 模组服，支持离线玩家加入，服务器持续更新，腐竹也超听劝。适合想体验原版与模组整合的长期玩家。</p>
             <div class="server-meta">
               <div class="qq-info">
@@ -934,7 +965,7 @@ ul{list-style:none}
               </div>
               <div class="server-actions">
                 <button class="btn btn-quiet btn-sm js-copy" type="button" data-copy="1059442560"><svg class="ico"><use href="#i-copy"/></svg> 复制群号</button>
-                <a class="btn btn-primary btn-sm" href="https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener noreferrer"><svg class="ico"><use href="#i-users"/></svg> 一键加入</a>
+                <a class="btn btn-primary btn-sm" href="https://qun.qq.com/universal-share/share?ac=1&authKey=nEpQP%2Bv3EPbXQyW2rGKoR%2BRylT2rxXDsHMnuqtyxtOknRAdDfDukkbD2BdxqlTLI&busi_data=eyJncm91cENvZGUiOiIxMDU5NDQyNTYwIiwidG9rZW4iOiJPankwOThoUWZWbHZINXczbGNtWjlSV3p1UWZnSm53Sk9oWHUwNEtRMFhLaW9JQzhCSTZMbGQ5ZmFNbVpOWWVNIiwidWluIjoiMzc4MzAwMjMyMyJ9&data=QWRlRxWRcyLRcV6JCQgFpuFMIq57H1Vjk8pom2StAOzEh3G6JStM3uWeYsetRFZoTH93GsDKU7nzFjPOrTvz-w&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener noreferrer">点击加入 <svg class="ico ico-arrow"><use href="#i-arrow"/></svg></a>
               </div>
             </div>
           </div>
