@@ -622,6 +622,7 @@ ul{list-style:none}
 }
 .modal-close:hover{background:var(--red);border-color:var(--red-2);transform:rotate(90deg)}
 .modal-box video{display:block;width:100%;aspect-ratio:16/9;max-height:74vh;border-radius:10px;background:#000;object-fit:contain}
+.modal-box iframe{display:block;width:100%;aspect-ratio:16/9;max-height:74vh;border:0;border-radius:10px;background:#000}
 .video-loading{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   display:none;align-items:center;gap:10px;font-size:13px;color:#fff;letter-spacing:.06em;
@@ -1192,7 +1193,7 @@ ul{list-style:none}
 <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="服务器宣传片">
   <div class="modal-box" id="videoBox">
     <button class="modal-close" type="button" onclick="closeVideo()" aria-label="关闭视频"><svg class="ico"><use href="#i-close"/></svg></button>
-    <video id="dynamicVideo" controls playsinline preload="metadata" controlslist="nodownload" disablepictureinpicture oncontextmenu="return false;"></video>
+    <iframe id="biliPlayer" title="珑谷纪服务器宣传片" src="about:blank" scrolling="no" frameborder="no" framespacing="0" allowfullscreen="true" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <div class="video-loading" id="videoLoadingHint"><span class="spinner" aria-hidden="true"></span> 视频加载中…</div>
   </div>
 </div>
@@ -1223,10 +1224,11 @@ ul{list-style:none}
   var videoModal = document.getElementById('videoModal');
   var videoBox = document.getElementById('videoBox');
   var donateModal = document.getElementById('donateModal');
-  var dynamicVideo = document.getElementById('dynamicVideo');
+  var dynamicVideo = document.getElementById('biliPlayer');
   var loadingHint = document.getElementById('videoLoadingHint');
   var toast = document.getElementById('toast');
-  var blobUrl = null;
+  /* B 站播放器：BV1zx14zuEkD（宣传片） */
+  var BILI_PLAYER_URL = 'https://player.bilibili.com/player.html?isOutside=true&aid=117687657175504&bvid=BV1zx14zuEkD&cid=43966334076&p=1';
 
   /* ---------- 顶栏滚动状态 ---------- */
   function onScroll() {
@@ -1480,39 +1482,26 @@ ul{list-style:none}
   });
   window.addEventListener('load', initBg);
 
-  /* ---------- 视频弹窗 ---------- */
+  /* ---------- 视频弹窗（B 站播放器） ---------- */
   window.openVideo = function () {
     videoModal.classList.add('show');
     document.body.style.overflow = 'hidden';
     loadingHint.classList.add('show');
-    fetch('vedio.mp4').then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.blob();
-    }).then(function (blob) {
-      blobUrl = URL.createObjectURL(blob);
-      dynamicVideo.src = blobUrl;
-      return dynamicVideo.load();
-    }).then(function () {
-      return dynamicVideo.play();
-    }).catch(function (err) {
-      console.error('视频加载失败：', err);
-      showToast('视频加载失败，请稍后再试');
-      closeVideo();
-    }).finally(function () {
-      loadingHint.classList.remove('show');
-    });
+    dynamicVideo.src = BILI_PLAYER_URL + '&autoplay=1';
+    setTimeout(function () { loadingHint.classList.remove('show'); }, 1600);
   };
   window.closeVideo = function () {
-    if (dynamicVideo) {
-      dynamicVideo.pause();
-      if (blobUrl) { URL.revokeObjectURL(blobUrl); blobUrl = null; }
-      dynamicVideo.removeAttribute('src');
-      dynamicVideo.load();
-    }
+    /* 置空 src 才能真正停止 B 站播放器（否则关窗后仍在后台播放） */
+    if (dynamicVideo) dynamicVideo.src = 'about:blank';
     videoModal.classList.remove('show');
     document.body.style.overflow = '';
     loadingHint.classList.remove('show');
   };
+  if (dynamicVideo) {
+    dynamicVideo.addEventListener('load', function () {
+      loadingHint.classList.remove('show');
+    });
+  }
   videoModal.addEventListener('click', function (e) {
     if (!videoBox.contains(e.target)) closeVideo();
   });
