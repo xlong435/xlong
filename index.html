@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#07080c">
-<title>珑谷纪官方 · 我的世界双端互通社区</title>
+<title>珑谷纪·致我们的乌托邦</title>
 <meta name="description" content="珑谷纪官方 —— 我的世界网易版与国际 Java 版双端互通社区。纯净生存、长期稳定运营、萌新友好，提供启动器、MC 工具、官方论坛与服务器宣传片。">
 <meta name="keywords" content="珑谷纪,我的世界服务器,MC服务器,网易MC,国际版MC,MC互通服,我的世界开服,赤焰工坊">
-<meta property="og:title" content="珑谷纪官方 · 我的世界双端互通社区">
+<meta property="og:title" content="珑谷纪·致我们的乌托邦">
 <meta property="og:description" content="网易版 × 国际 Java 版双服持续运营，纯净生存、友好交流，与伙伴一起创造属于你的方块世界。">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/webp" href="龙之谷图标.webp">
@@ -399,11 +399,15 @@ ul{list-style:none}
   transition:border-color .3s,transform .3s,box-shadow .3s;
 }
 .server-card:hover{border-color:rgba(226,56,43,.42);transform:translateY(-4px);box-shadow:0 28px 60px rgba(0,0,0,.45)}
-.server-gallery{display:grid;grid-template-columns:1.55fr 1fr 1fr;gap:2px;height:190px;background:#0a0c11}
-.server-gallery figure{position:relative;overflow:hidden;margin:0}
-.server-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);filter:saturate(.95)}
-.server-card:hover .server-gallery img{transform:scale(1.05)}
-.server-gallery figure::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,8,12,.02) 40%,rgba(7,8,12,.55));pointer-events:none}
+/* 单图铺满 + 底部渐变融入卡片 */
+.server-gallery{
+  position:relative;display:block;height:clamp(196px,21vw,248px);overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,#000 0%,#000 66%,rgba(0,0,0,.55) 84%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 0%,#000 66%,rgba(0,0,0,.55) 84%,transparent 100%);
+}
+.server-gallery figure{position:relative;margin:0;height:100%}
+.server-gallery img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s;filter:saturate(.96)}
+.server-card:hover .server-gallery img{transform:scale(1.045);filter:saturate(1.02)}
 .server-body{padding:clamp(20px,2.4vw,28px);display:flex;flex-direction:column;flex:1}
 .server-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .server-head h3{font-size:clamp(1.15rem,1.8vw,1.4rem);font-weight:800;letter-spacing:.02em}
@@ -688,7 +692,7 @@ ul{list-style:none}
   .hero-facts{flex-direction:column;align-items:flex-start;gap:10px;max-width:300px;margin-left:auto;margin-right:auto;text-align:left}
   .hero-facts li{width:100%}
   .scroll-cue{display:none}
-  .server-gallery{height:150px;grid-template-columns:1.4fr 1fr 1fr}
+  .server-gallery{height:176px}
   .server-meta{flex-direction:column;align-items:stretch}
   .server-actions{justify-content:stretch}
   .server-actions .btn{flex:1}
@@ -875,7 +879,7 @@ ul{list-style:none}
       <p class="hero-en">Long Valley · Official</p>
       <p class="hero-lead">一个长期稳定运营的 Minecraft 双端互通社区。<br>纯净生存、友好交流，与伙伴一起创造属于你的方块世界。</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://pd.qq.com/s/c3b85f58g?b=5" target="_blank" rel="noopener noreferrer">进入官方论坛 <svg class="ico ico-arrow"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-primary" href="https://qm.qq.com/q/IbkB7LCFUI" target="_blank" rel="noopener noreferrer">加入游戏 <svg class="ico ico-arrow"><use href="#i-arrow"/></svg></a>
         <button class="btn btn-ghost" type="button" onclick="openVideo()"><svg class="ico"><use href="#i-play"/></svg> 观看宣传片</button>
       </div>
       <a class="hero-entry" href="http://www.qinghexiaozhen.xyz:32010" target="_blank" rel="noopener noreferrer">
@@ -935,8 +939,6 @@ ul{list-style:none}
         <article class="server-card reveal" style="--d:.05s">
           <div class="server-gallery">
             <figure><img src="预览一.webp" alt="网易版服务器主城" loading="lazy"></figure>
-            <figure><img src="预览二.webp" alt="网易版服务器场景" loading="lazy"></figure>
-            <figure><img src="预览三.webp" alt="网易版服务器建筑" loading="lazy"></figure>
           </div>
           <div class="server-body">
             <div class="server-head">
@@ -960,15 +962,13 @@ ul{list-style:none}
         <article class="server-card reveal" style="--d:.12s">
           <div class="server-gallery">
             <figure><img src="国际一.webp" alt="国际服场景" loading="lazy"></figure>
-            <figure><img src="国际二.webp" alt="国际服建筑" loading="lazy"></figure>
-            <figure><img src="国际三.webp" alt="国际服玩法" loading="lazy"></figure>
           </div>
           <div class="server-body">
             <div class="server-head">
               <span class="chip chip-green">国际版</span>
               <h3>国际 Java 服</h3>
             </div>
-            <p class="server-desc">分为粘液科技服与 1.20.1 模组服，支持离线玩家加入，服务器持续更新，腐竹也超听劝。适合想体验原版与模组整合的长期玩家。</p>
+            <p class="server-desc">一体化群组服，包含原版生存、空岛生存和粘液科技多重玩法！腐竹也超听劝。适合想体验原版与模组整合的长期玩家。</p>
             <div class="server-meta">
               <div class="qq-info">
                 <span class="qq-label">官方交流群</span>
